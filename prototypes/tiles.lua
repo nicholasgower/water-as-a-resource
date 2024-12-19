@@ -1,235 +1,128 @@
-
 data:extend(
 {
-	{
+  {
     name = "crude-oil",
     type = "tile",
-    collision_mask =
-    {
-      "water-tile",
-	  "item-layer",
-      "resource-layer",
-      "player-layer",
-      "doodad-layer"
+    collision_mask = {
+      layers = {
+        ["water_tile"]=true,
+        ["item"]=true,
+        ["resource"]=true,
+        ["player"]=true,
+        ["doodad"]=true,
+        
+      }
     },
     autoplace = nil,
-    draw_in_water_layer = true,
-	pollution_absorption_per_second = 0,
-    layer = 2,
+    pollution_absorptions_per_second = 0,
+    layer_group = "water",
+    
     variants = {
-      main =
-      {
+      empty_transitions=true,
+      -- Changed to new tile graphics definition format
+      main = {
         {
           picture = "__WaterAsAResource__/graphics/terrain/crude-oil/crude-oil1.png",
           count = 8,
-          size = 1,
-          hr_version =
-          {
-            picture = "__WaterAsAResource__/graphics/terrain/crude-oil/crude-oil-hr1.png",
-            count = 8,
-            scale = 0.5,
-            size = 1
-          }
+          size = 1
         },
         {
           picture = "__WaterAsAResource__/graphics/terrain/crude-oil/crude-oil2.png",
           count = 8,
-          size = 2,
-          hr_version =
-          {
-            picture = "__WaterAsAResource__/graphics/terrain/crude-oil/crude-oil-hr2.png",
-            count = 8,
-            scale = 0.5,
-            size = 2
-          }
+          size = 2
         },
         {
           picture = "__WaterAsAResource__/graphics/terrain/crude-oil/crude-oil4.png",
           count = 8,
-          size = 4,
-          hr_version =
-          {
-            picture = "__WaterAsAResource__/graphics/terrain/crude-oil/crude-oil-hr4.png",
-            count = 8,
-            scale = 0.5,
-            size = 4
-          }
+          size = 4
         }
       },
-      inner_corner =
-      {
+      inner_corner = {
         picture = "__WaterAsAResource__/graphics/terrain/crude-oil/crude-oil-inner-corner.png",
-        count = 6,
-        hr_version =
-        {
-          picture = "__WaterAsAResource__/graphics/terrain/crude-oil/crude-oil-inner-corner-hr.png",
-          count = 6,
-          scale = 0.5
-        }
+        count = 6
       },
-      outer_corner =
-      {
+      outer_corner = {
         picture = "__WaterAsAResource__/graphics/terrain/crude-oil/crude-oil-outer-corner.png",
-        count = 6,
-        hr_version =
-        {
-          picture = "__WaterAsAResource__/graphics/terrain/crude-oil/crude-oil-outer-corner-hr.png",
-          count = 6,
-          scale = 0.5
-        }
+        count = 6
       },
-      side =
-      {
+      side = {
         picture = "__WaterAsAResource__/graphics/terrain/crude-oil/crude-oil-side.png",
-        count = 6,
-        hr_version =
-        {
-          picture = "__WaterAsAResource__/graphics/terrain/crude-oil/crude-oil-side-hr.png",
-          count = 6,
-          scale = 0.5
-        }
+        count = 6
       },
-      u_transition =
-      {
+      u_transition = {
         picture = "__WaterAsAResource__/graphics/terrain/crude-oil/crude-oil-u.png",
-        count = 1,
-        hr_version =
-        {
-          picture = "__WaterAsAResource__/graphics/terrain/crude-oil/crude-oil-u-hr.png",
-          count = 1,
-          scale = 0.5
-        }
+        count = 1
       },
-      o_transition =
-      {
+      o_transition = {
         picture = "__WaterAsAResource__/graphics/terrain/crude-oil/crude-oil-o.png",
-        count = 1,
-        hr_version =
-        {
-          picture = "__WaterAsAResource__/graphics/terrain/crude-oil/crude-oil-o-hr.png",
-          count = 1,
-          scale = 0.5
-        }
-      },
+        count = 1
+      }
     },
-    --allowed_neighbors = { "grass-1" },
-    map_color={r=128, g=128, b=128},
-    ageing=0.0006
+    map_color = {r=128, g=128, b=128},
+    ageing = 0.0006,
+    layer = 2,
+    check_collision_with_entities = true -- Changed from undefined to explicit default
   },
   {
     name = "crude-oil-deep",
     type = "tile",
-    collision_mask =
-    {
-	  "water-tile",
-      "resource-layer",
-      "item-layer",
-      "player-layer",
-      "doodad-layer"
+    collision_mask = {
+      layers = {
+        ["water_tile"]=true,
+        ["item"]=true,
+        ["resource"]=true,
+        ["player"]=true,
+        ["doodad"]=true,
+        
+      }
     },
     autoplace = nil,
-    draw_in_water_layer = true,
-	pollution_absorption_per_second = 0,
-    layer = 4,
+    pollution_absorptions_per_second = 0,
+    layer_group = "water",
     variants = {
-      main =
-      {
+      empty_transitions=true,
+      main = {
         {
           picture = "__WaterAsAResource__/graphics/terrain/crude-oil-deep/crude-oil-deep1.png",
           count = 8,
-          size = 1,
-          hr_version =
-          {
-            picture = "__WaterAsAResource__/graphics/terrain/crude-oil-deep/crude-oil-deep1-hr.png",
-            count = 8,
-            scale = 0.5,
-            size = 1
-          }
+          size = 1
         },
         {
           picture = "__WaterAsAResource__/graphics/terrain/crude-oil-deep/crude-oil-deep2.png",
           count = 8,
-          size = 2,
-          hr_version =
-          {
-            picture = "__WaterAsAResource__/graphics/terrain/crude-oil-deep/crude-oil-deep2-hr.png",
-            count = 8,
-            scale = 0.5,
-            size = 2
-          }
+          size = 2
         },
         {
           picture = "__WaterAsAResource__/graphics/terrain/crude-oil-deep/crude-oil-deep4.png",
           count = 8,
-          size = 4,
-          hr_version =
-          {
-            picture = "__WaterAsAResource__/graphics/terrain/crude-oil-deep/crude-oil-deep4-hr.png",
-            count = 8,
-            scale = 0.5,
-            size = 4
-          }
+          size = 4
         }
       },
-      inner_corner =
-      {
+      inner_corner = {
         picture = "__WaterAsAResource__/graphics/terrain/crude-oil-deep/crude-oil-deep-inner-corner.png",
-        count = 6,
-        hr_version =
-        {
-          picture = "__WaterAsAResource__/graphics/terrain/crude-oil-deep/crude-oil-deep-inner-corner-hr.png",
-          count = 6,
-          scale = 0.5
-        }
+        count = 6
       },
-      outer_corner =
-      {
+      outer_corner = {
         picture = "__WaterAsAResource__/graphics/terrain/crude-oil-deep/crude-oil-deep-outer-corner.png",
-        count = 6,
-        hr_version =
-        {
-          picture = "__WaterAsAResource__/graphics/terrain/crude-oil-deep/crude-oil-deep-outer-corner-hr.png",
-          count = 6,
-          scale = 0.5
-        }
+        count = 6
       },
-      side =
-      {
+      side = {
         picture = "__WaterAsAResource__/graphics/terrain/crude-oil-deep/crude-oil-deep-side.png",
-        count = 6,
-        hr_version =
-        {
-          picture = "__WaterAsAResource__/graphics/terrain/crude-oil-deep/crude-oil-deep-side-hr.png",
-          count = 6,
-          scale = 0.5
-        }
+        count = 6
       },
-      u_transition =
-      {
+      u_transition = {
         picture = "__WaterAsAResource__/graphics/terrain/crude-oil-deep/crude-oil-deep-u.png",
-        count = 1,
-        hr_version =
-        {
-          picture = "__WaterAsAResource__/graphics/terrain/crude-oil-deep/crude-oil-deep-u-hr.png",
-          count = 1,
-          scale = 0.5
-        }
+        count = 1
       },
-      o_transition =
-      {
+      o_transition = {
         picture = "__WaterAsAResource__/graphics/terrain/crude-oil-deep/crude-oil-deep-o.png",
-        count = 1,
-        hr_version =
-        {
-          picture = "__WaterAsAResource__/graphics/terrain/crude-oil-deep/crude-oil-deep-o-hr.png",
-          count = 1,
-          scale = 0.5
-        }
+        count = 1
       }
     },
     allowed_neighbors = { "crude-oil" },
-    map_color={r=48, g=48, b=48},
-    ageing=0.0006
+    map_color = {r=48, g=48, b=48},
+    ageing = 0.0006,
+    layer = 4,
+    check_collision_with_entities = true -- Changed from undefined to explicit default
   }
-}
-)
+})

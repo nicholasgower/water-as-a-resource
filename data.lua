@@ -12,7 +12,8 @@ local offshorenofluid = table.deepcopy(data.raw["offshore-pump"]["offshore-pump"
 offshorenofluid.name ="offshore-pump-nofluid"
 offshorenofluid.pumping_speed = 0.1
 offshorenofluid.collision_box = {{-0.6, -0.55}, {0.6, 0.3}}
-offshorenofluid.fluid_box = {base_area = 1,base_level = 1,pipe_covers = pipecoverspictures(),production_type = "output",pipe_connections = { {position = {0, -0.56},type = "output"}, }, }
+--offshorenofluid.fluid_box = {volume=100,pipe_covers = pipecoverspictures(),production_type = "output",pipe_connections = { {position = {0, -0.56},type = "output"}, }, }
+offshorenofluid.fluid_box.pipe_connections[1].positions={0,-0.56}
 offshorenofluid.placeable_by = {item = "offshore-pump", count = 1}
 
 local offshorecrudeoil = table.deepcopy(data.raw["offshore-pump"]["offshore-pump"])
@@ -20,7 +21,9 @@ local offshorecrudeoil = table.deepcopy(data.raw["offshore-pump"]["offshore-pump
 offshorecrudeoil.name = "offshore-crude-oil-pump"
 offshorecrudeoil.fluid = "crude-oil"
 offshorecrudeoil.pumping_speed = 20
-offshorecrudeoil.fluid_box ={base_area = 1,base_level = 1,pipe_covers = pipecoverspictures(),production_type = "output",filter = "crude-oil",pipe_connections ={ {position = {0, 1},type = "output" }, }, }
+--offshorecrudeoil.fluid_box ={volume=100,pipe_covers = pipecoverspictures(),production_type = "output",filter = "crude-oil",pipe_connections ={ {position = {0, 1},type = "output" }, }, }
+offshorecrudeoil.fluid_box.filter="crude-oil"
+
 offshorecrudeoil.placeable_by = {item = "offshore-pump", count = 1}
 
 local lakeshallow = table.deepcopy(data.raw["tile"]["sand-3"])

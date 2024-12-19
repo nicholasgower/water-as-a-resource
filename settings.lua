@@ -1,19 +1,19 @@
 data:extend({
     {
         type = "bool-setting",
-        name = "Alarms-Low-Level (50/75/90%)",
+        name = "alarms-low-level",
         setting_type = "runtime-global",
         default_value = true
     },
     {
         type = "bool-setting",
-        name = "Alarms-High-Level (95/97/98/99%)",
+        name = "alarms-high-level",
         setting_type = "runtime-global",
         default_value = true
     },
 	{
         type = "bool-setting",
-        name = "Alarms-Landfill Message",
+        name = "alarms-landfill-message",
         setting_type = "runtime-per-user",
         default_value = true
     },
@@ -25,7 +25,7 @@ data:extend({
     },
     {
         type = "int-setting",
-        name = "FluidArea-Start-Area",
+        name = "fluid-area-start-area",
         setting_type = "runtime-global",
         default_value = 100,
         minimum_value = 100,

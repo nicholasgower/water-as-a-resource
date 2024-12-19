@@ -507,7 +507,7 @@ function GetWaterArea(a) 										-- Get Water Area Function
 		WaterEdgeArea = global.WaterGlobalArea[#global.WaterGlobalArea]["WaterEdgeArea"]
 		WASearchQueue = {position}
 		WASearched = {}
-		SearchAmount = settings.global["FluidArea-Start-Area"].value
+		SearchAmount = settings.global["fluid-area-start-area"].value
 		FA = global.WaterGlobalArea[a]
 		PlayerMaxArea = settings.global["FluidArea-MaxFluidAreaSize"].value
 		TotalArea = global.WaterGlobalArea[a]["ShallowWater"] + global.WaterGlobalArea[a]["DeepWater"]
@@ -520,7 +520,7 @@ function GetWaterArea(a) 										-- Get Water Area Function
 		WaterEdgeArea = global.WaterGlobalArea[#global.WaterGlobalArea]["WaterEdgeArea"]
 		WASearchQueue = {position}
 		WASearched = {}
-		SearchAmount = settings.global["FluidArea-Start-Area"].value
+		SearchAmount = settings.global["fluid-area-start-area"].value
 		FA = global.WaterGlobalArea[a]
 		PlayerMaxArea = settings.global["FluidArea-MaxFluidAreaSize"].value
 		TotalArea = global.WaterGlobalArea[a]["ShallowWater"] + global.WaterGlobalArea[a]["DeepWater"]
@@ -1218,8 +1218,8 @@ function AddedWaterArea(a)
 	if WGA[a]["AmountWtr"] ~= WGA[a]["WtrUsed"] and WGA[a]["Percent"] > 0 then
 		local Percent = WGA[a]["Percent"]
 		local WA = WGA[a]
-		local LowAlarmEnabled = settings.global["Alarms-Low-Level (50/75/90%)"].value
-		local HighAlarmEnabled = settings.global["Alarms-High-Level (95/97/98/99%)"].value
+		local LowAlarmEnabled = settings.global["alarms-low-level"].value
+		local HighAlarmEnabled = settings.global["alarms-high-level"].value
 		if Percent < 100 and Percent >= 80 then
 			WGA[a]["Depleted"] = 0
 			local RP = WA["RandPercent"]
@@ -1281,8 +1281,8 @@ function DepleatedWaterArea(a)
 	local WGA = global.WaterGlobalArea
 	if WGA[a]["Depleted"] ~= 1 and WGA[a]["ToSearch"] == nil then
 		local Percent = WGA[a]["Percent"]
-		local LowAlarmEnabled = settings.global["Alarms-Low-Level (50/75/90%)"].value
-		local HighAlarmEnabled = settings.global["Alarms-High-Level (95/97/98/99%)"].value
+		local LowAlarmEnabled = settings.global["alarms-low-level"].value
+		local HighAlarmEnabled = settings.global["alarms-high-level"].value
 		local WA = WGA[a]
 		if Percent <= 49 then
 			--game.print("IN NORMAL BOUNDS")
@@ -1744,7 +1744,7 @@ function LandFill(a)
 		end
 	::EscapeLFSearch::
 	end
-	local LandfillEnabled = settings.get_player_settings(game.players[1])["Alarms-Landfill Message"].value
+	local LandfillEnabled = settings.get_player_settings(game.players[1])["alarms-landfill-message"].value
 	if #global.LandFill == 0 and Found == true and LandfillEnabled == true then
 		game.print(string.format("Landfill has reduced FluidArea %s, to %sL of %s.", WGA[a]["WtrName"], WGA[a]["AmountWtr"], WGA[a]["FluidType"]))
 	end

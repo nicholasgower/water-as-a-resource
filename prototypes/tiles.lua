@@ -22,39 +22,39 @@ data:extend(
       -- Changed to new tile graphics definition format
       main = {
         {
-          picture = "__WaterAsAResource__/graphics/terrain/crude-oil/crude-oil1.png",
+          picture = "__water-as-a-resource__/graphics/terrain/crude-oil/crude-oil1.png",
           count = 8,
           size = 1
         },
         {
-          picture = "__WaterAsAResource__/graphics/terrain/crude-oil/crude-oil2.png",
+          picture = "__water-as-a-resource__/graphics/terrain/crude-oil/crude-oil2.png",
           count = 8,
           size = 2
         },
         {
-          picture = "__WaterAsAResource__/graphics/terrain/crude-oil/crude-oil4.png",
+          picture = "__water-as-a-resource__/graphics/terrain/crude-oil/crude-oil4.png",
           count = 8,
           size = 4
         }
       },
       inner_corner = {
-        picture = "__WaterAsAResource__/graphics/terrain/crude-oil/crude-oil-inner-corner.png",
+        picture = "__water-as-a-resource__/graphics/terrain/crude-oil/crude-oil-inner-corner.png",
         count = 6
       },
       outer_corner = {
-        picture = "__WaterAsAResource__/graphics/terrain/crude-oil/crude-oil-outer-corner.png",
+        picture = "__water-as-a-resource__/graphics/terrain/crude-oil/crude-oil-outer-corner.png",
         count = 6
       },
       side = {
-        picture = "__WaterAsAResource__/graphics/terrain/crude-oil/crude-oil-side.png",
+        picture = "__water-as-a-resource__/graphics/terrain/crude-oil/crude-oil-side.png",
         count = 6
       },
       u_transition = {
-        picture = "__WaterAsAResource__/graphics/terrain/crude-oil/crude-oil-u.png",
+        picture = "__water-as-a-resource__/graphics/terrain/crude-oil/crude-oil-u.png",
         count = 1
       },
       o_transition = {
-        picture = "__WaterAsAResource__/graphics/terrain/crude-oil/crude-oil-o.png",
+        picture = "__water-as-a-resource__/graphics/terrain/crude-oil/crude-oil-o.png",
         count = 1
       }
     },
@@ -83,39 +83,39 @@ data:extend(
       empty_transitions=true,
       main = {
         {
-          picture = "__WaterAsAResource__/graphics/terrain/crude-oil-deep/crude-oil-deep1.png",
+          picture = "__water-as-a-resource__/graphics/terrain/crude-oil-deep/crude-oil-deep1.png",
           count = 8,
           size = 1
         },
         {
-          picture = "__WaterAsAResource__/graphics/terrain/crude-oil-deep/crude-oil-deep2.png",
+          picture = "__water-as-a-resource__/graphics/terrain/crude-oil-deep/crude-oil-deep2.png",
           count = 8,
           size = 2
         },
         {
-          picture = "__WaterAsAResource__/graphics/terrain/crude-oil-deep/crude-oil-deep4.png",
+          picture = "__water-as-a-resource__/graphics/terrain/crude-oil-deep/crude-oil-deep4.png",
           count = 8,
           size = 4
         }
       },
       inner_corner = {
-        picture = "__WaterAsAResource__/graphics/terrain/crude-oil-deep/crude-oil-deep-inner-corner.png",
+        picture = "__water-as-a-resource__/graphics/terrain/crude-oil-deep/crude-oil-deep-inner-corner.png",
         count = 6
       },
       outer_corner = {
-        picture = "__WaterAsAResource__/graphics/terrain/crude-oil-deep/crude-oil-deep-outer-corner.png",
+        picture = "__water-as-a-resource__/graphics/terrain/crude-oil-deep/crude-oil-deep-outer-corner.png",
         count = 6
       },
       side = {
-        picture = "__WaterAsAResource__/graphics/terrain/crude-oil-deep/crude-oil-deep-side.png",
+        picture = "__water-as-a-resource__/graphics/terrain/crude-oil-deep/crude-oil-deep-side.png",
         count = 6
       },
       u_transition = {
-        picture = "__WaterAsAResource__/graphics/terrain/crude-oil-deep/crude-oil-deep-u.png",
+        picture = "__water-as-a-resource__/graphics/terrain/crude-oil-deep/crude-oil-deep-u.png",
         count = 1
       },
       o_transition = {
-        picture = "__WaterAsAResource__/graphics/terrain/crude-oil-deep/crude-oil-deep-o.png",
+        picture = "__water-as-a-resource__/graphics/terrain/crude-oil-deep/crude-oil-deep-o.png",
         count = 1
       }
     },

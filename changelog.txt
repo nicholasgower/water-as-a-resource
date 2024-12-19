@@ -282,7 +282,7 @@ Date: 12. 03. 2019
     - Offshore Drain / Pump Item Icons updated to easily tell them apart
   Bug Fix(s):
     - Reference Global.NewInstall not NewInstall so OP/OD's remove on reload of save game
-    - OD's get replaced on mod update to update the entity saved in global.ODLocate
+    - OD's get replaced on mod update to update the entity saved in storage.ODLocate
     - OP's get replaced on mod update to update the entity and prevent fluid mixing issues, offshore pump gets refunded
 ---------------------------------------------------------------------------------------------------
 Version: 0.5.16

@@ -10,46 +10,46 @@ require("fluidlist")
 -- GLOBAL VARIABLES
 
 function Globals()
-	if not global.WaterGlobalArea then global.WaterGlobalArea = {} end
-	if not global.OPLocate then global.OPLocate = {} end
-	if not global.ODLocate then global.ODLocate = {} end
-	if not global.LandFill then global.LandFill = {} end
-	if not global.FluidProducers then global.FluidProducers = {} end
-	if not global.PlayerForces then global.PlayerForces = {} end
-	if not global.FluidFlow then global.FluidFlow = {} end
-	if not global.ScanOffshoresQueue then global.ScanOffshoresQueue = {} end
+	if not storage.WaterGlobalArea then storage.WaterGlobalArea = {} end
+	if not storage.OPLocate then storage.OPLocate = {} end
+	if not storage.ODLocate then storage.ODLocate = {} end
+	if not storage.LandFill then storage.LandFill = {} end
+	if not storage.FluidProducers then storage.FluidProducers = {} end
+	if not storage.PlayerForces then storage.PlayerForces = {} end
+	if not storage.FluidFlow then storage.FluidFlow = {} end
+	if not storage.ScanOffshoresQueue then storage.ScanOffshoresQueue = {} end
 	
-	if not global.WGAID then global.WGAID = 0 end
-	if not global.Type then global.Type = 0 end
-	-- if not global.WaterFlow then global.WaterFlow = 0 end
-	-- if not global.CrudeFlow then global.CrudeFlow = 0 end
-	-- if not global.LastWaterFlow then global.LastWaterFlow = 0 end
-	-- if not global.LastCrudeFlow then global.LastCrudeFlow = 0 end
-	if not global.WaterBodyType then global.WaterBodyType = 0 end
-	if not global.ActiveOPs then global.ActiveOPs = 0 end
-	if not global.ActiveODs then global.ActiveODs = 0 end
-	if not global.PercentChange then global.PercentChange = 0 end
-	if not global.InstallTick then global.InstallTick = 0 end
-	if not global.LoopTick then global.LoopTick = 0 end
+	if not storage.WGAID then storage.WGAID = 0 end
+	if not storage.Type then storage.Type = 0 end
+	-- if not storage.WaterFlow then storage.WaterFlow = 0 end
+	-- if not storage.CrudeFlow then storage.CrudeFlow = 0 end
+	-- if not storage.LastWaterFlow then storage.LastWaterFlow = 0 end
+	-- if not storage.LastCrudeFlow then storage.LastCrudeFlow = 0 end
+	if not storage.WaterBodyType then storage.WaterBodyType = 0 end
+	if not storage.ActiveOPs then storage.ActiveOPs = 0 end
+	if not storage.ActiveODs then storage.ActiveODs = 0 end
+	if not storage.PercentChange then storage.PercentChange = 0 end
+	if not storage.InstallTick then storage.InstallTick = 0 end
+	if not storage.LoopTick then storage.LoopTick = 0 end
 
-	if not global.Added then global.Added = true end
-	if not global.NewInstall then global.NewInstall = true end
-	if not global.ITMessage then global.ITMessage = true end
-	if not global.remotetrigger then global.remotetrigger = false end
-	if not global.ODRemoved then global.ODRemoved = false end
-	if not global.EnableNextOffshore then global.EnableNextOffshore = false end
+	if not storage.Added then storage.Added = true end
+	if not storage.NewInstall then storage.NewInstall = true end
+	if not storage.ITMessage then storage.ITMessage = true end
+	if not storage.remotetrigger then storage.remotetrigger = false end
+	if not storage.ODRemoved then storage.ODRemoved = false end
+	if not storage.EnableNextOffshore then storage.EnableNextOffshore = false end
 end
 
 function LinkGlobals()
-	-- WaterFlow = global.WaterFlow
-	-- CrudeFlow = global.CrudeFlow
-	-- LastWaterFlow = global.LastWaterFlow
-	-- LastCrudeFlow = global.LastCrudeFlow
-	WaterBodyType = global.WaterBodyType
-	ActiveOPs = global.ActiveOPs
-	ActiveODs = global.ActiveODs
-	PercentChange = global.PercentChange
-	WGAID = global.WGAID
+	-- WaterFlow = storage.WaterFlow
+	-- CrudeFlow = storage.CrudeFlow
+	-- LastWaterFlow = storage.LastWaterFlow
+	-- LastCrudeFlow = storage.LastCrudeFlow
+	WaterBodyType = storage.WaterBodyType
+	ActiveOPs = storage.ActiveOPs
+	ActiveODs = storage.ActiveODs
+	PercentChange = storage.PercentChange
+	WGAID = storage.WGAID
 end
 
 -- EVENT DEPENDANT FUNCTIONS
@@ -193,18 +193,18 @@ function IsWater(SearchPosition, surface)
 end
 
 function GlobalWaterArea()
-	if #global.WaterGlobalArea == 0 then
-		if global.Type == 1 then
+	if #storage.WaterGlobalArea == 0 then
+		if storage.Type == 1 then
 			CreateWaterArea()	-- Create WaterArea
-			player = global.OPLocate[1]["entity"].last_user
-			global.OPLocate[1]["WA"] = global.WGAID			-- Assign Offshore Pump 1 to WaterArea 1 - If RemoveWAOPD Active then Assign WGAID
-			global.WaterGlobalArea[1]["OPs"][1] = {["force"] = global.OPLocate[1]["force"], ["count"] = 1}
-			global.WaterGlobalArea[1]["OPsA"][1] = {["force"] = global.OPLocate[1]["force"], ["count"] = 0}
-			global.WaterGlobalArea[1]["MapMarker"][1] = {["force"] = global.OPLocate[1]["force"], ["placed"] = false,["icon"] = nil}
-			global.WaterGlobalArea[1]["Surface"] = global.OPLocate[1]["entity"].surface
+			player = storage.OPLocate[1]["entity"].last_user
+			storage.OPLocate[1]["WA"] = storage.WGAID			-- Assign Offshore Pump 1 to WaterArea 1 - If RemoveWAOPD Active then Assign WGAID
+			storage.WaterGlobalArea[1]["OPs"][1] = {["force"] = storage.OPLocate[1]["force"], ["count"] = 1}
+			storage.WaterGlobalArea[1]["OPsA"][1] = {["force"] = storage.OPLocate[1]["force"], ["count"] = 0}
+			storage.WaterGlobalArea[1]["MapMarker"][1] = {["force"] = storage.OPLocate[1]["force"], ["placed"] = false,["icon"] = nil}
+			storage.WaterGlobalArea[1]["Surface"] = storage.OPLocate[1]["entity"].surface
 			AssignFluid()
-			if global.WaterGlobalArea[1]["ToSearch"] == nil then
-				game.forces[player.force.name].print(string.format("%s created, with %sL of %s.", global.WaterGlobalArea[1]["WtrName"], comma_value(global.WaterGlobalArea[1]["AmountWtr"]), global.WaterGlobalArea[1]["FluidType"]))
+			if storage.WaterGlobalArea[1]["ToSearch"] == nil then
+				game.forces[player.force.name].print(string.format("%s created, with %sL of %s.", storage.WaterGlobalArea[1]["WtrName"], comma_value(storage.WaterGlobalArea[1]["AmountWtr"]), storage.WaterGlobalArea[1]["FluidType"]))
 				a = 1
 				MapMarker(a)
 				return "GWA-Complete"
@@ -212,34 +212,34 @@ function GlobalWaterArea()
 				game.players[player.name].print("FluidArea being scanned, please wait for assignment.")
 				return "GWA-ToSearch"
 			end
-		elseif global.Type == 2 then
-			local x = global.ODLocate[1]["position"]["x"]
-			local y = global.ODLocate[1]["position"]["y"]
-			surface = global.ODLocate[1]["surface"].name
-			local dir = global.ODLocate[1]["direction"]
-			player = global.ODLocate[1]["entity"].last_user
+		elseif storage.Type == 2 then
+			local x = storage.ODLocate[1]["position"]["x"]
+			local y = storage.ODLocate[1]["position"]["y"]
+			surface = storage.ODLocate[1]["surface"].name
+			local dir = storage.ODLocate[1]["direction"]
+			player = storage.ODLocate[1]["entity"].last_user
 			if dir == 0 then -- North
-				SearchPosition = {x = global.ODLocate[1]["position"]["x"], y = global.ODLocate[1]["position"]["y"]+1}
+				SearchPosition = {x = storage.ODLocate[1]["position"]["x"], y = storage.ODLocate[1]["position"]["y"]+1}
 			elseif dir == 2 then -- East
-				SearchPosition = {x = global.ODLocate[1]["position"]["x"]-1, y = global.ODLocate[1]["position"]["y"]}
+				SearchPosition = {x = storage.ODLocate[1]["position"]["x"]-1, y = storage.ODLocate[1]["position"]["y"]}
 			elseif dir == 4 then -- South
-				SearchPosition = {x = global.ODLocate[1]["position"]["x"], y = global.ODLocate[1]["position"]["y"]-1}
+				SearchPosition = {x = storage.ODLocate[1]["position"]["x"], y = storage.ODLocate[1]["position"]["y"]-1}
 			elseif dir == 6 then -- West
-				SearchPosition = {x = global.ODLocate[1]["position"]["x"]+1, y = global.ODLocate[1]["position"]["y"]}
+				SearchPosition = {x = storage.ODLocate[1]["position"]["x"]+1, y = storage.ODLocate[1]["position"]["y"]}
 			end
-			local WaterCheck = global.ODLocate[1]["surface"].get_tile(x,y).name
+			local WaterCheck = storage.ODLocate[1]["surface"].get_tile(x,y).name
 			if IsWater(SearchPosition,surface) == false then
 				if WaterCheck == "water" or WaterCheck == "deepwater" then
 					CreateWaterArea()
-					global.ODLocate[1]["WA"] = 1
-					global.WaterGlobalArea[1]["ODs"][1] = {["force"] = global.ODLocate[1]["force"], ["count"] = 1}
-					global.WaterGlobalArea[1]["ODsA"][1] = {["force"] = global.ODLocate[1]["force"], ["count"] = 0}
-					global.WaterGlobalArea[1]["WtrAdd"][1] = {["force"] = global.ODLocate[1]["force"], ["count"] = 0}
-					global.WaterGlobalArea[1]["MapMarker"][1] = {["force"] = global.ODLocate[1]["force"], ["placed"] = false,["icon"] = nil}
-					global.WaterGlobalArea[1]["Surface"] = global.ODLocate[1]["entity"].surface
+					storage.ODLocate[1]["WA"] = 1
+					storage.WaterGlobalArea[1]["ODs"][1] = {["force"] = storage.ODLocate[1]["force"], ["count"] = 1}
+					storage.WaterGlobalArea[1]["ODsA"][1] = {["force"] = storage.ODLocate[1]["force"], ["count"] = 0}
+					storage.WaterGlobalArea[1]["WtrAdd"][1] = {["force"] = storage.ODLocate[1]["force"], ["count"] = 0}
+					storage.WaterGlobalArea[1]["MapMarker"][1] = {["force"] = storage.ODLocate[1]["force"], ["placed"] = false,["icon"] = nil}
+					storage.WaterGlobalArea[1]["Surface"] = storage.ODLocate[1]["entity"].surface
 					AssignFluid()
-					if global.WaterGlobalArea[1]["ToSearch"] == nil then
-						game.forces[player.force.name].print(string.format("%s created, with %sL of %s.", global.WaterGlobalArea[1]["WtrName"], comma_value(global.WaterGlobalArea[1]["AmountWtr"]), "water"))
+					if storage.WaterGlobalArea[1]["ToSearch"] == nil then
+						game.forces[player.force.name].print(string.format("%s created, with %sL of %s.", storage.WaterGlobalArea[1]["WtrName"], comma_value(storage.WaterGlobalArea[1]["AmountWtr"]), "water"))
 						a = 1
 						MapMarker(a)
 						return "GWA-Complete"
@@ -249,18 +249,18 @@ function GlobalWaterArea()
 					end
 				else
 					game.players[player.name].print("Area not suitable for Offshore Drain.")
-					global.ODLocate[1]["entity"].destroy()
-					table.remove(global.ODLocate)
+					storage.ODLocate[1]["entity"].destroy()
+					table.remove(storage.ODLocate)
 					game.players[player.name].insert{name="offshore-drain",count=1}
-					global.ODRemoved = true
+					storage.ODRemoved = true
 					return "GWA-NotSuitable"
 				end
 			else
 				game.players[player.name].print("Not On Edge Of Lake.")
-				global.ODLocate[1]["entity"].destroy()
-				table.remove(global.ODLocate)
+				storage.ODLocate[1]["entity"].destroy()
+				table.remove(storage.ODLocate)
 				game.players[player.name].insert{name="offshore-drain",count=1}
-				global.ODRemoved = true
+				storage.ODRemoved = true
 				return "GWA-NotEdge"
 			end
 		end
@@ -272,56 +272,56 @@ end
 function CompareAssign()
 	OffShoreCompareArea()
 	if FoundExt == true then 						-- IF No Offshores Found then New Area
-		if global.Type == 1 then
+		if storage.Type == 1 then
 			CreateWaterArea()
-			player = global.OPLocate[#global.OPLocate]["entity"].last_user
-			force = global.OPLocate[#global.OPLocate]["entity"].force.name
-			global.OPLocate[#global.OPLocate]["WA"] = global.WaterGlobalArea[#global.WaterGlobalArea]["WGAID"]
-			global.WaterGlobalArea[#global.WaterGlobalArea]["OPs"][1] = {["force"] = global.OPLocate[#global.OPLocate]["force"], ["count"] = 1}
-			global.WaterGlobalArea[#global.WaterGlobalArea]["OPsA"][1] = {["force"] = global.OPLocate[#global.OPLocate]["force"], ["count"] = 0}
-			global.WaterGlobalArea[#global.WaterGlobalArea]["MapMarker"][1] = {["force"] = global.OPLocate[#global.OPLocate]["force"], ["placed"] = false,["icon"] = nil}
-			global.WaterGlobalArea[#global.WaterGlobalArea]["Surface"] = global.OPLocate[#global.OPLocate]["entity"].surface
+			player = storage.OPLocate[#storage.OPLocate]["entity"].last_user
+			force = storage.OPLocate[#storage.OPLocate]["entity"].force.name
+			storage.OPLocate[#storage.OPLocate]["WA"] = storage.WaterGlobalArea[#storage.WaterGlobalArea]["WGAID"]
+			storage.WaterGlobalArea[#storage.WaterGlobalArea]["OPs"][1] = {["force"] = storage.OPLocate[#storage.OPLocate]["force"], ["count"] = 1}
+			storage.WaterGlobalArea[#storage.WaterGlobalArea]["OPsA"][1] = {["force"] = storage.OPLocate[#storage.OPLocate]["force"], ["count"] = 0}
+			storage.WaterGlobalArea[#storage.WaterGlobalArea]["MapMarker"][1] = {["force"] = storage.OPLocate[#storage.OPLocate]["force"], ["placed"] = false,["icon"] = nil}
+			storage.WaterGlobalArea[#storage.WaterGlobalArea]["Surface"] = storage.OPLocate[#storage.OPLocate]["entity"].surface
 			AssignFluid()
-			if global.WaterGlobalArea[#global.WaterGlobalArea]["ToSearch"] == nil then
-				game.forces[force].print(string.format("%s created, with %sL of %s.", global.WaterGlobalArea[#global.WaterGlobalArea]["WtrName"], comma_value(global.WaterGlobalArea[#global.WaterGlobalArea]["AmountWtr"]), global.WaterGlobalArea[#global.WaterGlobalArea]["FluidType"]))
-				a = #global.WaterGlobalArea
-				MapMarker(#global.WaterGlobalArea)
+			if storage.WaterGlobalArea[#storage.WaterGlobalArea]["ToSearch"] == nil then
+				game.forces[force].print(string.format("%s created, with %sL of %s.", storage.WaterGlobalArea[#storage.WaterGlobalArea]["WtrName"], comma_value(storage.WaterGlobalArea[#storage.WaterGlobalArea]["AmountWtr"]), storage.WaterGlobalArea[#storage.WaterGlobalArea]["FluidType"]))
+				a = #storage.WaterGlobalArea
+				MapMarker(#storage.WaterGlobalArea)
 				return "CA-Complete"
 			else
 				game.players[player.name].print("FluidArea being scanned, please wait for assignment.")
 				return "CA-ToSearch"
 			end
 			FoundExt = false
-		elseif global.Type == 2 then
-			local x = global.ODLocate[#global.ODLocate]["position"]["x"]
-			local y = global.ODLocate[#global.ODLocate]["position"]["y"]
-			surface = global.ODLocate[#global.ODLocate]["surface"].name
-			local dir = global.ODLocate[#global.ODLocate]["direction"]
-			player = global.ODLocate[#global.ODLocate]["entity"].last_user
+		elseif storage.Type == 2 then
+			local x = storage.ODLocate[#storage.ODLocate]["position"]["x"]
+			local y = storage.ODLocate[#storage.ODLocate]["position"]["y"]
+			surface = storage.ODLocate[#storage.ODLocate]["surface"].name
+			local dir = storage.ODLocate[#storage.ODLocate]["direction"]
+			player = storage.ODLocate[#storage.ODLocate]["entity"].last_user
 			if dir == 0 then -- North
-				SearchPosition = {x = global.ODLocate[#global.ODLocate]["position"]["x"], y = global.ODLocate[#global.ODLocate]["position"]["y"]+1}
+				SearchPosition = {x = storage.ODLocate[#storage.ODLocate]["position"]["x"], y = storage.ODLocate[#storage.ODLocate]["position"]["y"]+1}
 			elseif dir == 2 then -- East
-				SearchPosition = {x = global.ODLocate[#global.ODLocate]["position"]["x"]-1, y = global.ODLocate[#global.ODLocate]["position"]["y"]}
+				SearchPosition = {x = storage.ODLocate[#storage.ODLocate]["position"]["x"]-1, y = storage.ODLocate[#storage.ODLocate]["position"]["y"]}
 			elseif dir == 4 then -- South
-				SearchPosition = {x = global.ODLocate[#global.ODLocate]["position"]["x"], y = global.ODLocate[#global.ODLocate]["position"]["y"]-1}
+				SearchPosition = {x = storage.ODLocate[#storage.ODLocate]["position"]["x"], y = storage.ODLocate[#storage.ODLocate]["position"]["y"]-1}
 			elseif dir == 6 then -- West
-				SearchPosition = {x = global.ODLocate[#global.ODLocate]["position"]["x"]+1, y = global.ODLocate[#global.ODLocate]["position"]["y"]+1}
+				SearchPosition = {x = storage.ODLocate[#storage.ODLocate]["position"]["x"]+1, y = storage.ODLocate[#storage.ODLocate]["position"]["y"]+1}
 			end
-			local WaterCheck = global.ODLocate[#global.ODLocate]["surface"].get_tile(x,y).name
+			local WaterCheck = storage.ODLocate[#storage.ODLocate]["surface"].get_tile(x,y).name
 			if IsWater(SearchPosition,surface) == false then
 				if WaterCheck == "water" or WaterCheck == "deepwater" then
 					CreateWaterArea()
-					global.ODLocate[#global.ODLocate]["WA"] = global.WaterGlobalArea[#global.WaterGlobalArea]["WGAID"]
-					global.WaterGlobalArea[#global.WaterGlobalArea]["ODs"][1] = {["force"] = global.ODLocate[#global.ODLocate]["force"], ["count"] = 1}
-					global.WaterGlobalArea[#global.WaterGlobalArea]["ODsA"][1] = {["force"] = global.ODLocate[#global.ODLocate]["force"], ["count"] = 0}
-					global.WaterGlobalArea[#global.WaterGlobalArea]["WtrAdd"][1] = {["force"] = global.ODLocate[#global.ODLocate]["force"], ["count"] = 0}
-					global.WaterGlobalArea[#global.WaterGlobalArea]["MapMarker"][1] = {["force"] = global.ODLocate[#global.ODLocate]["force"], ["placed"] = false,["icon"] = nil}
-					-- global.WaterGlobalArea[#global.WaterGlobalArea]["ODs"] = 1
-					global.WaterGlobalArea[#global.WaterGlobalArea]["Surface"] = global.ODLocate[#global.ODLocate]["entity"].surface
+					storage.ODLocate[#storage.ODLocate]["WA"] = storage.WaterGlobalArea[#storage.WaterGlobalArea]["WGAID"]
+					storage.WaterGlobalArea[#storage.WaterGlobalArea]["ODs"][1] = {["force"] = storage.ODLocate[#storage.ODLocate]["force"], ["count"] = 1}
+					storage.WaterGlobalArea[#storage.WaterGlobalArea]["ODsA"][1] = {["force"] = storage.ODLocate[#storage.ODLocate]["force"], ["count"] = 0}
+					storage.WaterGlobalArea[#storage.WaterGlobalArea]["WtrAdd"][1] = {["force"] = storage.ODLocate[#storage.ODLocate]["force"], ["count"] = 0}
+					storage.WaterGlobalArea[#storage.WaterGlobalArea]["MapMarker"][1] = {["force"] = storage.ODLocate[#storage.ODLocate]["force"], ["placed"] = false,["icon"] = nil}
+					-- storage.WaterGlobalArea[#storage.WaterGlobalArea]["ODs"] = 1
+					storage.WaterGlobalArea[#storage.WaterGlobalArea]["Surface"] = storage.ODLocate[#storage.ODLocate]["entity"].surface
 					AssignFluid()
-					if global.WaterGlobalArea[#global.WaterGlobalArea]["ToSearch"] == nil then
-						game.forces[player.force.name].print(string.format("%s created, with %sL of %s.", global.WaterGlobalArea[#global.WaterGlobalArea]["WtrName"], comma_value(global.WaterGlobalArea[#global.WaterGlobalArea]["AmountWtr"]), "water"))
-						a = #global.WaterGlobalArea
+					if storage.WaterGlobalArea[#storage.WaterGlobalArea]["ToSearch"] == nil then
+						game.forces[player.force.name].print(string.format("%s created, with %sL of %s.", storage.WaterGlobalArea[#storage.WaterGlobalArea]["WtrName"], comma_value(storage.WaterGlobalArea[#storage.WaterGlobalArea]["AmountWtr"]), "water"))
+						a = #storage.WaterGlobalArea
 						MapMarker(a)
 						return "CA-Complete"
 					else
@@ -330,19 +330,19 @@ function CompareAssign()
 					end
 				else
 					game.players[player.name].print("Area not suitable for Offshore Drain.")
-					global.ODLocate[#global.ODLocate]["entity"].destroy()
-					table.remove(global.ODLocate,#global.ODLocate)
+					storage.ODLocate[#storage.ODLocate]["entity"].destroy()
+					table.remove(storage.ODLocate,#storage.ODLocate)
 					game.players[player.name].insert{name="offshore-drain",count=1}
-					global.ODRemoved = true
+					storage.ODRemoved = true
 					return "CA-NotSuitable"
 				end
 				FoundExt = false
 			else
 				game.players[player.name].print("Not On Edge of Lake.")
-				global.ODLocate[#global.ODLocate]["entity"].destroy()
-				table.remove(global.ODLocate,#global.ODLocate)
+				storage.ODLocate[#storage.ODLocate]["entity"].destroy()
+				table.remove(storage.ODLocate,#storage.ODLocate)
 				game.players[player.name].insert{name="offshore-drain",count=1}
-				global.ODRemoved = true
+				storage.ODRemoved = true
 				return "CA-NotEdge"
 			end
 			FoundExt = false
@@ -351,10 +351,10 @@ function CompareAssign()
 end
 
 function CreateWaterArea()
-	global.WaterGlobalArea[#global.WaterGlobalArea+1] = {["WGAID"] = 0, ["WtrName"] = "None",["Surface"] = nil, ["ToSearch"] = nil, ["HasSearched"] = nil,["LoopCount"] = 0, ["AmountWtr"] = 0,["AmountBonusValue"] = 0,["RegenAmount"] = 0,["Depleted"] = 0,["ShallowWater"] = 0, ["DeepWater"] = 0,["ShallowWater-Shallow"] = 0,["ShallowWater-Mud"] = 0,["Percent"] = 0,["PercentPrev"] = 0,["Fired50"] = false, ["Fired75"] = false, ["Fired90"] = false, ["Fired95"] = false, ["Fired97"] = false,["Fired98"] = false,["Fired99"] = false,["RandPercent"] = 79, ["BTF"] = 0,["BTFE"] = 0,["Below80"] = 0, ["WaterRepArea"] = {},["WaterEdgeArea"] = {},["WaterEdgeAreaY"] = {},["WaterEdgeAreaX"] = {},["MinX"] = 0, ["MaxX"] = 0, ["MinY"] = 0, ["MaxY"] = 0, ["Hdif"] = 0, ["Vdif"] = 0, ["Hyp"] = 0, ["TilesSet"] = "N",["OPs"] = {},["OPsA"] = {},["ODs"] = {}, ["ODsA"] = {}, ["WtrUsed"] = 0,["WtrAdd"] = {}, ["WaterBodyType"] = 0, ["FluidType"] = nil, ["MapMarker"] = {}, ["MapMarkerPlaced"] = false}
-	a = #global.WaterGlobalArea
-	global.WGAID = global.WGAID + 1
-	global.WaterGlobalArea[a]["WGAID"] = global.WGAID
+	storage.WaterGlobalArea[#storage.WaterGlobalArea+1] = {["WGAID"] = 0, ["WtrName"] = "None",["Surface"] = nil, ["ToSearch"] = nil, ["HasSearched"] = nil,["LoopCount"] = 0, ["AmountWtr"] = 0,["AmountBonusValue"] = 0,["RegenAmount"] = 0,["Depleted"] = 0,["ShallowWater"] = 0, ["DeepWater"] = 0,["ShallowWater-Shallow"] = 0,["ShallowWater-Mud"] = 0,["Percent"] = 0,["PercentPrev"] = 0,["Fired50"] = false, ["Fired75"] = false, ["Fired90"] = false, ["Fired95"] = false, ["Fired97"] = false,["Fired98"] = false,["Fired99"] = false,["RandPercent"] = 79, ["BTF"] = 0,["BTFE"] = 0,["Below80"] = 0, ["WaterRepArea"] = {},["WaterEdgeArea"] = {},["WaterEdgeAreaY"] = {},["WaterEdgeAreaX"] = {},["MinX"] = 0, ["MaxX"] = 0, ["MinY"] = 0, ["MaxY"] = 0, ["Hdif"] = 0, ["Vdif"] = 0, ["Hyp"] = 0, ["TilesSet"] = "N",["OPs"] = {},["OPsA"] = {},["ODs"] = {}, ["ODsA"] = {}, ["WtrUsed"] = 0,["WtrAdd"] = {}, ["WaterBodyType"] = 0, ["FluidType"] = nil, ["MapMarker"] = {}, ["MapMarkerPlaced"] = false}
+	a = #storage.WaterGlobalArea
+	storage.WGAID = storage.WGAID + 1
+	storage.WaterGlobalArea[a]["WGAID"] = storage.WGAID
 	GetWaterArea(a)
 	CalculatedWaterTotal(a)
 	waterbodies.WtrName(a)
@@ -363,18 +363,18 @@ function CreateWaterArea()
 end
 
 function AssignFluid()	-- Assign Fluid On New WaterArea Creation
-	for a = 1, #global.WaterGlobalArea, 1 do
-		if global.WaterGlobalArea[a]["FluidType"] == nil then
-			if global.Type == 1 then
-				for b = 1, #global.OPLocate, 1 do
-					if global.OPLocate[b]["WA"] == global.WaterGlobalArea[a]["WGAID"] then
-						global.WaterGlobalArea[a]["FluidType"] = global.OPLocate[b]["tile"]
+	for a = 1, #storage.WaterGlobalArea, 1 do
+		if storage.WaterGlobalArea[a]["FluidType"] == nil then
+			if storage.Type == 1 then
+				for b = 1, #storage.OPLocate, 1 do
+					if storage.OPLocate[b]["WA"] == storage.WaterGlobalArea[a]["WGAID"] then
+						storage.WaterGlobalArea[a]["FluidType"] = storage.OPLocate[b]["tile"]
 					end
 				end
-			elseif global.Type == 2 then
-				for b = 1, #global.ODLocate, 1 do
-					if global.ODLocate[b]["WA"] == global.WaterGlobalArea[a]["WGAID"] then
-						global.WaterGlobalArea[a]["FluidType"] = global.ODLocate[b]["tile"]
+			elseif storage.Type == 2 then
+				for b = 1, #storage.ODLocate, 1 do
+					if storage.ODLocate[b]["WA"] == storage.WaterGlobalArea[a]["WGAID"] then
+						storage.WaterGlobalArea[a]["FluidType"] = storage.ODLocate[b]["tile"]
 					end
 				end
 			end
@@ -383,21 +383,21 @@ function AssignFluid()	-- Assign Fluid On New WaterArea Creation
 end
 
 function OffShoreCompareArea()
-	if global.Type == 1 then
-		NuOPs = #global.OPLocate
-		OPS = global.OPLocate
+	if storage.Type == 1 then
+		NuOPs = #storage.OPLocate
+		OPS = storage.OPLocate
 		NewOPPosX = OPS[NuOPs]["position"]["x"] - 0.5
 		NewOPPosY = OPS[NuOPs]["position"]["y"] - 0.5
 		player = OPS[NuOPs]["entity"].last_user
-	elseif global.Type == 2 then
-		NuOPs = #global.ODLocate
-		OPS = global.ODLocate
+	elseif storage.Type == 2 then
+		NuOPs = #storage.ODLocate
+		OPS = storage.ODLocate
 		NewOPPosX = OPS[NuOPs]["position"]["x"] - 0.5
 		NewOPPosY = OPS[NuOPs]["position"]["y"] - 0.5
 		player = OPS[NuOPs]["entity"].last_user
 	end
-	local NuWAs = #global.WaterGlobalArea
-	local WA = global.WaterGlobalArea
+	local NuWAs = #storage.WaterGlobalArea
+	local WA = storage.WaterGlobalArea
 	FoundInt = false
 	FoundExt = true
 	for a = NuWAs, 1, -1 do 	-- FOR Each WATERAREA
@@ -421,7 +421,7 @@ function OffShoreCompareArea()
 			end
 		end
 		if FoundInt == true then -- FOUND IN THIS WATERAREA
-			if global.Type == 1 then
+			if storage.Type == 1 then
 				OPS[NuOPs]["WA"] = WA[a]["WGAID"]
 				OPForce = OPS[NuOPs]["force"]
 				PumpForceNotFound = true
@@ -454,7 +454,7 @@ function OffShoreCompareArea()
 					end
 				end
 				FoundInt = false
-			elseif global.Type == 2 then
+			elseif storage.Type == 2 then
 				OPS[NuOPs]["WA"] = WA[a]["WGAID"]
 				OPForce = OPS[NuOPs]["force"]
 				DrainForceNotFound = true
@@ -498,43 +498,43 @@ return FoundExt
 end
 
 function GetWaterArea(a) 										-- Get Water Area Function
-	if global.Type == 1 then
-		position = global.OPLocate[#global.OPLocate]["position"]
-		surface = global.OPLocate[#global.OPLocate]["surface"].name
-		direction = global.OPLocate[#global.OPLocate]["direction"]
-		WaterGArea = global.WaterGlobalArea[#global.WaterGlobalArea]
-		WaterRepArea = global.WaterGlobalArea[#global.WaterGlobalArea]["WaterRepArea"]
-		WaterEdgeArea = global.WaterGlobalArea[#global.WaterGlobalArea]["WaterEdgeArea"]
+	if storage.Type == 1 then
+		position = storage.OPLocate[#storage.OPLocate]["position"]
+		surface = storage.OPLocate[#storage.OPLocate]["surface"].name
+		direction = storage.OPLocate[#storage.OPLocate]["direction"]
+		WaterGArea = storage.WaterGlobalArea[#storage.WaterGlobalArea]
+		WaterRepArea = storage.WaterGlobalArea[#storage.WaterGlobalArea]["WaterRepArea"]
+		WaterEdgeArea = storage.WaterGlobalArea[#storage.WaterGlobalArea]["WaterEdgeArea"]
 		WASearchQueue = {position}
 		WASearched = {}
 		SearchAmount = settings.global["fluid-area-start-area"].value
-		FA = global.WaterGlobalArea[a]
+		FA = storage.WaterGlobalArea[a]
 		PlayerMaxArea = settings.global["FluidArea-MaxFluidAreaSize"].value
-		TotalArea = global.WaterGlobalArea[a]["ShallowWater"] + global.WaterGlobalArea[a]["DeepWater"]
-	elseif global.Type == 2 then
-		position = global.ODLocate[#global.ODLocate]["position"]
-		surface = global.ODLocate[#global.ODLocate]["surface"].name
-		direction = global.ODLocate[#global.ODLocate]["direction"]
-		WaterGArea = global.WaterGlobalArea[#global.WaterGlobalArea]
-		WaterRepArea = global.WaterGlobalArea[#global.WaterGlobalArea]["WaterRepArea"]
-		WaterEdgeArea = global.WaterGlobalArea[#global.WaterGlobalArea]["WaterEdgeArea"]
+		TotalArea = storage.WaterGlobalArea[a]["ShallowWater"] + storage.WaterGlobalArea[a]["DeepWater"]
+	elseif storage.Type == 2 then
+		position = storage.ODLocate[#storage.ODLocate]["position"]
+		surface = storage.ODLocate[#storage.ODLocate]["surface"].name
+		direction = storage.ODLocate[#storage.ODLocate]["direction"]
+		WaterGArea = storage.WaterGlobalArea[#storage.WaterGlobalArea]
+		WaterRepArea = storage.WaterGlobalArea[#storage.WaterGlobalArea]["WaterRepArea"]
+		WaterEdgeArea = storage.WaterGlobalArea[#storage.WaterGlobalArea]["WaterEdgeArea"]
 		WASearchQueue = {position}
 		WASearched = {}
 		SearchAmount = settings.global["fluid-area-start-area"].value
-		FA = global.WaterGlobalArea[a]
+		FA = storage.WaterGlobalArea[a]
 		PlayerMaxArea = settings.global["FluidArea-MaxFluidAreaSize"].value
-		TotalArea = global.WaterGlobalArea[a]["ShallowWater"] + global.WaterGlobalArea[a]["DeepWater"]
-	elseif global.WaterGlobalArea[a]["ToSearch"] ~= nil then
-		WaterGArea = global.WaterGlobalArea[a]
-		WaterRepArea = global.WaterGlobalArea[a]["WaterRepArea"]
-		WaterEdgeArea = global.WaterGlobalArea[a]["WaterEdgeArea"]
-		WASearchQueue = global.WaterGlobalArea[a]["ToSearch"]
-		WASearched = global.WaterGlobalArea[a]["HasSearched"]
-		surface = global.WaterGlobalArea[a]["Surface"].name
+		TotalArea = storage.WaterGlobalArea[a]["ShallowWater"] + storage.WaterGlobalArea[a]["DeepWater"]
+	elseif storage.WaterGlobalArea[a]["ToSearch"] ~= nil then
+		WaterGArea = storage.WaterGlobalArea[a]
+		WaterRepArea = storage.WaterGlobalArea[a]["WaterRepArea"]
+		WaterEdgeArea = storage.WaterGlobalArea[a]["WaterEdgeArea"]
+		WASearchQueue = storage.WaterGlobalArea[a]["ToSearch"]
+		WASearched = storage.WaterGlobalArea[a]["HasSearched"]
+		surface = storage.WaterGlobalArea[a]["Surface"].name
 		SearchAmount = settings.global["FluidArea-Additional-Tiles-Per-Second"].value
 		PlayerMaxArea = settings.global["FluidArea-MaxFluidAreaSize"].value
-		FA = global.WaterGlobalArea[a]
-		TotalArea = global.WaterGlobalArea[a]["ShallowWater"] + global.WaterGlobalArea[a]["DeepWater"]
+		FA = storage.WaterGlobalArea[a]
+		TotalArea = storage.WaterGlobalArea[a]["ShallowWater"] + storage.WaterGlobalArea[a]["DeepWater"]
 	end
 	while #WASearchQueue > 0 and SearchAmount > 0 do
 		local SearchPosition = WASearchQueue[1]										-- Convert Offshore Pump Position into SearchPosition
@@ -595,13 +595,13 @@ function GetWaterArea(a) 										-- Get Water Area Function
 		game.print(#WASearchQueue)
 	end
 	if #WASearchQueue == 0 then
-		global.WaterGlobalArea[a]["ToSearch"] = nil
-		global.WaterGlobalArea[a]["HasSearched"] = nil
+		storage.WaterGlobalArea[a]["ToSearch"] = nil
+		storage.WaterGlobalArea[a]["HasSearched"] = nil
 		-- local wateredgeposition = {}
 		-- local wateredgepositionxtemp = {}
-		-- local wateredgepositionx = global.WaterGlobalArea[a]["WaterEdgeAreaX"]
+		-- local wateredgepositionx = storage.WaterGlobalArea[a]["WaterEdgeAreaX"]
 		-- local wateredgepositionytemp = {}
-		-- local wateredgepositiony = global.WaterGlobalArea[a]["WaterEdgeAreaY"]
+		-- local wateredgepositiony = storage.WaterGlobalArea[a]["WaterEdgeAreaY"]
 		-- local maxx = 0
 		-- local minx = 0
 		-- local maxy = 0
@@ -646,29 +646,29 @@ end
 function FluidAreaContinue(a)
 	GetWaterArea(a)
 	CalculatedWaterTotal(a)
-	global.WaterGlobalArea[a]["LoopCount"] = global.WaterGlobalArea[a]["LoopCount"] + 1
+	storage.WaterGlobalArea[a]["LoopCount"] = storage.WaterGlobalArea[a]["LoopCount"] + 1
 	local AlarmEnabled = settings.get_player_settings(game.players[1])["Alarms-Continuing-Search"].value
-	if global.WaterGlobalArea[a]["LoopCount"] == 20 and AlarmEnabled == true then
-		global.WaterGlobalArea[a]["LoopCount"] = 0
+	if storage.WaterGlobalArea[a]["LoopCount"] == 20 and AlarmEnabled == true then
+		storage.WaterGlobalArea[a]["LoopCount"] = 0
 		game.print(string.format("Still Scanning FluidArea %s", a))
 	end
-	if global.WaterGlobalArea[a]["ToSearch"] == nil then
-		global.WaterGlobalArea[a]["LoopCount"] = 0
+	if storage.WaterGlobalArea[a]["ToSearch"] == nil then
+		storage.WaterGlobalArea[a]["LoopCount"] = 0
 		waterbodies.WtrName(a)
-		game.print(string.format("%s created, with %sL of %s.", global.WaterGlobalArea[a]["WtrName"], comma_value(global.WaterGlobalArea[a]["AmountWtr"]), global.WaterGlobalArea[a]["FluidType"]))
+		game.print(string.format("%s created, with %sL of %s.", storage.WaterGlobalArea[a]["WtrName"], comma_value(storage.WaterGlobalArea[a]["AmountWtr"]), storage.WaterGlobalArea[a]["FluidType"]))
 		MapMarker(a)
 	end
 end
 
 function CalculatedWaterTotal(a)
-	local Shallow = global.WaterGlobalArea[a]["ShallowWater"]
-	local ShallowS = global.WaterGlobalArea[a]["ShallowWater-Shallow"]
-	local ShallowM = global.WaterGlobalArea[a]["ShallowWater-Mud"]
-	local Deep = global.WaterGlobalArea[a]["DeepWater"]
-	local ShallowShallow = global.WaterGlobalArea[a]["ShallowWater-Shallow"]
-	local ShallowMud = global.WaterGlobalArea[a]["ShallowWater-Mud"]
+	local Shallow = storage.WaterGlobalArea[a]["ShallowWater"]
+	local ShallowS = storage.WaterGlobalArea[a]["ShallowWater-Shallow"]
+	local ShallowM = storage.WaterGlobalArea[a]["ShallowWater-Mud"]
+	local Deep = storage.WaterGlobalArea[a]["DeepWater"]
+	local ShallowShallow = storage.WaterGlobalArea[a]["ShallowWater-Shallow"]
+	local ShallowMud = storage.WaterGlobalArea[a]["ShallowWater-Mud"]
 	local TotalArea = Shallow + ShallowS + ShallowM + Deep
-	global.WaterGlobalArea[a]["BTF"] = TotalArea
+	storage.WaterGlobalArea[a]["BTF"] = TotalArea
 	local WATER = settings.global["TileFluidAmount-Shallow"].value
 	local DEEPWATER = settings.global["TileFluidAmount-Deep"].value
 	local PBonus = 0.01 
@@ -682,42 +682,42 @@ function CalculatedWaterTotal(a)
 	local WaterBodyType = 0
 	if TotalArea < 4 then
 		--game.print("PUDDLE")
-		global.WaterGlobalArea[a]["AmountWtr"] = WaterTotal * PBonus
-		global.WaterGlobalArea[a]["AmountBonusValue"] = PBonus
-		global.WaterGlobalArea[a]["WtrName"] = "Puddle"
-		global.WaterGlobalArea[a]["WaterBodyType"] = 0
+		storage.WaterGlobalArea[a]["AmountWtr"] = WaterTotal * PBonus
+		storage.WaterGlobalArea[a]["AmountBonusValue"] = PBonus
+		storage.WaterGlobalArea[a]["WtrName"] = "Puddle"
+		storage.WaterGlobalArea[a]["WaterBodyType"] = 0
 	elseif TotalArea == 4 then
 		--game.print("WELL")
-		global.WaterGlobalArea[a]["AmountWtr"] = WaterTotal * WBonus
-		global.WaterGlobalArea[a]["AmountBonusValue"] = WBonus
-		global.WaterGlobalArea[a]["WtrName"] = "Well"
-		global.WaterGlobalArea[a]["WaterBodyType"] = 1
+		storage.WaterGlobalArea[a]["AmountWtr"] = WaterTotal * WBonus
+		storage.WaterGlobalArea[a]["AmountBonusValue"] = WBonus
+		storage.WaterGlobalArea[a]["WtrName"] = "Well"
+		storage.WaterGlobalArea[a]["WaterBodyType"] = 1
 	elseif TotalArea > 4 and TotalArea <= 200 then
 		--game.print("POND")
-		global.WaterGlobalArea[a]["AmountWtr"] = WaterTotal * PDBonus
-		global.WaterGlobalArea[a]["AmountBonusValue"] = PDBonus
-		global.WaterGlobalArea[a]["WtrName"] = "Pond"
-		global.WaterGlobalArea[a]["WaterBodyType"] = 2
+		storage.WaterGlobalArea[a]["AmountWtr"] = WaterTotal * PDBonus
+		storage.WaterGlobalArea[a]["AmountBonusValue"] = PDBonus
+		storage.WaterGlobalArea[a]["WtrName"] = "Pond"
+		storage.WaterGlobalArea[a]["WaterBodyType"] = 2
 	elseif TotalArea > 200 and TotalArea <= 6000 then
 		--game.print("LAKE")
-		global.WaterGlobalArea[a]["AmountWtr"] = WaterTotal * LBonus
-		global.WaterGlobalArea[a]["AmountBonusValue"] = LBonus
-		global.WaterGlobalArea[a]["WaterBodyType"] = 3
+		storage.WaterGlobalArea[a]["AmountWtr"] = WaterTotal * LBonus
+		storage.WaterGlobalArea[a]["AmountBonusValue"] = LBonus
+		storage.WaterGlobalArea[a]["WaterBodyType"] = 3
 	elseif TotalArea > 6000 and TotalArea <= 60000 then
 		--game.print("GREAT LAKE")
-		global.WaterGlobalArea[a]["AmountWtr"] = WaterTotal * GLBonus
-		global.WaterGlobalArea[a]["AmountBonusValue"] = GLBonus
-		global.WaterGlobalArea[a]["WaterBodyType"] = 4
+		storage.WaterGlobalArea[a]["AmountWtr"] = WaterTotal * GLBonus
+		storage.WaterGlobalArea[a]["AmountBonusValue"] = GLBonus
+		storage.WaterGlobalArea[a]["WaterBodyType"] = 4
 	elseif TotalArea > 60000 and TotalArea <= 600000 then
 		--game.print("SEA")
-		global.WaterGlobalArea[a]["AmountWtr"] = WaterTotal * SBonus
-		global.WaterGlobalArea[a]["AmountBonusValue"] = SBonus
-		global.WaterGlobalArea[a]["WaterBodyType"] = 5
+		storage.WaterGlobalArea[a]["AmountWtr"] = WaterTotal * SBonus
+		storage.WaterGlobalArea[a]["AmountBonusValue"] = SBonus
+		storage.WaterGlobalArea[a]["WaterBodyType"] = 5
 	else
 		--game.print("OCEAN")
-		global.WaterGlobalArea[a]["AmountWtr"] = WaterTotal * OBonus
-		global.WaterGlobalArea[a]["AmountBonusValue"] = OBonus
-		global.WaterGlobalArea[a]["WaterBodyType"] = 6
+		storage.WaterGlobalArea[a]["AmountWtr"] = WaterTotal * OBonus
+		storage.WaterGlobalArea[a]["AmountBonusValue"] = OBonus
+		storage.WaterGlobalArea[a]["WaterBodyType"] = 6
 	end
 	local RegenOff = settings.global["Disable-FluidArea-RegenRate"].value
 	if RegenOff == false then
@@ -726,7 +726,7 @@ function CalculatedWaterTotal(a)
 	else
 		RegenAmount = 0
 	end
-	global.WaterGlobalArea[a]["RegenAmount"] = RegenAmount
+	storage.WaterGlobalArea[a]["RegenAmount"] = RegenAmount
 end
 
 function comma_value(n) -- credit http://richard.warburton.it
@@ -736,33 +736,33 @@ end
 
 function MapMarker(a)
 	if settings.global["Map-EnableMarkers"].value == true then
-		local MapMarker = global.WaterGlobalArea[a]["MapMarker"]
-		local LMapMarker = #global.WaterGlobalArea[a]["MapMarker"]
-		local WGA = global.WaterGlobalArea[a]
-		--for b = 1, #global.PlayerForces, 1 do
+		local MapMarker = storage.WaterGlobalArea[a]["MapMarker"]
+		local LMapMarker = #storage.WaterGlobalArea[a]["MapMarker"]
+		local WGA = storage.WaterGlobalArea[a]
+		--for b = 1, #storage.PlayerForces, 1 do
 			for c = 1, LMapMarker, 1 do
-				--if MapMarker[c]["force"] == global.PlayerForces[b]["name"] then
+				--if MapMarker[c]["force"] == storage.PlayerForces[b]["name"] then
 					if MapMarker[c]["icon"] == nil or MapMarker[c]["icon"].valid == false or MapMarker[c]["placed"] == false then
-						global.WaterGlobalArea[a]["MapMarker"][c]["placed"] = false
+						storage.WaterGlobalArea[a]["MapMarker"][c]["placed"] = false
 						MapMarkerPlace(a)
 					elseif MapMarker[c]["icon"].valid == true and WGA["ToSearch"] == nil and WGA["Depleted"] ~= 1 then
-						local maptext = string.format("%s - %s - %.2f %%",global.WaterGlobalArea[a]["WtrName"],comma_value(math.ceil(global.WaterGlobalArea[a]["AmountWtr"]*((100-global.WaterGlobalArea[a]["Percent"])/100))),100-global.WaterGlobalArea[a]["Percent"])
-						global.WaterGlobalArea[a]["MapMarker"][c]["icon"].icon = {type="fluid",name=global.WaterGlobalArea[a]["FluidType"]}
-						global.WaterGlobalArea[a]["MapMarker"][c]["icon"].text = maptext
+						local maptext = string.format("%s - %s - %.2f %%",storage.WaterGlobalArea[a]["WtrName"],comma_value(math.ceil(storage.WaterGlobalArea[a]["AmountWtr"]*((100-storage.WaterGlobalArea[a]["Percent"])/100))),100-storage.WaterGlobalArea[a]["Percent"])
+						storage.WaterGlobalArea[a]["MapMarker"][c]["icon"].icon = {type="fluid",name=storage.WaterGlobalArea[a]["FluidType"]}
+						storage.WaterGlobalArea[a]["MapMarker"][c]["icon"].text = maptext
 					elseif MapMarker[c]["icon"].valid == true and WGA["ToSearch"] == nil and WGA["Depleted"] == 1 then
-						local maptext = string.format("%s - %s",global.WaterGlobalArea[a]["WtrName"],"Depleted")
-						global.WaterGlobalArea[a]["MapMarker"][c]["icon"].text = maptext
+						local maptext = string.format("%s - %s",storage.WaterGlobalArea[a]["WtrName"],"Depleted")
+						storage.WaterGlobalArea[a]["MapMarker"][c]["icon"].text = maptext
 					end
 				--end
 			end
 		--end
 	else
-		for b = 1, #global.PlayerForces, 1 do
-			local MapMarker = global.WaterGlobalArea[a]["MapMarker"]
-			local LMapMarker = #global.WaterGlobalArea[a]["MapMarker"]
+		for b = 1, #storage.PlayerForces, 1 do
+			local MapMarker = storage.WaterGlobalArea[a]["MapMarker"]
+			local LMapMarker = #storage.WaterGlobalArea[a]["MapMarker"]
 			for c = 1, LMapMarker, 1 do
 				if MapMarker[c]["placed"] == true then
-					global.WaterGlobalArea[a]["MapMarker"][c]["placed"] = false
+					storage.WaterGlobalArea[a]["MapMarker"][c]["placed"] = false
 				end
 			end
 		end
@@ -771,18 +771,18 @@ end
 
 function MapMarkerPlace(a)
 	if settings.global["Map-EnableMarkers"].value == true then
-		local MapMarker = global.WaterGlobalArea[a]["MapMarker"]
-		local LMapMarker = #global.WaterGlobalArea[a]["MapMarker"]
+		local MapMarker = storage.WaterGlobalArea[a]["MapMarker"]
+		local LMapMarker = #storage.WaterGlobalArea[a]["MapMarker"]
 		local maptext = "Pending..."
-		for b = 1, #global.PlayerForces, 1 do
+		for b = 1, #storage.PlayerForces, 1 do
 			for c = 1, LMapMarker, 1 do
-				if MapMarker[c]["force"] == global.PlayerForces[b]["name"] then
+				if MapMarker[c]["force"] == storage.PlayerForces[b]["name"] then
 					if MapMarker[c]["placed"] == false then
-						global.WaterGlobalArea[a]["MapMarker"][c]["placed"] = true
-						if #global.WaterGlobalArea[a]["WaterRepArea"] > 0 then
-							global.WaterGlobalArea[a]["MapMarker"][c]["icon"] = game.forces[global.PlayerForces[b]["name"]].add_chart_tag(global.WaterGlobalArea[a]["Surface"],{["position"]= global.WaterGlobalArea[a]["WaterRepArea"][1]["position"],["text"] = maptext})
+						storage.WaterGlobalArea[a]["MapMarker"][c]["placed"] = true
+						if #storage.WaterGlobalArea[a]["WaterRepArea"] > 0 then
+							storage.WaterGlobalArea[a]["MapMarker"][c]["icon"] = game.forces[storage.PlayerForces[b]["name"]].add_chart_tag(storage.WaterGlobalArea[a]["Surface"],{["position"]= storage.WaterGlobalArea[a]["WaterRepArea"][1]["position"],["text"] = maptext})
 						else
-							global.WaterGlobalArea[a]["MapMarker"][c]["icon"] = game.forces[global.PlayerForces[b]["name"]].add_chart_tag(global.WaterGlobalArea[a]["Surface"],{["position"]= global.WaterGlobalArea[a]["WaterEdgeArea"][1]["position"],["text"] = maptext})
+							storage.WaterGlobalArea[a]["MapMarker"][c]["icon"] = game.forces[storage.PlayerForces[b]["name"]].add_chart_tag(storage.WaterGlobalArea[a]["Surface"],{["position"]= storage.WaterGlobalArea[a]["WaterEdgeArea"][1]["position"],["text"] = maptext})
 						end         
 					end
 				end
@@ -792,20 +792,20 @@ function MapMarkerPlace(a)
 end
 
 function CorrectPump()
-	if global.OPLocate[#global.OPLocate]["entity"].valid then
-		if global.OPLocate[#global.OPLocate]["entity"]["name"] == "offshore-pump" or global.OPLocate[#global.OPLocate]["entity"]["name"] == "kr-electric-offshore-pump"then
-			if global.OPLocate[#global.OPLocate]["tile"] == "crude-oil" then
-				local OPE = global.OPLocate[#global.OPLocate]["entity"]
+	if storage.OPLocate[#storage.OPLocate]["entity"].valid then
+		if storage.OPLocate[#storage.OPLocate]["entity"]["name"] == "offshore-pump" or storage.OPLocate[#storage.OPLocate]["entity"]["name"] == "kr-electric-offshore-pump"then
+			if storage.OPLocate[#storage.OPLocate]["tile"] == "crude-oil" then
+				local OPE = storage.OPLocate[#storage.OPLocate]["entity"]
 				local OPD = OPE.direction
 				local OPP = OPE.position
-				local OPSp = global.OPLocate[#global.OPLocate]["spritepos"]
+				local OPSp = storage.OPLocate[#storage.OPLocate]["spritepos"]
 				local OPS = OPE.surface
 				local OPF = OPE.force
 				local OPPl = OPE.last_user
 				OPE.destroy()
 				local OPN = game.surfaces[OPS.name].create_entity{name="offshore-crude-oil-pump",position = OPSp,direction = OPD,force = OPF,player=OPPl}
 				if OPN ~= nil then
-					global.OPLocate[#global.OPLocate]["entity"] = OPN
+					storage.OPLocate[#storage.OPLocate]["entity"] = OPN
 				else
 					game.players[OPN.last_user.name].print("Offshore Pump - Crude Oil cannot be placed here. Returned Pump")
 					game.players[OPN.last_user.name].insert{name="offshore-pump",count=1}
@@ -830,30 +830,30 @@ end
 function OffshoreForce(OPforce,ODforce)
 	InitalForce = false
 	NotFound = false
-	if global.Type == 1 then
-		Offpump = global.OPLocate
-		LOffpump = #global.OPLocate
+	if storage.Type == 1 then
+		Offpump = storage.OPLocate
+		LOffpump = #storage.OPLocate
 		Force = OPforce
-	elseif global.Type == 2 then
-		Offpump = global.ODLocate
-		LOffpump = #global.ODLocate
+	elseif storage.Type == 2 then
+		Offpump = storage.ODLocate
+		LOffpump = #storage.ODLocate
 		Force = ODforce
 	end
-	if global.PlayerForces == nil or #global.PlayerForces == 0 then
-		global.PlayerForces[#global.PlayerForces+1] = {["name"] = Force, ["OPcount"] = 0, ["ODcount"] = 0, ["WaterFlow"] = 0, ["LastWaterFlow"] = 0, ["CrudeFlow"] = 0, ["LastCrudeFlow"] = 0}
-		if global.Type == 1 then
-			global.PlayerForces[1]["OPcount"] = 1
-		elseif global.Type == 2 then
-			global.PlayerForces[1]["ODcount"] = 1
+	if storage.PlayerForces == nil or #storage.PlayerForces == 0 then
+		storage.PlayerForces[#storage.PlayerForces+1] = {["name"] = Force, ["OPcount"] = 0, ["ODcount"] = 0, ["WaterFlow"] = 0, ["LastWaterFlow"] = 0, ["CrudeFlow"] = 0, ["LastCrudeFlow"] = 0}
+		if storage.Type == 1 then
+			storage.PlayerForces[1]["OPcount"] = 1
+		elseif storage.Type == 2 then
+			storage.PlayerForces[1]["ODcount"] = 1
 		end
 		InitalForce = true
-	elseif #global.PlayerForces > 0 then
-		for a = 1, #global.PlayerForces, 1 do
-			if global.PlayerForces[a]["name"] == Force then
-				if global.Type == 1 then
-					global.PlayerForces[a]["OPcount"] = global.PlayerForces[a]["OPcount"] + 1
-				elseif global.Type == 2 then
-					global.PlayerForces[a]["ODcount"] = global.PlayerForces[a]["ODcount"] + 1
+	elseif #storage.PlayerForces > 0 then
+		for a = 1, #storage.PlayerForces, 1 do
+			if storage.PlayerForces[a]["name"] == Force then
+				if storage.Type == 1 then
+					storage.PlayerForces[a]["OPcount"] = storage.PlayerForces[a]["OPcount"] + 1
+				elseif storage.Type == 2 then
+					storage.PlayerForces[a]["ODcount"] = storage.PlayerForces[a]["ODcount"] + 1
 				end
 				goto Found
 			end
@@ -862,11 +862,11 @@ function OffshoreForce(OPforce,ODforce)
 		::Found::
 	end
 	if InitalForce == false and NotFound == true then
-		global.PlayerForces[#global.PlayerForces+1] = {["name"] = OPforce, ["OPcount"] = 0, ["ODcount"] = 0, ["WaterFlow"] = 0, ["LastWaterFlow"] = 0, ["CrudeFlow"] = 0, ["LastCrudeFlow"] = 0}
-		if global.Type == 1 then
-			global.PlayerForces[#global.PlayerForces]["OPcount"] = global.PlayerForces[#global.PlayerForces]["OPcount"] + 1
-		elseif global.Type == 2 then
-			global.PlayerForces[#global.PlayerForces]["ODcount"] = global.PlayerForces[#global.PlayerForces]["ODcount"] + 1
+		storage.PlayerForces[#storage.PlayerForces+1] = {["name"] = OPforce, ["OPcount"] = 0, ["ODcount"] = 0, ["WaterFlow"] = 0, ["LastWaterFlow"] = 0, ["CrudeFlow"] = 0, ["LastCrudeFlow"] = 0}
+		if storage.Type == 1 then
+			storage.PlayerForces[#storage.PlayerForces]["OPcount"] = storage.PlayerForces[#storage.PlayerForces]["OPcount"] + 1
+		elseif storage.Type == 2 then
+			storage.PlayerForces[#storage.PlayerForces]["ODcount"] = storage.PlayerForces[#storage.PlayerForces]["ODcount"] + 1
 		end
 	end
 end
@@ -875,9 +875,9 @@ end
 
 function RegenWater(a)
 	local DisableRegen = settings.global["Disable-FluidArea-RegenRate"].value
-	local WGA = global.WaterGlobalArea
+	local WGA = storage.WaterGlobalArea
 	if DisableRegen == false and WGA[a]["FluidType"] == "water" and WGA[a]["Percent"] > 0 and WGA[a]["Percent"] <= 99 and WGA[a]["Depleted"] ~= 1 then
-		local WGA = global.WaterGlobalArea
+		local WGA = storage.WaterGlobalArea
 		if WGA[a]["WtrUsed"] - WGA[a]["RegenAmount"] <= 0 then
 			WGA[a]["WtrUsed"] = 0
 		else
@@ -890,11 +890,11 @@ function RegenWater(a)
 end
 
 function EverySec()
-	for a = 1, #global.WaterGlobalArea, 1 do
-		if global.WaterGlobalArea[a]["ToSearch"] ~= nil then
+	for a = 1, #storage.WaterGlobalArea, 1 do
+		if storage.WaterGlobalArea[a]["ToSearch"] ~= nil then
 			FluidAreaContinue(a)
 		end
-		if #global.LandFill > 0 then
+		if #storage.LandFill > 0 then
 			LandFill(a)
 		end
 		RegenWater(a)
@@ -903,9 +903,9 @@ function EverySec()
 end
 
 function EmptyDrainPipes(a)
-	local ODL = global.ODLocate
+	local ODL = storage.ODLocate
 	for b = 1, #ODL, 1 do
-		local WGA = global.WaterGlobalArea
+		local WGA = storage.WaterGlobalArea
 		if WGA[a]["WGAID"] == ODL[b]["WA"] and WGA[a]["Depleted"] ~= 1 and ODL[b]["Active"] == 1 and ODL[b]["entity"].neighbours[1][1] and ODL[b]["entity"].neighbours[1][1].fluidbox[1] ~= nil and WGA[a]["FluidType"] == ODL[b]["PipeFluid"] and ODL[b]["entity"].neighbours[1][1].get_fluid_count() > 0.005 then
 			if ODL[b]["entity"].neighbours[1][1]["name"] == "storage-tank" then
 				fluid = ODL[b]["entity"].neighbours[1][1].fluidbox[1]
@@ -929,8 +929,8 @@ function EmptyDrainPipes(a)
 				ODL[b]["entity"].neighbours[1][1].remove_fluid{name=fluid.name,amount=fluid.amount}
 			end
 		end
-		for d = 1, #global.WaterGlobalArea[a]["WtrAdd"], 1 do
-			if global.WaterGlobalArea[a]["WtrAdd"][d]["force"] == global.ODLocate[b]["force"] then
+		for d = 1, #storage.WaterGlobalArea[a]["WtrAdd"], 1 do
+			if storage.WaterGlobalArea[a]["WtrAdd"][d]["force"] == storage.ODLocate[b]["force"] then
 				WGA[a]["WtrAdd"][d]["count"] = 0
 			end
 		end
@@ -938,7 +938,7 @@ function EmptyDrainPipes(a)
  end
  
 function AssignTiles(a)
-	local WGA = global.WaterGlobalArea
+	local WGA = storage.WaterGlobalArea
 	local WGAA = WGA[a]["ShallowWater"] + WGA[a]["DeepWater"]
 	local WGAT = WGA[a]["WaterRepArea"]
 	local WGAFT = WGA[a]["FluidType"]
@@ -988,7 +988,7 @@ function AssignTiles(a)
 end
 
 function WaterRandom(a)
-	local WGA = global.WaterGlobalArea
+	local WGA = storage.WaterGlobalArea
 	local WaterTiles = (WGA[a]["ShallowWater"] + WGA[a]["DeepWater"])
 	local Surface = WGA[a]["Surface"]
 	local finalper = 20
@@ -1009,7 +1009,7 @@ function WaterRandom(a)
 end
 
 function BackToFront(a)
-	local WGA = global.WaterGlobalArea
+	local WGA = storage.WaterGlobalArea
 	local WaterTiles = (WGA[a]["ShallowWater"] + WGA[a]["DeepWater"])
 	local Surface = WGA[a]["Surface"]
 	local TileCount = WGA[a]["BTF"]
@@ -1061,7 +1061,7 @@ function BackToFront(a)
 end
 
 function RegenWaterEdge(a)
-	local WGA = global.WaterGlobalArea
+	local WGA = storage.WaterGlobalArea
 	local surface = WGA[a]["Surface"]
 	local WAArea = WGA[a]["WaterEdgeArea"]
 	local TilesToReplace = {}
@@ -1114,9 +1114,9 @@ function RegenWaterEdge(a)
 end
 
 function BackToFrontEdge(a)
-	local WGA = global.WaterGlobalArea
-	local PGT = global.OPLocate
-	local DGT = global.ODLocate
+	local WGA = storage.WaterGlobalArea
+	local PGT = storage.OPLocate
+	local DGT = storage.ODLocate
 	local surface = WGA[a]["Surface"]
 	local WAArea = WGA[a]["WaterEdgeArea"]
 	local TilesToReplace = {}
@@ -1214,7 +1214,7 @@ function BackToFrontEdge(a)
 end
 
 function AddedWaterArea(a)
-	local WGA = global.WaterGlobalArea
+	local WGA = storage.WaterGlobalArea
 	if WGA[a]["AmountWtr"] ~= WGA[a]["WtrUsed"] and WGA[a]["Percent"] > 0 then
 		local Percent = WGA[a]["Percent"]
 		local WA = WGA[a]
@@ -1278,7 +1278,7 @@ function AddedWaterArea(a)
 end
 
 function DepleatedWaterArea(a)
-	local WGA = global.WaterGlobalArea
+	local WGA = storage.WaterGlobalArea
 	if WGA[a]["Depleted"] ~= 1 and WGA[a]["ToSearch"] == nil then
 		local Percent = WGA[a]["Percent"]
 		local LowAlarmEnabled = settings.global["alarms-low-level"].value
@@ -1287,19 +1287,19 @@ function DepleatedWaterArea(a)
 		if Percent <= 49 then
 			--game.print("IN NORMAL BOUNDS")
 		elseif Percent >= 50 and WA["Fired50"] == false and LowAlarmEnabled == true then
-			for b = 1, #global.PlayerForces, 1 do
+			for b = 1, #storage.PlayerForces, 1 do
 				for c = 1, #WGA[a]["OPsA"], 1 do
-					if global.PlayerForces[b]["name"] == WGA[a]["OPsA"][c]["force"] then
-						game.forces[global.PlayerForces[b]["name"]].print(string.format("%s has used %.0f %% of available %s.",WA["WtrName"], WA["Percent"], WA["FluidType"]))
+					if storage.PlayerForces[b]["name"] == WGA[a]["OPsA"][c]["force"] then
+						game.forces[storage.PlayerForces[b]["name"]].print(string.format("%s has used %.0f %% of available %s.",WA["WtrName"], WA["Percent"], WA["FluidType"]))
 					end
 				end
 			end
 			WA["Fired50"] = true
 		elseif Percent >= 75 and WA["Fired75"] == false and LowAlarmEnabled == true then
-			for b = 1, #global.PlayerForces, 1 do
+			for b = 1, #storage.PlayerForces, 1 do
 				for c = 1, #WGA[a]["OPsA"], 1 do
-					if global.PlayerForces[b]["name"] == WGA[a]["OPsA"][c]["force"] then
-						game.forces[global.PlayerForces[b]["name"]].print(string.format("%s has used %.0f %% of available %s.",WA["WtrName"], WA["Percent"], WA["FluidType"]))
+					if storage.PlayerForces[b]["name"] == WGA[a]["OPsA"][c]["force"] then
+						game.forces[storage.PlayerForces[b]["name"]].print(string.format("%s has used %.0f %% of available %s.",WA["WtrName"], WA["Percent"], WA["FluidType"]))
 					end
 				end
 			end
@@ -1321,55 +1321,55 @@ function DepleatedWaterArea(a)
 				WA["RandPercent"] = Percent
 			end
 			if Percent >= 90 and WA["Fired90"] == false and LowAlarmEnabled == true then
-				for b = 1, #global.PlayerForces, 1 do
+				for b = 1, #storage.PlayerForces, 1 do
 					for c = 1, #WGA[a]["OPsA"], 1 do
-						if global.PlayerForces[b]["name"] == WGA[a]["OPsA"][c]["force"] then
-							game.forces[global.PlayerForces[b]["name"]].print(string.format("%s has used %.0f %% of available %s.",WA["WtrName"], WA["Percent"], WA["FluidType"]))
+						if storage.PlayerForces[b]["name"] == WGA[a]["OPsA"][c]["force"] then
+							game.forces[storage.PlayerForces[b]["name"]].print(string.format("%s has used %.0f %% of available %s.",WA["WtrName"], WA["Percent"], WA["FluidType"]))
 						end
 					end
 				end
 				WA["Fired90"] = true
 			elseif Percent >= 95 and WA["Fired95"] == false and HighAlarmEnabled == true then
-				for b = 1, #global.PlayerForces, 1 do
+				for b = 1, #storage.PlayerForces, 1 do
 					for c = 1, #WGA[a]["OPsA"], 1 do
-						if global.PlayerForces[b]["name"] == WGA[a]["OPsA"][c]["force"] then
-							game.forces[global.PlayerForces[b]["name"]].print(string.format("%s has used %.0f %% of available %s.",WA["WtrName"], WA["Percent"], WA["FluidType"]))
+						if storage.PlayerForces[b]["name"] == WGA[a]["OPsA"][c]["force"] then
+							game.forces[storage.PlayerForces[b]["name"]].print(string.format("%s has used %.0f %% of available %s.",WA["WtrName"], WA["Percent"], WA["FluidType"]))
 						end
 					end
 				end
 				WA["Fired95"] = true
 			elseif Percent >= 97 and WA["Fired97"] == false and HighAlarmEnabled == true then
-				for b = 1, #global.PlayerForces, 1 do
+				for b = 1, #storage.PlayerForces, 1 do
 					for c = 1, #WGA[a]["OPsA"], 1 do
-						if global.PlayerForces[b]["name"] == WGA[a]["OPsA"][c]["force"] then
-							game.forces[global.PlayerForces[b]["name"]].print(string.format("%s has used %.0f %% of available %s.",WA["WtrName"], WA["Percent"], WA["FluidType"]))
+						if storage.PlayerForces[b]["name"] == WGA[a]["OPsA"][c]["force"] then
+							game.forces[storage.PlayerForces[b]["name"]].print(string.format("%s has used %.0f %% of available %s.",WA["WtrName"], WA["Percent"], WA["FluidType"]))
 						end
 					end
 				end
 				WA["Fired97"] = true
 			elseif Percent >= 98 and WA["Fired98"] == false and HighAlarmEnabled == true then
-				for b = 1, #global.PlayerForces, 1 do
+				for b = 1, #storage.PlayerForces, 1 do
 					for c = 1, #WGA[a]["OPsA"], 1 do
-						if global.PlayerForces[b]["name"] == WGA[a]["OPsA"][c]["force"] then
-							game.forces[global.PlayerForces[b]["name"]].print(string.format("%s has used %.0f %% of available %s.",WA["WtrName"], WA["Percent"], WA["FluidType"]))
+						if storage.PlayerForces[b]["name"] == WGA[a]["OPsA"][c]["force"] then
+							game.forces[storage.PlayerForces[b]["name"]].print(string.format("%s has used %.0f %% of available %s.",WA["WtrName"], WA["Percent"], WA["FluidType"]))
 						end
 					end
 				end
 				WA["Fired98"] = true
 			elseif Percent >= 99 and WA["Fired99"] == false and HighAlarmEnabled == true then
-				for b = 1, #global.PlayerForces, 1 do
+				for b = 1, #storage.PlayerForces, 1 do
 					for c = 1, #WGA[a]["OPsA"], 1 do
-						if global.PlayerForces[b]["name"] == WGA[a]["OPsA"][c]["force"] then
-							game.forces[global.PlayerForces[b]["name"]].print(string.format("%s has used %.0f %% of available %s.",WA["WtrName"], WA["Percent"], WA["FluidType"]))
+						if storage.PlayerForces[b]["name"] == WGA[a]["OPsA"][c]["force"] then
+							game.forces[storage.PlayerForces[b]["name"]].print(string.format("%s has used %.0f %% of available %s.",WA["WtrName"], WA["Percent"], WA["FluidType"]))
 						end
 					end
 				end
 				WA["Fired99"] = true
 			end		
 		elseif Percent >= 100 then 
-			if global.NewInstall == false then
-				for z = 1, #global.OPLocate, 1 do
-					local OP = global.OPLocate[z]
+			if storage.NewInstall == false then
+				for z = 1, #storage.OPLocate, 1 do
+					local OP = storage.OPLocate[z]
 					if OP["WA"] == WGA[a]["WGAID"] and OP["name"] ~= "offshore-pump-nofluid" then
 						local OPD = OP["direction"]
 						local OPE = OP["entity"]
@@ -1381,8 +1381,8 @@ function DepleatedWaterArea(a)
 						if OP["Active"] == 1 then
 							OP["Active"] = 0
 							ActiveOPs = ActiveOPs - 1
-							for y =1, #global.WaterGlobalArea[a]["OPsA"], 1 do
-								if global.WaterGlobalArea[a]["OPsA"][y]["force"] == OP["force"] then
+							for y =1, #storage.WaterGlobalArea[a]["OPsA"], 1 do
+								if storage.WaterGlobalArea[a]["OPsA"][y]["force"] == OP["force"] then
 									WA["OPsA"][y]["count"] = WA["OPsA"][y]["count"] - 1
 								end
 							end								
@@ -1410,7 +1410,7 @@ function DepleatedWaterArea(a)
 						end
 						OPE.destroy()
 						local OPNF = game.surfaces[OPS.name].create_entity{name="offshore-pump-nofluid",position = OPSp,direction = OPD,player = OPPl, force = "neutral"}
-						global.OPLocate[z]["entity"] = OPNF
+						storage.OPLocate[z]["entity"] = OPNF
 					end
 				end
 				WGA[a]["Depleted"] = 1
@@ -1425,10 +1425,10 @@ function DepleatedWaterArea(a)
 				end
 				WGA[a]["BTFE"] = 20
 				WGA[a]["WtrUsed"] = WGA[a]["AmountWtr"]
-				for b = 1, #global.PlayerForces, 1 do
+				for b = 1, #storage.PlayerForces, 1 do
 					for c = 1, #WGA[a]["OPsA"], 1 do
-						if global.PlayerForces[b]["name"] == WGA[a]["OPsA"][c]["force"] then
-							game.forces[global.PlayerForces[b]["name"]].print(string.format("%s has been depleted of %s.",WA["WtrName"], WA["FluidType"]))
+						if storage.PlayerForces[b]["name"] == WGA[a]["OPsA"][c]["force"] then
+							game.forces[storage.PlayerForces[b]["name"]].print(string.format("%s has been depleted of %s.",WA["WtrName"], WA["FluidType"]))
 						end
 					end
 				end
@@ -1436,43 +1436,43 @@ function DepleatedWaterArea(a)
 				WGA[a]["BTF"] = 0
 			else
 				local CurrentTick = game.tick
-				if CurrentTick < (global.InstallTick + 18000) and global.ITMessage == true then
-					for b = 1, #global.PlayerForces, 1 do
+				if CurrentTick < (storage.InstallTick + 18000) and storage.ITMessage == true then
+					for b = 1, #storage.PlayerForces, 1 do
 						for c = 1, #WGA[a]["OPsA"], 1 do
-							if global.PlayerForces[b]["name"] == WGA[a]["OPsA"][c]["force"] then
-								game.forces[global.PlayerForces[b]["name"]].print(string.format("Fluid Area Depletion Stopped on New/Mid Game Install. 5 Minutes from install till depletion."))
+							if storage.PlayerForces[b]["name"] == WGA[a]["OPsA"][c]["force"] then
+								game.forces[storage.PlayerForces[b]["name"]].print(string.format("Fluid Area Depletion Stopped on New/Mid Game Install. 5 Minutes from install till depletion."))
 							end
 						end
 					end
-					global.ITMessage = false
+					storage.ITMessage = false
 				end
-				if CurrentTick >= (global.InstallTick + 18000) then
-					for b = 1, #global.PlayerForces, 1 do
+				if CurrentTick >= (storage.InstallTick + 18000) then
+					for b = 1, #storage.PlayerForces, 1 do
 						for c = 1, #WGA[a]["OPsA"], 1 do
-							if global.PlayerForces[b]["name"] == WGA[a]["OPsA"][c]["force"] then
-								game.forces[global.PlayerForces[b]["name"]].print(string.format("Fluid Area 5 Mins Over. Depleting Fluid Area."))
+							if storage.PlayerForces[b]["name"] == WGA[a]["OPsA"][c]["force"] then
+								game.forces[storage.PlayerForces[b]["name"]].print(string.format("Fluid Area 5 Mins Over. Depleting Fluid Area."))
 							end
 						end
 					end
 					WGA[a]["Percent"] = 99
-					global.NewInstall = false
-					global.ITMessage = false
+					storage.NewInstall = false
+					storage.ITMessage = false
 				end
 			end
 		end
 	else
 		-- AREA DEPLETED
 		local RemoveFromTable = settings.global["FluidArea-RemoveFromTable"].value
-		if RemoveFromTable == true and global.NewInstall == false then
+		if RemoveFromTable == true and storage.NewInstall == false then
 			RemoveWAOPOD(a)
 		end
 	end
 end
 
 function CalcWaterUse(a)
-	local WGA = global.WaterGlobalArea
-	local GPF = global.PlayerForces
-	local LGPF = #global.PlayerForces
+	local WGA = storage.WaterGlobalArea
+	local GPF = storage.PlayerForces
+	local LGPF = #storage.PlayerForces
 	local WaterAreaUsed = WGA[a]["WtrUsed"]
 	local WaterAreaAmount = WGA[a]["AmountWtr"]
 	local WaterAreaPercent = WGA[a]["Percent"]
@@ -1484,9 +1484,9 @@ function CalcWaterUse(a)
 	TotalWaterAreaActiveDrains = 0
 	for b = 1, LGPF, 1 do
 		TotalWaterFlowRate = TotalWaterFlowRate + GPF[b]["WaterFlow"] - GPF[b]["LastWaterFlow"]
-		for c = 1, #global.FluidProducers, 1 do
-			if global.FluidProducers[c]["force"] == GPF[b]["name"] then
-				ForceCrudeAdjust = ForceCrudeAdjust + global.FluidProducers[c]["LastAmount"]
+		for c = 1, #storage.FluidProducers, 1 do
+			if storage.FluidProducers[c]["force"] == GPF[b]["name"] then
+				ForceCrudeAdjust = ForceCrudeAdjust + storage.FluidProducers[c]["LastAmount"]
 			end
 		end
 		TotalCrudeFlowRate = TotalCrudeFlowRate + GPF[b]["CrudeFlow"] - GPF[b]["LastCrudeFlow"] - ForceCrudeAdjust
@@ -1561,14 +1561,14 @@ function CalcWaterUse(a)
 end
 
 function CheckDrainAssignedFluidUse(a) -- Assign Fluid to Empty WaterArea
-	for c = 1, #global.ODLocate,1 do
-		local ODL = global.ODLocate
-		local WGA = global.WaterGlobalArea
+	for c = 1, #storage.ODLocate,1 do
+		local ODL = storage.ODLocate
+		local WGA = storage.WaterGlobalArea
 		if ODL[c]["WA"] == WGA[a]["WGAID"] and ODL[c]["entity"].neighbours[1][1] and ODL[c]["entity"].neighbours[1][1].fluidbox[1] ~= nil and ODL[c]["PipeFluid"] == WGA[a]["FluidType"] then
 			if ODL[c]["entity"].neighbours[1][1].get_fluid_count() > 0.005 then
 				fluid = ODL[c]["entity"].neighbours[1][1].fluidbox[1]
-				for d = 1, #global.WaterGlobalArea[a]["WtrAdd"], 1 do
-					if global.WaterGlobalArea[a]["WtrAdd"][d]["force"] == global.ODLocate[c]["force"] then
+				for d = 1, #storage.WaterGlobalArea[a]["WtrAdd"], 1 do
+					if storage.WaterGlobalArea[a]["WtrAdd"][d]["force"] == storage.ODLocate[c]["force"] then
 						if ODL[c]["entity"].neighbours[1][1]["name"] == "storage-tank" then
 							if fluid.amount >= 20 then
 								WGA[a]["WtrAdd"][d]["count"] = WGA[a]["WtrAdd"][d]["count"] + (20 * 6)
@@ -1595,8 +1595,8 @@ end
 
 function CheckDrainAssignedFluid(a)
 	if ActiveODs ~= 0 then
-	local WGA = global.WaterGlobalArea
-	local ODL = global.ODLocate
+	local WGA = storage.WaterGlobalArea
+	local ODL = storage.ODLocate
 		for c = 1, #WGA, 1 do
 			if WGA[c]["FluidType"] == "None" then
 				if ODL[a]["WA"] == WGA[c]["WGAID"] and ODL[a]["entity"].neighbours[1][1] and ODL[a]["entity"].neighbours[1][1].fluidbox[1] ~= nil then
@@ -1608,9 +1608,9 @@ function CheckDrainAssignedFluid(a)
 end
 
 function CheckOPActive(a)
-	local GOPL = global.OPLocate[a]
-	local WGA = global.WaterGlobalArea
-	local GPF = global.PlayerForces
+	local GOPL = storage.OPLocate[a]
+	local WGA = storage.WaterGlobalArea
+	local GPF = storage.PlayerForces
 	for b = 1, #WGA, 1 do
 		if GOPL["Active"] == 0 and WGA[b]["WGAID"] == GOPL["WA"] and WGA[b]["Depleted"] ~= 1 then
 			if GOPL["entity"].valid and GOPL["entity"].neighbours[1][1] then
@@ -1648,9 +1648,9 @@ function CheckOPActive(a)
 end
 
 function CheckODActive(a)
-	local GOPL = global.ODLocate[a]
-	local WGA = global.WaterGlobalArea
-	local ODL = global.ODLocate
+	local GOPL = storage.ODLocate[a]
+	local WGA = storage.WaterGlobalArea
+	local ODL = storage.ODLocate
 	local ODA = settings.global["FluidArea-ReactivateDrains"].value
 	for b = 1, #WGA, 1 do
 		if GOPL["Active"] == 0 and WGA[b]["WGAID"] == GOPL["WA"] then
@@ -1696,7 +1696,7 @@ function CheckODActive(a)
 end
 
 function LandFill(a)
-	local WGA = global.WaterGlobalArea
+	local WGA = storage.WaterGlobalArea
 	local Check = #WGA[a]["WaterRepArea"]
 	if Check > 0 then
 		WASize = #WGA[a]["WaterRepArea"]
@@ -1705,16 +1705,16 @@ function LandFill(a)
 		WASize = #WGA[a]["WaterEdgeArea"]
 		WAra = WGA[a]["WaterEdgeArea"]
 	end
-	for b = #global.LandFill, 1, -1 do
+	for b = #storage.LandFill, 1, -1 do
 		for c = 1, WASize, 1 do
 			if WAra[c]["name"] ~= "landfill" then
 				if Check > 0 then
-					global.WaterGlobalArea[a]["WaterRepArea"][c]["name"] = "landfill" 
-					LFPosX = global.LandFill[b]["position"]["x"] + 0.5
-					LFPosY = global.LandFill[b]["position"]["y"] + 0.5
+					storage.WaterGlobalArea[a]["WaterRepArea"][c]["name"] = "landfill" 
+					LFPosX = storage.LandFill[b]["position"]["x"] + 0.5
+					LFPosY = storage.LandFill[b]["position"]["y"] + 0.5
 				else
-					LFPosX = global.LandFill[b]["position"]["x"]
-                    LFPosY = global.LandFill[b]["position"]["y"]
+					LFPosX = storage.LandFill[b]["position"]["x"]
+                    LFPosY = storage.LandFill[b]["position"]["y"]
 				end
 				WAPosX = WAra[c]["position"]["x"]
 				WAPosY = WAra[c]["position"]["y"]
@@ -1722,30 +1722,30 @@ function LandFill(a)
 					if LFPosY == WAPosY then -- IF LandFill position y is equal to FluidArea position y
 					Found = true
 					if Check > 0 then
-						global.WaterGlobalArea[a]["WaterRepArea"][c]["name"] = "landfill" 
+						storage.WaterGlobalArea[a]["WaterRepArea"][c]["name"] = "landfill" 
 					end
-					local FluidName = global.LandFill[b]["name"]
+					local FluidName = storage.LandFill[b]["name"]
 					if FluidName == "water" or FluidName == "crude-oil" or FluidName == "water-green" or FluidName == "water-shallow" or FluidName == "water-mud" then
 						local ShallowAmount = settings.global["TileFluidAmount-Shallow"].value
-						global.WaterGlobalArea[a]["AmountWtr"] = WGA[a]["AmountWtr"] - (ShallowAmount * WGA[a]["AmountBonusValue"])
+						storage.WaterGlobalArea[a]["AmountWtr"] = WGA[a]["AmountWtr"] - (ShallowAmount * WGA[a]["AmountBonusValue"])
 					elseif FluidName == "deepwater" or FluidName == "crude-oil-deep" or FluidName == "deepwater-green" then
 						local DeepAmount = settings.global["TileFluidAmount-Deep"].value
-						global.WaterGlobalArea[a]["AmountWtr"] = WGA[a]["AmountWtr"] - (DeepAmount * WGA[a]["AmountBonusValue"])
+						storage.WaterGlobalArea[a]["AmountWtr"] = WGA[a]["AmountWtr"] - (DeepAmount * WGA[a]["AmountBonusValue"])
 					end
-					table.remove(global.LandFill,#global.LandFill)
+					table.remove(storage.LandFill,#storage.LandFill)
 					goto EscapeLFSearch
 					end
 				end
 			end
-			if a == #global.WaterGlobalArea and c == WASize then -- Remove from Landfill table if not found.
-				table.remove(global.LandFill,#global.LandFill)
+			if a == #storage.WaterGlobalArea and c == WASize then -- Remove from Landfill table if not found.
+				table.remove(storage.LandFill,#storage.LandFill)
 				goto EscapeLFSearch
 			end
 		end
 	::EscapeLFSearch::
 	end
 	local LandfillEnabled = settings.get_player_settings(game.players[1])["alarms-landfill-message"].value
-	if #global.LandFill == 0 and Found == true and LandfillEnabled == true then
+	if #storage.LandFill == 0 and Found == true and LandfillEnabled == true then
 		game.print(string.format("Landfill has reduced FluidArea %s, to %sL of %s.", WGA[a]["WtrName"], WGA[a]["AmountWtr"], WGA[a]["FluidType"]))
 	end
 	::EscapeLFSearchNF::
@@ -1754,14 +1754,14 @@ end
 function CheckActive()
 	ActiveOPs = 0
 	ActiveODs = 0
-	WGA = global.WaterGlobalArea
-	if #global.OPLocate ~= 0 then
-		for a = 1, #global.OPLocate, 1 do
+	WGA = storage.WaterGlobalArea
+	if #storage.OPLocate ~= 0 then
+		for a = 1, #storage.OPLocate, 1 do
 			CheckOPActive(a)
 		end
 	end
-	if #global.ODLocate ~= 0 then
-		for a = 1, #global.ODLocate, 1 do
+	if #storage.ODLocate ~= 0 then
+		for a = 1, #storage.ODLocate, 1 do
 			CheckODActive(a)
 			CheckDrainAssignedFluid(a)
 		end
@@ -1773,8 +1773,8 @@ function ScanOffshores()
 		local Jacks = game.surfaces[a].find_entities_filtered{name= "pumpjack"}
 		if #Jacks > 0 then
 			for b = 1, #Jacks, 1 do
-				for c = #global.FluidProducers, 1, -1 do
-					if Jacks[a]["position"] == global.FluidProducers[c]["position"] then
+				for c = #storage.FluidProducers, 1, -1 do
+					if Jacks[a]["position"] == storage.FluidProducers[c]["position"] then
 						table.remove(Jacks,#Jacks)
 					end
 				end
@@ -1784,7 +1784,7 @@ function ScanOffshores()
 				Jackposition = Jackentity.position	
 				Jacksurface = Jackentity.surface
 				Jackforce = Jackentity.force.name
-				global.FluidProducers[#global.FluidProducers+1] = {["entity"] = Jackentity, ["position"] = {["x"] = Jackposition.x , ["y"] = Jackposition.y}, ["surface"] = Jacksurface, ["FluidType"] = nil, ["LastAmount"] = 0, ["force"] = Jackforce}
+				storage.FluidProducers[#storage.FluidProducers+1] = {["entity"] = Jackentity, ["position"] = {["x"] = Jackposition.x , ["y"] = Jackposition.y}, ["surface"] = Jacksurface, ["FluidType"] = nil, ["LastAmount"] = 0, ["force"] = Jackforce}
 			end
 		end
 		Pumps = 0
@@ -1805,30 +1805,30 @@ function ScanOffshores()
 		if #Pumps > 0 then
 			for b = 1, #Pumps, 1 do
 				if Pumps[b].force.name ~= "neutral" then -- Ignore AbandondedRuins OffshorePumps which are neutral force
-					global.ScanOffshoresQueue[#global.ScanOffshoresQueue+1] = Pumps[b]
+					storage.ScanOffshoresQueue[#storage.ScanOffshoresQueue+1] = Pumps[b]
 				end
 			end
-			created_entity = global.ScanOffshoresQueue[1]
+			created_entity = storage.ScanOffshoresQueue[1]
 			a = {["created_entity"] = created_entity}
 			BuiltOffShore(a)
-			table.remove(global.ScanOffshoresQueue,1)
+			table.remove(storage.ScanOffshoresQueue,1)
 		end
 	end
-	global.Added = false
+	storage.Added = false
 end
 
 function PumpRereplace(a)
 	local PRPV = settings.global["FluidArea-RereplacePumps"].value
 	local PRP = 100 - PRPV
-	local WGA = global.WaterGlobalArea
+	local WGA = storage.WaterGlobalArea
 	if PRPV == 0 then
 		--Do Nothing as Off
 	else
 		local FAP = WGA[a]["Percent"]
 		if PRP >= FAP then
-			for b = #global.OPLocate, 1, -1 do
-				if global.OPLocate[b]["WA"] == WGA[a]["WGAID"] and global.OPLocate[b]["entity"].name == "offshore-pump-nofluid"then
-					local OP = global.OPLocate[b]
+			for b = #storage.OPLocate, 1, -1 do
+				if storage.OPLocate[b]["WA"] == WGA[a]["WGAID"] and storage.OPLocate[b]["entity"].name == "offshore-pump-nofluid"then
+					local OP = storage.OPLocate[b]
 					local OPD = OP["direction"]
 					local OPE = OP["entity"]
 					local OPP = OP["position"]
@@ -1842,16 +1842,16 @@ function PumpRereplace(a)
 					elseif WGA[a]["FluidType"] == "crude-oil" then
 						OPN = game.surfaces[OPS.name].create_entity{name="offshore-crude-oil-pump",position = OPSp,direction = OPD,player = OPP, force = OPF}
 					end	
-					global.OPLocate[b]["entity"] = OPN
-					if global.OPLocate[b]["entity"] == nil then
-						if global.WaterGlobalArea[a]["OPs"] <= 0 then
-							global.WaterGlobalArea[a]["OPs"] = 0
+					storage.OPLocate[b]["entity"] = OPN
+					if storage.OPLocate[b]["entity"] == nil then
+						if storage.WaterGlobalArea[a]["OPs"] <= 0 then
+							storage.WaterGlobalArea[a]["OPs"] = 0
 						else
-							global.WaterGlobalArea[a]["OPs"] = global.WaterGlobalArea[global.OPLocate[b]["WA"]]["OPs"] - 1
+							storage.WaterGlobalArea[a]["OPs"] = storage.WaterGlobalArea[storage.OPLocate[b]["WA"]]["OPs"] - 1
 						end
-						game.players[global.OPLocate[b]["entity"].last_user.name].print(string.format("Water As A Resource: Offshore Pump Removed from %s, as Pipes have another fluid type.", global.WaterGlobalArea[global.OPLocate[b]["WA"]]["WtrName"]))
-						game.players[global.OPLocate[b]["entity"].last_user.name].insert{name="offshore-pump",count=1}
-						table.remove(global.OPLocate,b)
+						game.players[storage.OPLocate[b]["entity"].last_user.name].print(string.format("Water As A Resource: Offshore Pump Removed from %s, as Pipes have another fluid type.", storage.WaterGlobalArea[storage.OPLocate[b]["WA"]]["WtrName"]))
+						game.players[storage.OPLocate[b]["entity"].last_user.name].insert{name="offshore-pump",count=1}
+						table.remove(storage.OPLocate,b)
 					end
 				end
 			end
@@ -1860,19 +1860,19 @@ function PumpRereplace(a)
 end
 
 function RemoveWAOPOD(a)
-	local WGA = global.WaterGlobalArea
+	local WGA = storage.WaterGlobalArea
 	if WGA[a]["Depleted"] == 1 then
 		if #WGA[a]["OPs"] > 0 then
-			for c = #global.OPLocate, 1, - 1 do
-				if WGA[a]["WGAID"] == global.OPLocate[c]["WA"] then
-					table.remove(global.OPLocate,c)
+			for c = #storage.OPLocate, 1, - 1 do
+				if WGA[a]["WGAID"] == storage.OPLocate[c]["WA"] then
+					table.remove(storage.OPLocate,c)
 				end
 			end
 		end
 		if #WGA[a]["ODs"] > 0 then
-			for c = #global.ODLocate, 1, - 1 do
-				if WGA[a]["WGAID"] == global.ODLocate[c]["WA"] then
-					table.remove(global.ODLocate,c)
+			for c = #storage.ODLocate, 1, - 1 do
+				if WGA[a]["WGAID"] == storage.ODLocate[c]["WA"] then
+					table.remove(storage.ODLocate,c)
 				end
 			end
 		end
@@ -1886,8 +1886,8 @@ function RemoveWAOPOD(a)
 end
 
 function FluidFlow()
-	GPF = global.PlayerForces
-	LGPF = #global.PlayerForces
+	GPF = storage.PlayerForces
+	LGPF = #storage.PlayerForces
 	if Skip ~= true or Skip == nil then
 		for a = 1, LGPF, 1 do							
 			GPF[a]["WaterFlow"] = math.ceil(game.forces[GPF[a]["name"]].fluid_production_statistics.get_input_count("water"))
@@ -1904,29 +1904,29 @@ function FluidFlow()
 end
 
 function CheckWater()
-	local WGA = global.WaterGlobalArea
+	local WGA = storage.WaterGlobalArea
 	fluidentities.CheckFluidProducers()
-	if global.Added == true then
+	if storage.Added == true then
 		ScanOffshores()
 	end
-	if #global.ScanOffshoresQueue >= 1 then
-		for a = 1, #global.WaterGlobalArea, 1 do
-			if global.WaterGlobalArea[a]["ToSearch"] == nil then
-				global.EnableNextOffshore = true
+	if #storage.ScanOffshoresQueue >= 1 then
+		for a = 1, #storage.WaterGlobalArea, 1 do
+			if storage.WaterGlobalArea[a]["ToSearch"] == nil then
+				storage.EnableNextOffshore = true
 				goto ENO
 			else
-				global.EnableNextOffshore = false
+				storage.EnableNextOffshore = false
 			end
 		end
 		::ENO::
-		if global.EnableNextOffshore == true then
-			created_entity = global.ScanOffshoresQueue[1]
+		if storage.EnableNextOffshore == true then
+			created_entity = storage.ScanOffshoresQueue[1]
 			a = {["created_entity"] = created_entity}
 			BuiltOffShore(a)
-			table.remove(global.ScanOffshoresQueue,1)
+			table.remove(storage.ScanOffshoresQueue,1)
 		end				
 	end
-	if #WGA ~= nil and global.Added ~= true then
+	if #WGA ~= nil and storage.Added ~= true then
 		FluidFlow()
 		CheckActive()
 		for a = #WGA, 1, -1 do
@@ -1950,10 +1950,10 @@ function CheckWater()
 			end
 		end
 		FluidFlow()
-		if global.LoopTick < 10 then
-			global.LoopTick = global.LoopTick + 1
-		elseif global.LoopTick == 10 then
-			global.LoopTick = 0
+		if storage.LoopTick < 10 then
+			storage.LoopTick = storage.LoopTick + 1
+		elseif storage.LoopTick == 10 then
+			storage.LoopTick = 0
 			EverySec()
 		end
 	end
@@ -1967,7 +1967,7 @@ function LandFillCheck(event)
 			local tiles = event.tiles
 			local surface = event.surface_index
 			for a = 1, #tiles, 1 do
-				global.LandFill[#global.LandFill+1] = {["name"] = tiles[a].old_tile.name, ["position"] = {["x"] = tiles[a]["position"].x, ["y"] = tiles[a]["position"].y},["surface"] = surface}
+				storage.LandFill[#storage.LandFill+1] = {["name"] = tiles[a].old_tile.name, ["position"] = {["x"] = tiles[a]["position"].x, ["y"] = tiles[a]["position"].y},["surface"] = surface}
 			end
 		end
 	end
@@ -1993,17 +1993,17 @@ function BuiltOffShore(event) 					-- Script Event On Built
 				-- IGNORE FIRST OFFSHORE TRIGGER UNLESS AAI IS ACTIVE
 				if game.active_mods["aai-industry"] then
 					OPentity = event.created_entity
-					global.Player = OPentity.last_user
+					storage.Player = OPentity.last_user
 				else
 					goto NOTVALID
 				end
 			elseif event.created_entity.name == "kr-electric-offshore-pump" then
 				OPentity = event.created_entity
-				global.Player = OPentity.last_user
+				storage.Player = OPentity.last_user
 			end
 		else
 			OPentity = event.created_entity
-			global.Player = OPentity.last_user
+			storage.Player = OPentity.last_user
 		end
 	else
 		goto NOTVALID
@@ -2013,27 +2013,27 @@ function BuiltOffShore(event) 					-- Script Event On Built
 		OPsurface = OPentity.surface													-- Variable for e.Surface
 		OPdirection = OPentity.direction												-- Variable for OPentity.direction
 		OPforce = OPentity.force.name
-		global.OPLocate[#global.OPLocate+1] = {["entity"] = OPentity,["position"] = {["x"] = OPposition.x, ["y"] = OPposition.y},["spritepos"] = {["x"] = OPposition.x, ["y"] = OPposition.y},["surface"] = OPsurface,["direction"] = OPdirection,["tile"] = nil, ["Active"] = 0, ["WA"] = 0, ["force"] = OPforce}
+		storage.OPLocate[#storage.OPLocate+1] = {["entity"] = OPentity,["position"] = {["x"] = OPposition.x, ["y"] = OPposition.y},["spritepos"] = {["x"] = OPposition.x, ["y"] = OPposition.y},["surface"] = OPsurface,["direction"] = OPdirection,["tile"] = nil, ["Active"] = 0, ["WA"] = 0, ["force"] = OPforce}
 		if OPdirection == 0 then -- North
-			global.OPLocate[#global.OPLocate]["position"]["y"] = OPposition.y - 1
+			storage.OPLocate[#storage.OPLocate]["position"]["y"] = OPposition.y - 1
 		elseif OPdirection == 2 then -- East
-			global.OPLocate[#global.OPLocate]["position"]["x"] = OPposition.x + 1
+			storage.OPLocate[#storage.OPLocate]["position"]["x"] = OPposition.x + 1
 		elseif OPdirection == 4 then -- South
-			global.OPLocate[#global.OPLocate]["position"]["y"] = OPposition.y + 1
+			storage.OPLocate[#storage.OPLocate]["position"]["y"] = OPposition.y + 1
 		elseif OPdirection == 6 then -- West
-			global.OPLocate[#global.OPLocate]["position"]["x"] = OPposition.x - 1
+			storage.OPLocate[#storage.OPLocate]["position"]["x"] = OPposition.x - 1
 		end
-		tile = OPsurface.get_tile(global.OPLocate[#global.OPLocate]["position"]["x"],global.OPLocate[#global.OPLocate]["position"]["y"]).name
+		tile = OPsurface.get_tile(storage.OPLocate[#storage.OPLocate]["position"]["x"],storage.OPLocate[#storage.OPLocate]["position"]["y"]).name
 		CorrectedFluid(tile)
-		global.OPLocate[#global.OPLocate]["tile"] = correctedtile
-		global.Type = 1
+		storage.OPLocate[#storage.OPLocate]["tile"] = correctedtile
+		storage.Type = 1
 		if CorrectPump() ~= false then
 			OffshoreForce(OPforce,false)
 			GlobalWaterArea()
 		else
-			table.remove(global.OPLocate,#global.OPLocate)
+			table.remove(storage.OPLocate,#storage.OPLocate)
 		end
-		global.Type = 0
+		storage.Type = 0
 	elseif OPentity.name == "offshore-drain" then
 		ODentity = event.created_entity
 		ODposition = ODentity.position
@@ -2042,15 +2042,15 @@ function BuiltOffShore(event) 					-- Script Event On Built
 		ODforce = ODentity.force.name
 		tile = ODsurface.get_tile(ODposition.x,ODposition.y).name
 		CorrectedFluid(tile)
-		global.ODLocate[#global.ODLocate+1] = {["entity"] = ODentity,["position"] = {["x"] = ODposition.x, ["y"] = ODposition.y},["surface"] = ODsurface,["direction"] = ODdirection, ["tile"] = correctedtile, ["PipeFluid"] = nil, ["Active"] = 0, ["WA"] = 0, ["force"] = ODforce}
-		global.Type = 2
+		storage.ODLocate[#storage.ODLocate+1] = {["entity"] = ODentity,["position"] = {["x"] = ODposition.x, ["y"] = ODposition.y},["surface"] = ODsurface,["direction"] = ODdirection, ["tile"] = correctedtile, ["PipeFluid"] = nil, ["Active"] = 0, ["WA"] = 0, ["force"] = ODforce}
+		storage.Type = 2
 		GlobalWaterArea()
-		if global.ODRemoved == false then
+		if storage.ODRemoved == false then
 			OffshoreForce(false,ODforce)
 		else
-			global.ODRemoved = false
+			storage.ODRemoved = false
 		end
-		global.Type = 0
+		storage.Type = 0
 	elseif OPentity.name =="pumpjack" or event.entity ~= nil and OPentity.name =="pumpjack" then
 		if event.created_entity.valid == true then
 			FPentity = event.created_entity
@@ -2060,11 +2060,11 @@ function BuiltOffShore(event) 					-- Script Event On Built
 		FPposition = FPentity.position	
 		FPsurface = FPentity.surface
 		FPforce = FPentity.force.name
-		global.FluidProducers[#global.FluidProducers+1] = {["entity"] = FPentity, ["position"] = {["x"] = FPposition.x , ["y"] = FPposition.y}, ["surface"] = FPsurface, ["FluidType"] = nil, ["LastAmount"] = 0, ["force"] = FPforce}
+		storage.FluidProducers[#storage.FluidProducers+1] = {["entity"] = FPentity, ["position"] = {["x"] = FPposition.x , ["y"] = FPposition.y}, ["surface"] = FPsurface, ["FluidType"] = nil, ["LastAmount"] = 0, ["force"] = FPforce}
 	else
 		--game.print("Not Built A Offshore Pump")									-- If Not Offshore Pump then print Bad Times
 	end
-	global.Type = 0
+	storage.Type = 0
 	::NOTVALID::
 end 
 
@@ -2074,9 +2074,9 @@ function DestroyedOffShore(event) 			-- Script Event On Player Mined
 		DOentity = event.entity
 		DOposition = DOentity.position
 		DOforce = DOentity.force.name
-		global.Type = 1
+		storage.Type = 1
 		DestroyOffshore()
-		global.Type = 0
+		storage.Type = 0
 	elseif event.entity.name == "offshore-drain" then
 		DOentity = event.entity
 		-- if DOentity.neighbours[1][1] and DOentity.neighbours[1][1].get_fluid_count() ~= 0 then
@@ -2084,61 +2084,61 @@ function DestroyedOffShore(event) 			-- Script Event On Player Mined
 		-- end
 		DOposition = DOentity.position
 		DOforce = DOentity.force.name
-		global.Type = 2
+		storage.Type = 2
 		DestroyOffshore()
-		global.Type = 0
+		storage.Type = 0
 	elseif event.entity.name == "pumpjack" then
 		DOentity = event.entity
 		DOposition = DOentity.position
 		DOforce = DOentity.force.name
-		global.Type = 3
+		storage.Type = 3
 		DestroyOffshore()
-		global.Type = 0
+		storage.Type = 0
 	end
 end
 
 function DestroyOffshore()
-	if global.Type == 1 then
-		PTYPE = global.OPLocate
-		PTYPEL = #global.OPLocate
+	if storage.Type == 1 then
+		PTYPE = storage.OPLocate
+		PTYPEL = #storage.OPLocate
 		PFORCE = DOforce
-	elseif global.Type == 2 then
-		PTYPE = global.ODLocate
-		PTYPEL = #global.ODLocate
+	elseif storage.Type == 2 then
+		PTYPE = storage.ODLocate
+		PTYPEL = #storage.ODLocate
 		PFORCE = DOforce
-	elseif global.Type == 3 then
-		PTYPE = global.FluidProducers
-		PTYPEL = #global.FluidProducers
+	elseif storage.Type == 3 then
+		PTYPE = storage.FluidProducers
+		PTYPEL = #storage.FluidProducers
 		PFORCE = DOforce
 	end	
 	local DOPosX = DOposition.x
 	local DOPosY = DOposition.y
-	local WGA = global.WaterGlobalArea
-	local OPF = global.PlayerForces
+	local WGA = storage.WaterGlobalArea
+	local OPF = storage.PlayerForces
 	for a = PTYPEL, 1, -1 do
-		if global.Type == 1 then
+		if storage.Type == 1 then
 			OPosX = PTYPE[a]["spritepos"]["x"]
 			OPosY = PTYPE[a]["spritepos"]["y"]
-		elseif global.Type == 2 then
+		elseif storage.Type == 2 then
 			OPosX = PTYPE[a]["position"]["x"]			
 			OPosY = PTYPE[a]["position"]["y"]
 		end
 		if DOPosX == OPosX then
 			if DOPosY == OPosY then
-				if global.Type == 1 then
+				if storage.Type == 1 then
 					local OWA = PTYPE[a]["WA"]
 					for b = 1, #WGA, 1 do	
-						if #global.WaterGlobalArea ~= 0 and WGA ~= 0 and WGA[b]["WGAID"] == OWA then
-							for c = 1, #global.WaterGlobalArea[b]["OPs"], 1 do
-								if global.WaterGlobalArea[b]["OPs"][c]["force"] == PFORCE then
-									global.WaterGlobalArea[b]["OPs"][c]["count"] = global.WaterGlobalArea[b]["OPs"][c]["count"] - 1
+						if #storage.WaterGlobalArea ~= 0 and WGA ~= 0 and WGA[b]["WGAID"] == OWA then
+							for c = 1, #storage.WaterGlobalArea[b]["OPs"], 1 do
+								if storage.WaterGlobalArea[b]["OPs"][c]["force"] == PFORCE then
+									storage.WaterGlobalArea[b]["OPs"][c]["count"] = storage.WaterGlobalArea[b]["OPs"][c]["count"] - 1
 								end
 							end
 						end					
 						if PTYPE[a]["Active"] == 1 and WGA ~= 0 and WGA[b]["WGAID"] == OWA then
-							for c = 1, #global.WaterGlobalArea[b]["OPs"], 1 do
-								if global.WaterGlobalArea[b]["OPsA"][c]["force"] == PFORCE then
-									global.WaterGlobalArea[b]["OPsA"][c]["count"] = global.WaterGlobalArea[b]["OPsA"][c]["count"] - 1
+							for c = 1, #storage.WaterGlobalArea[b]["OPs"], 1 do
+								if storage.WaterGlobalArea[b]["OPsA"][c]["force"] == PFORCE then
+									storage.WaterGlobalArea[b]["OPsA"][c]["count"] = storage.WaterGlobalArea[b]["OPsA"][c]["count"] - 1
 									ActiveOPs = ActiveOPs - 1
 								end
 							end
@@ -2149,20 +2149,20 @@ function DestroyOffshore()
 							OPF[c]["OPcount"] = OPF[c]["OPcount"] - 1
 						end
 					end
-				elseif global.Type == 2 then
+				elseif storage.Type == 2 then
 					local OWA = PTYPE[a]["WA"]
 					for b = 1, #WGA, 1 do
-						if #global.WaterGlobalArea ~= 0 and WGA ~= 0 and WGA[b]["WGAID"] == OWA then
-							for c = 1, #global.WaterGlobalArea[b]["ODs"], 1 do
-								if global.WaterGlobalArea[b]["ODs"][c]["force"] == PFORCE then
-									global.WaterGlobalArea[b]["ODs"][c]["count"] = global.WaterGlobalArea[b]["ODs"][c]["count"] - 1
+						if #storage.WaterGlobalArea ~= 0 and WGA ~= 0 and WGA[b]["WGAID"] == OWA then
+							for c = 1, #storage.WaterGlobalArea[b]["ODs"], 1 do
+								if storage.WaterGlobalArea[b]["ODs"][c]["force"] == PFORCE then
+									storage.WaterGlobalArea[b]["ODs"][c]["count"] = storage.WaterGlobalArea[b]["ODs"][c]["count"] - 1
 								end
 							end
 						end					
 						if PTYPE[a]["Active"] == 1 and WGA ~= 0 and WGA[b]["WGAID"] == OWA then
-							for c = 1, #global.WaterGlobalArea[b]["ODs"], 1 do
-								if global.WaterGlobalArea[b]["ODsA"][c]["force"] == PFORCE then
-									global.WaterGlobalArea[b]["ODsA"][c]["count"] = global.WaterGlobalArea[b]["ODsA"][c]["count"] - 1
+							for c = 1, #storage.WaterGlobalArea[b]["ODs"], 1 do
+								if storage.WaterGlobalArea[b]["ODsA"][c]["force"] == PFORCE then
+									storage.WaterGlobalArea[b]["ODsA"][c]["count"] = storage.WaterGlobalArea[b]["ODsA"][c]["count"] - 1
 									ActiveODs = ActiveODs - 1
 								end
 							end
@@ -2184,335 +2184,335 @@ function UpdateMod(data)
 	if data.mod_changes.WaterAsAResource then
 		oldVer = data.mod_changes.WaterAsAResource.old_version
 		if oldVer == nil then
-			-- global.LastWaterFlow = math.ceil(game.players[1].force.fluid_production_statistics.get_input_count("water"))
-			-- global.LastCrudeFlow = math.ceil(game.players[1].force.fluid_production_statistics.get_input_count("crude-oil"))
+			-- storage.LastWaterFlow = math.ceil(game.players[1].force.fluid_production_statistics.get_input_count("water"))
+			-- storage.LastCrudeFlow = math.ceil(game.players[1].force.fluid_production_statistics.get_input_count("crude-oil"))
 			Players = #game.players
 			if Players <= 1 then
-				if global.PlayerForces == nil then
+				if storage.PlayerForces == nil then
 					Force = game.players[1].force.name
-					global.PlayerForces[#global.PlayerForces+1] = {["name"] = Force, ["OPcount"] = 0, ["ODcount"] = 0, ["WaterFlow"] = 0, ["LastWaterFlow"] = 0, ["CrudeFlow"] = 0, ["LastCrudeFlow"] = 0}
-					global.PlayerForces[#global.PlayerForces]["LastWaterFlow"] = math.ceil(game.forces[global.PlayerForces[#global.PlayerForces]["name"]].fluid_production_statistics.get_input_count("water"))
-					global.PlayerForces[#global.PlayerForces]["LastCrudeFlow"] = math.ceil(game.forces[global.PlayerForces[#global.PlayerForces]["name"]].fluid_production_statistics.get_input_count("crude-oil"))
+					storage.PlayerForces[#storage.PlayerForces+1] = {["name"] = Force, ["OPcount"] = 0, ["ODcount"] = 0, ["WaterFlow"] = 0, ["LastWaterFlow"] = 0, ["CrudeFlow"] = 0, ["LastCrudeFlow"] = 0}
+					storage.PlayerForces[#storage.PlayerForces]["LastWaterFlow"] = math.ceil(game.forces[storage.PlayerForces[#storage.PlayerForces]["name"]].fluid_production_statistics.get_input_count("water"))
+					storage.PlayerForces[#storage.PlayerForces]["LastCrudeFlow"] = math.ceil(game.forces[storage.PlayerForces[#storage.PlayerForces]["name"]].fluid_production_statistics.get_input_count("crude-oil"))
 				end
 			else
 				for a = 1, Players, 1 do
 					Force = game.players[a].force.name
-					if global.PlayerForces == nil then
-						global.PlayerForces[#global.PlayerForces+1] = {["name"] = Force, ["OPcount"] = 0, ["ODcount"] = 0, ["WaterFlow"] = 0, ["LastWaterFlow"] = 0, ["CrudeFlow"] = 0, ["LastCrudeFlow"] = 0}
-						global.PlayerForces[#global.PlayerForces]["LastWaterFlow"] = math.ceil(game.forces[global.PlayerForces[#global.PlayerForces]["name"]].fluid_production_statistics.get_input_count("water"))
-						global.PlayerForces[#global.PlayerForces]["LastCrudeFlow"] = math.ceil(game.forces[global.PlayerForces[#global.PlayerForces]["name"]].fluid_production_statistics.get_input_count("crude-oil"))
+					if storage.PlayerForces == nil then
+						storage.PlayerForces[#storage.PlayerForces+1] = {["name"] = Force, ["OPcount"] = 0, ["ODcount"] = 0, ["WaterFlow"] = 0, ["LastWaterFlow"] = 0, ["CrudeFlow"] = 0, ["LastCrudeFlow"] = 0}
+						storage.PlayerForces[#storage.PlayerForces]["LastWaterFlow"] = math.ceil(game.forces[storage.PlayerForces[#storage.PlayerForces]["name"]].fluid_production_statistics.get_input_count("water"))
+						storage.PlayerForces[#storage.PlayerForces]["LastCrudeFlow"] = math.ceil(game.forces[storage.PlayerForces[#storage.PlayerForces]["name"]].fluid_production_statistics.get_input_count("crude-oil"))
 					else
 						NewForce = true
-						for c = 1, #global.PlayerForces, 1 do
-							if global.PlayerForces[c]["force"] == Force then
+						for c = 1, #storage.PlayerForces, 1 do
+							if storage.PlayerForces[c]["force"] == Force then
 								NewForce = false
 							end
 						end
 						if NewForce == true then
-							global.PlayerForces[#global.PlayerForces+1] = {["name"] = Force, ["OPcount"] = 0, ["ODcount"] = 0, ["WaterFlow"] = 0, ["LastWaterFlow"] = 0, ["CrudeFlow"] = 0, ["LastCrudeFlow"] = 0}
-							global.PlayerForces[#global.PlayerForces]["LastWaterFlow"] = math.ceil(game.forces[global.PlayerForces[#global.PlayerForces]["name"]].fluid_production_statistics.get_input_count("water"))
-							global.PlayerForces[#global.PlayerForces]["LastCrudeFlow"] = math.ceil(game.forces[global.PlayerForces[#global.PlayerForces]["name"]].fluid_production_statistics.get_input_count("crude-oil"))
+							storage.PlayerForces[#storage.PlayerForces+1] = {["name"] = Force, ["OPcount"] = 0, ["ODcount"] = 0, ["WaterFlow"] = 0, ["LastWaterFlow"] = 0, ["CrudeFlow"] = 0, ["LastCrudeFlow"] = 0}
+							storage.PlayerForces[#storage.PlayerForces]["LastWaterFlow"] = math.ceil(game.forces[storage.PlayerForces[#storage.PlayerForces]["name"]].fluid_production_statistics.get_input_count("water"))
+							storage.PlayerForces[#storage.PlayerForces]["LastCrudeFlow"] = math.ceil(game.forces[storage.PlayerForces[#storage.PlayerForces]["name"]].fluid_production_statistics.get_input_count("crude-oil"))
 						end
 					end
 				end
 			end
-			global.InstallTick = game.tick
+			storage.InstallTick = game.tick
 		else
 			--game.print("Water As A Resource: Updating Mod Internals")
 			Globals()
 			LinkGlobals()
 							
-			if #global.WaterGlobalArea > 0 then
-				for a = 1, #global.WaterGlobalArea, 1 do
-					if global.WaterGlobalArea[a]["WGAID"] == nil then
-						global.WaterGlobalArea[a]["WGAID"] = a
+			if #storage.WaterGlobalArea > 0 then
+				for a = 1, #storage.WaterGlobalArea, 1 do
+					if storage.WaterGlobalArea[a]["WGAID"] == nil then
+						storage.WaterGlobalArea[a]["WGAID"] = a
 					end
-					local Count = global.WaterGlobalArea[a]["ShallowWater"] + global.WaterGlobalArea[a]["DeepWater"]
-					if global.WaterGlobalArea[a]["ShallowWater-Shallow"] == nil then
-						global.WaterGlobalArea[a]["ShallowWater-Shallow"] = 0
+					local Count = storage.WaterGlobalArea[a]["ShallowWater"] + storage.WaterGlobalArea[a]["DeepWater"]
+					if storage.WaterGlobalArea[a]["ShallowWater-Shallow"] == nil then
+						storage.WaterGlobalArea[a]["ShallowWater-Shallow"] = 0
 					end
-					if global.WaterGlobalArea[a]["ShallowWater-Mud"] == nil then
-						global.WaterGlobalArea[a]["ShallowWater-Mud"] = 0
+					if storage.WaterGlobalArea[a]["ShallowWater-Mud"] == nil then
+						storage.WaterGlobalArea[a]["ShallowWater-Mud"] = 0
 					end
-					if global.WaterGlobalArea[a]["WtrName"] == nil or global.WaterGlobalArea[a]["WtrName"] == "None" then
-						global.WaterGlobalArea[a]["WtrName"] = a
+					if storage.WaterGlobalArea[a]["WtrName"] == nil or storage.WaterGlobalArea[a]["WtrName"] == "None" then
+						storage.WaterGlobalArea[a]["WtrName"] = a
 					end
-					if global.WaterGlobalArea[a]["AmountBonusValue"] == nil or global.WaterGlobalArea[a]["AmountBonusValue"] == 0 then
+					if storage.WaterGlobalArea[a]["AmountBonusValue"] == nil or storage.WaterGlobalArea[a]["AmountBonusValue"] == 0 then
 						if Count < 4 then
-							global.WaterGlobalArea[a]["AmountBonusValue"] = 0.01
+							storage.WaterGlobalArea[a]["AmountBonusValue"] = 0.01
 						elseif Count == 4 then
-							global.WaterGlobalArea[a]["AmountBonusValue"] = 0.5
+							storage.WaterGlobalArea[a]["AmountBonusValue"] = 0.5
 						elseif Count >4 and Count <= 200 then
-							global.WaterGlobalArea[a]["AmountBonusValue"] = 1
+							storage.WaterGlobalArea[a]["AmountBonusValue"] = 1
 						elseif Count > 200 and Count <= 6000 then
-							global.WaterGlobalArea[a]["AmountBonusValue"] = 1.5
+							storage.WaterGlobalArea[a]["AmountBonusValue"] = 1.5
 						elseif Count > 6000 and Count <= 60000 then
-							global.WaterGlobalArea[a]["AmountBonusValue"] = 2
+							storage.WaterGlobalArea[a]["AmountBonusValue"] = 2
 						elseif Count > 60000 and Count <= 600000 then
-							global.WaterGlobalArea[a]["AmountBonusValue"] = 2.5
+							storage.WaterGlobalArea[a]["AmountBonusValue"] = 2.5
 						else
-							global.WaterGlobalArea[a]["AmountBonusValue"] = 3
+							storage.WaterGlobalArea[a]["AmountBonusValue"] = 3
 						end
 					end
-					if global.WaterGlobalArea[a]["WtrUsed"] == nil then
-						global.WaterGlobalArea[a]["WtrUsed"] = (global.WaterGlobalArea[a]["AmountWtr"] * global.WaterGlobalArea[a]["Percent"]) / 100
+					if storage.WaterGlobalArea[a]["WtrUsed"] == nil then
+						storage.WaterGlobalArea[a]["WtrUsed"] = (storage.WaterGlobalArea[a]["AmountWtr"] * storage.WaterGlobalArea[a]["Percent"]) / 100
 					end
-					-- if global.WaterGlobalArea[a]["OPsA"] == nil or global.WaterGlobalArea[a]["OPsA"] < 0 then
-						-- global.WaterGlobalArea[a]["OPsA"] = 0
+					-- if storage.WaterGlobalArea[a]["OPsA"] == nil or storage.WaterGlobalArea[a]["OPsA"] < 0 then
+						-- storage.WaterGlobalArea[a]["OPsA"] = 0
 					-- end
-					-- if global.WaterGlobalArea[a]["WtrAdd"] == nil then
-						-- global.WaterGlobalArea[a]["WtrAdd"] = 0
+					-- if storage.WaterGlobalArea[a]["WtrAdd"] == nil then
+						-- storage.WaterGlobalArea[a]["WtrAdd"] = 0
 					-- end
-					-- if global.WaterGlobalArea[a]["ODsA"] == nil or global.WaterGlobalArea[a]["ODsA"] < 0 then
-						-- global.WaterGlobalArea[a]["ODsA"] = 0
+					-- if storage.WaterGlobalArea[a]["ODsA"] == nil or storage.WaterGlobalArea[a]["ODsA"] < 0 then
+						-- storage.WaterGlobalArea[a]["ODsA"] = 0
 					-- end
-					-- if global.WaterGlobalArea[a]["ODs"] == nil then
-						-- global.WaterGlobalArea[a]["ODs"] = 0
+					-- if storage.WaterGlobalArea[a]["ODs"] == nil then
+						-- storage.WaterGlobalArea[a]["ODs"] = 0
 					-- end
-					if global.WaterGlobalArea[a]["PercentPrev"] == nil then
-						global.WaterGlobalArea[a]["PercentPrev"] = global.WaterGlobalArea[a]["Percent"]
+					if storage.WaterGlobalArea[a]["PercentPrev"] == nil then
+						storage.WaterGlobalArea[a]["PercentPrev"] = storage.WaterGlobalArea[a]["Percent"]
 					end
-					if global.WaterGlobalArea[a]["Depleted"] == 1 then
-						global.WaterGlobalArea[a]["FluidType"] = "None"
-						global.WaterGlobalArea[a]["Percent"] = 100
-						global.WaterGlobalArea[a]["PercentPrev"] = 100
-						global.WaterGlobalArea[a]["WtrUsed"] = global.WaterGlobalArea[a]["AmountWtr"]
+					if storage.WaterGlobalArea[a]["Depleted"] == 1 then
+						storage.WaterGlobalArea[a]["FluidType"] = "None"
+						storage.WaterGlobalArea[a]["Percent"] = 100
+						storage.WaterGlobalArea[a]["PercentPrev"] = 100
+						storage.WaterGlobalArea[a]["WtrUsed"] = storage.WaterGlobalArea[a]["AmountWtr"]
 					end
-					if global.WaterGlobalArea[a]["ToSearch"] == nil or global.WaterGlobalArea[a]["ToSearch"] == 0 then
-						global.WaterGlobalArea[a]["ToSearch"] = nil
+					if storage.WaterGlobalArea[a]["ToSearch"] == nil or storage.WaterGlobalArea[a]["ToSearch"] == 0 then
+						storage.WaterGlobalArea[a]["ToSearch"] = nil
 					end
-					if global.WaterGlobalArea[a]["HasSearched"] == nil or global.WaterGlobalArea[a]["HasSearched"] == 0 then
-						global.WaterGlobalArea[a]["HasSearched"] = nil
+					if storage.WaterGlobalArea[a]["HasSearched"] == nil or storage.WaterGlobalArea[a]["HasSearched"] == 0 then
+						storage.WaterGlobalArea[a]["HasSearched"] = nil
 					end
-					if global.WaterGlobalArea[a]["TilesSet"] == nil then
-						global.WaterGlobalArea[a]["TilesSet"] = "N"
+					if storage.WaterGlobalArea[a]["TilesSet"] == nil then
+						storage.WaterGlobalArea[a]["TilesSet"] = "N"
 					end
-					if global.WaterGlobalArea[a]["Percent"] < 50 then
-						global.WaterGlobalArea[a]["Fired50"] = false
-						global.WaterGlobalArea[a]["Fired75"] = false
-						global.WaterGlobalArea[a]["Fired90"] = false
-						global.WaterGlobalArea[a]["Fired95"] = false
-						global.WaterGlobalArea[a]["Fired97"] = false
-						global.WaterGlobalArea[a]["Fired98"] = false
-						global.WaterGlobalArea[a]["Fired99"] = false
+					if storage.WaterGlobalArea[a]["Percent"] < 50 then
+						storage.WaterGlobalArea[a]["Fired50"] = false
+						storage.WaterGlobalArea[a]["Fired75"] = false
+						storage.WaterGlobalArea[a]["Fired90"] = false
+						storage.WaterGlobalArea[a]["Fired95"] = false
+						storage.WaterGlobalArea[a]["Fired97"] = false
+						storage.WaterGlobalArea[a]["Fired98"] = false
+						storage.WaterGlobalArea[a]["Fired99"] = false
 					end
-					if global.WaterGlobalArea[a]["Percent"] >= 50 then
-						global.WaterGlobalArea[a]["Fired50"] = true
+					if storage.WaterGlobalArea[a]["Percent"] >= 50 then
+						storage.WaterGlobalArea[a]["Fired50"] = true
 					end
-					if global.WaterGlobalArea[a]["Percent"] >= 75 then
-						global.WaterGlobalArea[a]["Fired75"] = false
+					if storage.WaterGlobalArea[a]["Percent"] >= 75 then
+						storage.WaterGlobalArea[a]["Fired75"] = false
 					end
-					if global.WaterGlobalArea[a]["Percent"] >= 90 then
-						global.WaterGlobalArea[a]["Fired90"] = true
+					if storage.WaterGlobalArea[a]["Percent"] >= 90 then
+						storage.WaterGlobalArea[a]["Fired90"] = true
 					end
-					if global.WaterGlobalArea[a]["Percent"] >= 95 then
-						global.WaterGlobalArea[a]["Fired95"] = true
+					if storage.WaterGlobalArea[a]["Percent"] >= 95 then
+						storage.WaterGlobalArea[a]["Fired95"] = true
 					end
-					if global.WaterGlobalArea[a]["Percent"] >= 97 then
-						global.WaterGlobalArea[a]["Fired97"] = true
+					if storage.WaterGlobalArea[a]["Percent"] >= 97 then
+						storage.WaterGlobalArea[a]["Fired97"] = true
 					end
-					if global.WaterGlobalArea[a]["Percent"] >= 98 then
-						global.WaterGlobalArea[a]["Fired98"] = true
+					if storage.WaterGlobalArea[a]["Percent"] >= 98 then
+						storage.WaterGlobalArea[a]["Fired98"] = true
 					end
-					if global.WaterGlobalArea[a]["Percent"] >= 99 then
-						global.WaterGlobalArea[a]["Fired99"] = true
+					if storage.WaterGlobalArea[a]["Percent"] >= 99 then
+						storage.WaterGlobalArea[a]["Fired99"] = true
 					end
-					if global.WaterGlobalArea[a]["BTFE"] == nil then
-						global.WaterGlobalArea[a]["BTFE"] = 0
+					if storage.WaterGlobalArea[a]["BTFE"] == nil then
+						storage.WaterGlobalArea[a]["BTFE"] = 0
 					end
-					global.WaterGlobalArea[a]["BTF"] = Count
+					storage.WaterGlobalArea[a]["BTF"] = Count
 					for b = 1, Count, 1 do
-						if global.WaterGlobalArea[a]["FluidType"] == nil or global.WaterGlobalArea[a]["FluidType"] == "None" then
-							if #global.WaterGlobalArea[a]["WaterRepArea"] > 0 then
-								tile = global.WaterGlobalArea[a]["WaterRepArea"][b]["name"]
+						if storage.WaterGlobalArea[a]["FluidType"] == nil or storage.WaterGlobalArea[a]["FluidType"] == "None" then
+							if #storage.WaterGlobalArea[a]["WaterRepArea"] > 0 then
+								tile = storage.WaterGlobalArea[a]["WaterRepArea"][b]["name"]
 							else
-								tile = global.WaterGlobalArea[a]["WaterEdgeArea"][1]["name"]
+								tile = storage.WaterGlobalArea[a]["WaterEdgeArea"][1]["name"]
 							end
 							if tile == "water" or tile == "deepwater" or tile == "lake-shallow" then
-								global.WaterGlobalArea[a]["FluidType"] = "water"
+								storage.WaterGlobalArea[a]["FluidType"] = "water"
 							elseif tile == "crude-oil" or tile == "crude-oil-deep" or tile == "lake-deep" then
-								global.WaterGlobalArea[a]["FluidType"] = "crude-oil"
-							elseif global.WaterGlobalArea[a]["FluidType"] == nil then
-								global.WaterGlobalArea[a]["FluidType"] = "None"
+								storage.WaterGlobalArea[a]["FluidType"] = "crude-oil"
+							elseif storage.WaterGlobalArea[a]["FluidType"] == nil then
+								storage.WaterGlobalArea[a]["FluidType"] = "None"
 							end
 						end
 					end
-					if global.WaterGlobalArea[a]["LoopCount"] == nil then
-						global.WaterGlobalArea[a]["LoopCount"] = 0
+					if storage.WaterGlobalArea[a]["LoopCount"] == nil then
+						storage.WaterGlobalArea[a]["LoopCount"] = 0
 					end
-					if global.WaterGlobalArea[a]["RegenAmount"] == nil then
-						global.WaterGlobalArea[a]["RegenAmount"] = 0
+					if storage.WaterGlobalArea[a]["RegenAmount"] == nil then
+						storage.WaterGlobalArea[a]["RegenAmount"] = 0
 					end
-					if global.WaterGlobalArea[a]["Percent"] >= 80 and global.WaterGlobalArea[a]["Percent"] < 100 then
-						local TPP = math.floor((global.WaterGlobalArea[a]["ShallowWater"] + global.WaterGlobalArea[a]["DeepWater"]) / 20)
-						local PF = math.floor(global.WaterGlobalArea[a]["Percent"] - 80) / 0.1
+					if storage.WaterGlobalArea[a]["Percent"] >= 80 and storage.WaterGlobalArea[a]["Percent"] < 100 then
+						local TPP = math.floor((storage.WaterGlobalArea[a]["ShallowWater"] + storage.WaterGlobalArea[a]["DeepWater"]) / 20)
+						local PF = math.floor(storage.WaterGlobalArea[a]["Percent"] - 80) / 0.1
 						local Tiles = TPP * (PF/100)
-						global.WaterGlobalArea[a]["BTF"] = global.WaterGlobalArea[a]["BTF"] - Tiles
+						storage.WaterGlobalArea[a]["BTF"] = storage.WaterGlobalArea[a]["BTF"] - Tiles
 					else
-						global.WaterGlobalArea[a]["BTF"] = Count
+						storage.WaterGlobalArea[a]["BTF"] = Count
 					end
-					if global.WaterGlobalArea[a]["WaterEdgeArea"] == nil then
-						global.WaterGlobalArea[a]["WaterEdgeArea"] = {}
+					if storage.WaterGlobalArea[a]["WaterEdgeArea"] == nil then
+						storage.WaterGlobalArea[a]["WaterEdgeArea"] = {}
 					end
 					for b = 1, #game.surfaces, 1 do
-						if #global.WaterGlobalArea[a]["WaterRepArea"] > 0 then
-							pos = global.WaterGlobalArea[a]["WaterRepArea"][1]["position"]
+						if #storage.WaterGlobalArea[a]["WaterRepArea"] > 0 then
+							pos = storage.WaterGlobalArea[a]["WaterRepArea"][1]["position"]
 						else
-							pos = global.WaterGlobalArea[a]["WaterEdgeArea"][1]["position"]
+							pos = storage.WaterGlobalArea[a]["WaterEdgeArea"][1]["position"]
 						end
 						local tile = game.surfaces[b].get_tile(pos)
 						if tile.valid == true then
 							local tilename = tile.name
 							if tilename == "water" or tilename =="deepwater" or tilename=="crude-oil" or tilename=="crude-oil-deep" or tilename=="sand-3" or tilename=="dry-dirt" or tilename=="lake-shallow" or tilename=="lake-deep" then
-								if global.WaterGlobalArea[a]["Surface"] == nil then
-									global.WaterGlobalArea[a]["Surface"] = game.surfaces[b]
+								if storage.WaterGlobalArea[a]["Surface"] == nil then
+									storage.WaterGlobalArea[a]["Surface"] = game.surfaces[b]
 								end
 							end	
 						end
 						for c = Count, 1 , -1 do
-							if #global.WaterGlobalArea[a]["WaterRepArea"] > 0 then
-								posc = global.WaterGlobalArea[a]["WaterRepArea"][c]["position"]
+							if #storage.WaterGlobalArea[a]["WaterRepArea"] > 0 then
+								posc = storage.WaterGlobalArea[a]["WaterRepArea"][c]["position"]
 								local tile = game.surfaces[b].get_tile(posc)
 								if tile.valid == true then
 									local tilename = tile.name
 									if tilename == "water" or tilename =="deepwater" or tilename=="crude-oil" or tilename=="crude-oil-deep" then
-										if global.WaterGlobalArea[a]["WaterRepArea"][c]["OriginalName"] == nil then
-											global.WaterGlobalArea[a]["WaterRepArea"][c]["OriginalName"] = tilename
+										if storage.WaterGlobalArea[a]["WaterRepArea"][c]["OriginalName"] == nil then
+											storage.WaterGlobalArea[a]["WaterRepArea"][c]["OriginalName"] = tilename
 										end
 									end
 								end
 							end
 						end
 					end
-					if #global.WaterGlobalArea[a]["WaterEdgeArea"] > 0 then
-						for b = 1, #global.WaterGlobalArea[a]["WaterEdgeArea"], 1 do
-							if global.WaterGlobalArea[a]["MinX"] == nil then 
-								global.WaterGlobalArea[a]["MinX"] = global.WaterGlobalArea[a]["WaterEdgeArea"][b]["x"]
-							elseif global.WaterGlobalArea[a]["MinX"] == 0 or global.WaterGlobalArea[a]["MinX"] > global.WaterGlobalArea[a]["WaterEdgeArea"][b]["position"]["x"] then
-								global.WaterGlobalArea[a]["MinX"] = global.WaterGlobalArea[a]["WaterEdgeArea"][b]["position"]["x"]
+					if #storage.WaterGlobalArea[a]["WaterEdgeArea"] > 0 then
+						for b = 1, #storage.WaterGlobalArea[a]["WaterEdgeArea"], 1 do
+							if storage.WaterGlobalArea[a]["MinX"] == nil then 
+								storage.WaterGlobalArea[a]["MinX"] = storage.WaterGlobalArea[a]["WaterEdgeArea"][b]["x"]
+							elseif storage.WaterGlobalArea[a]["MinX"] == 0 or storage.WaterGlobalArea[a]["MinX"] > storage.WaterGlobalArea[a]["WaterEdgeArea"][b]["position"]["x"] then
+								storage.WaterGlobalArea[a]["MinX"] = storage.WaterGlobalArea[a]["WaterEdgeArea"][b]["position"]["x"]
 							end
-							if global.WaterGlobalArea[a]["MaxX"] == nil then
-								global.WaterGlobalArea[a]["MaxX"] = global.WaterGlobalArea[a]["WaterEdgeArea"][b]["x"]
-							elseif global.WaterGlobalArea[a]["MaxX"] == 0 or global.WaterGlobalArea[a]["MaxX"] < global.WaterGlobalArea[a]["WaterEdgeArea"][b]["position"]["x"] then
-								global.WaterGlobalArea[a]["MaxX"] = global.WaterGlobalArea[a]["WaterEdgeArea"][b]["position"]["x"]
+							if storage.WaterGlobalArea[a]["MaxX"] == nil then
+								storage.WaterGlobalArea[a]["MaxX"] = storage.WaterGlobalArea[a]["WaterEdgeArea"][b]["x"]
+							elseif storage.WaterGlobalArea[a]["MaxX"] == 0 or storage.WaterGlobalArea[a]["MaxX"] < storage.WaterGlobalArea[a]["WaterEdgeArea"][b]["position"]["x"] then
+								storage.WaterGlobalArea[a]["MaxX"] = storage.WaterGlobalArea[a]["WaterEdgeArea"][b]["position"]["x"]
 							end
-							if global.WaterGlobalArea[a]["MinY"] == nil then
-								global.WaterGlobalArea[a]["MinY"] = global.WaterGlobalArea[a]["WaterEdgeArea"][b]["y"]
-							elseif global.WaterGlobalArea[a]["MinY"] == 0 or global.WaterGlobalArea[a]["MinY"] > global.WaterGlobalArea[a]["WaterEdgeArea"][b]["position"]["y"] then
-								global.WaterGlobalArea[a]["MinY"] = global.WaterGlobalArea[a]["WaterEdgeArea"][b]["position"]["y"]
+							if storage.WaterGlobalArea[a]["MinY"] == nil then
+								storage.WaterGlobalArea[a]["MinY"] = storage.WaterGlobalArea[a]["WaterEdgeArea"][b]["y"]
+							elseif storage.WaterGlobalArea[a]["MinY"] == 0 or storage.WaterGlobalArea[a]["MinY"] > storage.WaterGlobalArea[a]["WaterEdgeArea"][b]["position"]["y"] then
+								storage.WaterGlobalArea[a]["MinY"] = storage.WaterGlobalArea[a]["WaterEdgeArea"][b]["position"]["y"]
 							end
-							if global.WaterGlobalArea[a]["MaxY"] == nil then
-								global.WaterGlobalArea[a]["MaxY"] = global.WaterGlobalArea[a]["WaterEdgeArea"][b]["y"]
-							elseif global.WaterGlobalArea[a]["MaxY"] == 0 or global.WaterGlobalArea[a]["MaxY"] < global.WaterGlobalArea[a]["WaterEdgeArea"][b]["position"]["y"] then
-								global.WaterGlobalArea[a]["MaxY"] = global.WaterGlobalArea[a]["WaterEdgeArea"][b]["position"]["y"]
+							if storage.WaterGlobalArea[a]["MaxY"] == nil then
+								storage.WaterGlobalArea[a]["MaxY"] = storage.WaterGlobalArea[a]["WaterEdgeArea"][b]["y"]
+							elseif storage.WaterGlobalArea[a]["MaxY"] == 0 or storage.WaterGlobalArea[a]["MaxY"] < storage.WaterGlobalArea[a]["WaterEdgeArea"][b]["position"]["y"] then
+								storage.WaterGlobalArea[a]["MaxY"] = storage.WaterGlobalArea[a]["WaterEdgeArea"][b]["position"]["y"]
 							end
 						end
-						local minx = global.WaterGlobalArea[a]["MinX"]
-						local maxx = global.WaterGlobalArea[a]["MaxX"]
-						local miny = global.WaterGlobalArea[a]["MinY"]
-						local maxy = global.WaterGlobalArea[a]["MaxY"]
-						global.WaterGlobalArea[a]["Hdif"] = maxx - minx
-						global.WaterGlobalArea[a]["Vdif"] = maxy - miny
-						global.WaterGlobalArea[a]["Hyp"] = math.sqrt(((maxx - minx)^2) + ((maxy - miny)^2))
+						local minx = storage.WaterGlobalArea[a]["MinX"]
+						local maxx = storage.WaterGlobalArea[a]["MaxX"]
+						local miny = storage.WaterGlobalArea[a]["MinY"]
+						local maxy = storage.WaterGlobalArea[a]["MaxY"]
+						storage.WaterGlobalArea[a]["Hdif"] = maxx - minx
+						storage.WaterGlobalArea[a]["Vdif"] = maxy - miny
+						storage.WaterGlobalArea[a]["Hyp"] = math.sqrt(((maxx - minx)^2) + ((maxy - miny)^2))
 					end
-					-- MapMarker = global.WaterGlobalArea[a]["MapMarker"]
-					-- if global.WaterGlobalArea[a]["MapMarkerPlaced"] == false then
-						-- global.WaterGlobalArea[a]["MapMarker"][1] = {["force"] = Force, ["placed"] = false,["icon"] = nil}
+					-- MapMarker = storage.WaterGlobalArea[a]["MapMarker"]
+					-- if storage.WaterGlobalArea[a]["MapMarkerPlaced"] == false then
+						-- storage.WaterGlobalArea[a]["MapMarker"][1] = {["force"] = Force, ["placed"] = false,["icon"] = nil}
 					-- else
-						-- global.WaterGlobalArea[a]["MapMarker"][1] = {["force"] = Force, ["placed"] = true,["icon"] = MapMarker}
+						-- storage.WaterGlobalArea[a]["MapMarker"][1] = {["force"] = Force, ["placed"] = true,["icon"] = MapMarker}
 					-- end
-					if global.WaterGlobalArea[a]["MapMarker"] ~= nil and global.WaterGlobalArea[a]["MapMarker"].valid == true then
-						global.WaterGlobalArea[a]["MapMarker"].destroy()
-						global.WaterGlobalArea[a]["MapMarkerPlaced"] = nil
+					if storage.WaterGlobalArea[a]["MapMarker"] ~= nil and storage.WaterGlobalArea[a]["MapMarker"].valid == true then
+						storage.WaterGlobalArea[a]["MapMarker"].destroy()
+						storage.WaterGlobalArea[a]["MapMarkerPlaced"] = nil
 					end
 				end
 			end
-			if #global.OPLocate > 0 then
-				for a = #global.OPLocate, 1, -1 do
-					if global.OPLocate[a]["OPposition"] ~= nil then
-						OPTilePosX = global.OPLocate[a]["OPposition"]["x"]
-						OPTilePosY = global.OPLocate[a]["OPposition"]["y"]
+			if #storage.OPLocate > 0 then
+				for a = #storage.OPLocate, 1, -1 do
+					if storage.OPLocate[a]["OPposition"] ~= nil then
+						OPTilePosX = storage.OPLocate[a]["OPposition"]["x"]
+						OPTilePosY = storage.OPLocate[a]["OPposition"]["y"]
 					else
-						OPTilePosX = global.OPLocate[a]["position"]["x"]
-						OPTilePosY = global.OPLocate[a]["position"]["y"]
+						OPTilePosX = storage.OPLocate[a]["position"]["x"]
+						OPTilePosY = storage.OPLocate[a]["position"]["y"]
 					end
-					for b = 1, #global.WaterGlobalArea, 1 do
-						if #global.WaterGlobalArea[b]["WaterRepArea"] > 0 then
-							CompTiles = global.WaterGlobalArea[b]["ShallowWater"] + global.WaterGlobalArea[b]["DeepWater"]
+					for b = 1, #storage.WaterGlobalArea, 1 do
+						if #storage.WaterGlobalArea[b]["WaterRepArea"] > 0 then
+							CompTiles = storage.WaterGlobalArea[b]["ShallowWater"] + storage.WaterGlobalArea[b]["DeepWater"]
 						else
-							CompTiles = #global.WaterGlobalArea[b]["WaterEdgeArea"]
+							CompTiles = #storage.WaterGlobalArea[b]["WaterEdgeArea"]
 						end
-						if global.OPLocate[a]["WA"] == nil or global.OPLocate[a]["WA"] == 0 then
+						if storage.OPLocate[a]["WA"] == nil or storage.OPLocate[a]["WA"] == 0 then
 							for c = CompTiles, 1, -1 do -- FOR EACH TILE in WATERAREA
-								if #global.WaterGlobalArea[b]["WaterRepArea"] > 0 then
-									WATilePosX = global.WaterGlobalArea[b]["WaterRepArea"][c]["position"]["x"]
-									WATilePosY = global.WaterGlobalArea[b]["WaterRepArea"][c]["position"]["y"]
+								if #storage.WaterGlobalArea[b]["WaterRepArea"] > 0 then
+									WATilePosX = storage.WaterGlobalArea[b]["WaterRepArea"][c]["position"]["x"]
+									WATilePosY = storage.WaterGlobalArea[b]["WaterRepArea"][c]["position"]["y"]
 								else
-									WATilePosX = global.WaterGlobalArea[b]["WaterEdgeArea"][c]["position"]["x"]								
-									WATilePosY = global.WaterGlobalArea[b]["WaterEdgeArea"][c]["position"]["y"]
+									WATilePosX = storage.WaterGlobalArea[b]["WaterEdgeArea"][c]["position"]["x"]								
+									WATilePosY = storage.WaterGlobalArea[b]["WaterEdgeArea"][c]["position"]["y"]
 								end
 								if WATilePosX == OPTilePosX then
 									if WATilePosY == OPTilePosY then
-										if #global.WaterGlobalArea[b]["WaterRepArea"] > 0 then
-											global.OPLocate[a]["WA"] = b
+										if #storage.WaterGlobalArea[b]["WaterRepArea"] > 0 then
+											storage.OPLocate[a]["WA"] = b
 										else
-											global.OPLocate[a]["WA"] = global.WaterGlobalArea[b]["WGAID"]
+											storage.OPLocate[a]["WA"] = storage.WaterGlobalArea[b]["WGAID"]
 										end
 									end
 								end
 							end
 						end
 					end
-					if global.OPLocate[a]["Active"] == nil then
-						global.OPLocate[a]["Active"] = 0
+					if storage.OPLocate[a]["Active"] == nil then
+						storage.OPLocate[a]["Active"] = 0
 					end
-					if global.OPLocate[a]["entity"] == nil then
-						global.OPLocate[a]["entity"] = global.OPLocate[a]["OPentity"]
+					if storage.OPLocate[a]["entity"] == nil then
+						storage.OPLocate[a]["entity"] = storage.OPLocate[a]["OPentity"]
 					end
-					if global.OPLocate[a]["position"] == nil then
-						global.OPLocate[a]["position"] = global.OPLocate[a]["OPposition"]
+					if storage.OPLocate[a]["position"] == nil then
+						storage.OPLocate[a]["position"] = storage.OPLocate[a]["OPposition"]
 					end
-					if global.OPLocate[a]["direction"] == nil then
-						global.OPLocate[a]["direction"] = global.OPLocate[a]["OPdirection"]
+					if storage.OPLocate[a]["direction"] == nil then
+						storage.OPLocate[a]["direction"] = storage.OPLocate[a]["OPdirection"]
 					end
-					if global.OPLocate[a]["force"] == nil then
-						global.OPLocate[a]["force"] = "player"
+					if storage.OPLocate[a]["force"] == nil then
+						storage.OPLocate[a]["force"] = "player"
 					end
-					for b = 1, #global.WaterGlobalArea, 1 do
-						if global.OPLocate[a]["WA"] == b and global.WaterGlobalArea[b]["Depleted"] ~= 1 then
-							global.OPLocate[a]["tile"] = global.WaterGlobalArea[b]["FluidType"]
-						elseif global.OPLocate[a]["WA"] == b and global.WaterGlobalArea[b]["Depleted"] == 1 then
-							global.OPLocate[a]["tile"] = "None"
+					for b = 1, #storage.WaterGlobalArea, 1 do
+						if storage.OPLocate[a]["WA"] == b and storage.WaterGlobalArea[b]["Depleted"] ~= 1 then
+							storage.OPLocate[a]["tile"] = storage.WaterGlobalArea[b]["FluidType"]
+						elseif storage.OPLocate[a]["WA"] == b and storage.WaterGlobalArea[b]["Depleted"] == 1 then
+							storage.OPLocate[a]["tile"] = "None"
 						end
 					end
 					for b = 1, #game.surfaces, 1 do
-						pos = global.OPLocate[a]["position"]
+						pos = storage.OPLocate[a]["position"]
 						local tile = game.surfaces[b].get_tile(pos)
 						if tile.valid == true then
 							local tilename = tile.name
 							if tilename == "water" or tilename =="deepwater" or tilename=="crude-oil" or tilename=="crude-oil-deep" or tilename=="sand-3" or tilename=="dry-dirt" then
-								global.OPLocate[a]["surface"] = game.surfaces[b]
+								storage.OPLocate[a]["surface"] = game.surfaces[b]
 							end
 						end
 					end
-					if global.OPLocate[a]["spritepos"] == nil then
-						--global.OPLocate[a]["spritepos"] = global.OPLocate[a]["position"] -- POSITION IS IN WATER / SPRITEPOS IS OUTPUT PIPE
-						if global.OPLocate[a]["direction"] == 0 then -- North
-							global.OPLocate[a]["spritepos"] = {["x"] = global.OPLocate[a]["position"]["x"], ["y"] = global.OPLocate[a]["position"]["y"] + 1}
-						elseif global.OPLocate[a]["direction"] == 2 then -- East
-							global.OPLocate[a]["spritepos"] = {["x"] = global.OPLocate[a]["position"]["x"] - 1, ["y"] = global.OPLocate[a]["position"]["y"]}
-						elseif global.OPLocate[a]["direction"] == 4 then -- South
-							global.OPLocate[a]["spritepos"] = {["x"] = global.OPLocate[a]["position"]["x"], ["y"] = global.OPLocate[a]["position"]["y"] - 1}
-						elseif global.OPLocate[a]["direction"] == 6 then -- West
-							global.OPLocate[a]["spritepos"] = {["x"] = global.OPLocate[a]["position"]["x"] + 1, ["y"] = global.OPLocate[a]["position"]["y"]}
+					if storage.OPLocate[a]["spritepos"] == nil then
+						--storage.OPLocate[a]["spritepos"] = storage.OPLocate[a]["position"] -- POSITION IS IN WATER / SPRITEPOS IS OUTPUT PIPE
+						if storage.OPLocate[a]["direction"] == 0 then -- North
+							storage.OPLocate[a]["spritepos"] = {["x"] = storage.OPLocate[a]["position"]["x"], ["y"] = storage.OPLocate[a]["position"]["y"] + 1}
+						elseif storage.OPLocate[a]["direction"] == 2 then -- East
+							storage.OPLocate[a]["spritepos"] = {["x"] = storage.OPLocate[a]["position"]["x"] - 1, ["y"] = storage.OPLocate[a]["position"]["y"]}
+						elseif storage.OPLocate[a]["direction"] == 4 then -- South
+							storage.OPLocate[a]["spritepos"] = {["x"] = storage.OPLocate[a]["position"]["x"], ["y"] = storage.OPLocate[a]["position"]["y"] - 1}
+						elseif storage.OPLocate[a]["direction"] == 6 then -- West
+							storage.OPLocate[a]["spritepos"] = {["x"] = storage.OPLocate[a]["position"]["x"] + 1, ["y"] = storage.OPLocate[a]["position"]["y"]}
 						end
 					end
-					if global.OPLocate[a]["tile"] == "water" or global.OPLocate[a]["tile"] == "deepwater" then
-						local OPE = global.OPLocate[a]["entity"]
-						local OPD = global.OPLocate[a]["direction"]
-						local OPP = global.OPLocate[a]["position"]
-						local OPSp = global.OPLocate[a]["spritepos"]
-						local OPS = global.OPLocate[a]["surface"]
+					if storage.OPLocate[a]["tile"] == "water" or storage.OPLocate[a]["tile"] == "deepwater" then
+						local OPE = storage.OPLocate[a]["entity"]
+						local OPD = storage.OPLocate[a]["direction"]
+						local OPP = storage.OPLocate[a]["position"]
+						local OPSp = storage.OPLocate[a]["spritepos"]
+						local OPS = storage.OPLocate[a]["surface"]
 						local OPPl = OPE.last_user
 						if OPE.valid == true then
 							OPPl = OPE.last_user
@@ -2533,22 +2533,22 @@ function UpdateMod(data)
 						end
 						OPE.destroy()
 						local OPN = game.surfaces[OPS.name].create_entity{name="offshore-pump",position = OPSp,direction = OPD,player = OPPl,force=OPF}
-						global.OPLocate[a]["entity"] = OPN
-						-- if global.OPLocate[a]["entity"] == nil then
-							-- if global.WaterGlobalArea[global.OPLocate[a]["WA"]]["OPs"] <= 0 then
-								-- global.WaterGlobalArea[global.OPLocate[a]["WA"]]["OPs"] = 0
+						storage.OPLocate[a]["entity"] = OPN
+						-- if storage.OPLocate[a]["entity"] == nil then
+							-- if storage.WaterGlobalArea[storage.OPLocate[a]["WA"]]["OPs"] <= 0 then
+								-- storage.WaterGlobalArea[storage.OPLocate[a]["WA"]]["OPs"] = 0
 							-- else
-								-- global.WaterGlobalArea[global.OPLocate[a]["WA"]]["OPs"] = global.WaterGlobalArea[global.OPLocate[a]["WA"]]["OPs"] - 1
+								-- storage.WaterGlobalArea[storage.OPLocate[a]["WA"]]["OPs"] = storage.WaterGlobalArea[storage.OPLocate[a]["WA"]]["OPs"] - 1
 							-- end
-							-- table.remove(global.OPLocate,a)
+							-- table.remove(storage.OPLocate,a)
 							-- game.players[1].insert{name="offshore-pump",count=1}
 						-- end
-					elseif global.OPLocate[a]["tile"] == "crude-oil" or global.OPLocate[a]["tile"] == "crude-oil-deep" then
-						local OPE2 = global.OPLocate[a]["entity"]
-						local OPD2 = global.OPLocate[a]["direction"]
-						local OPP2 = global.OPLocate[a]["position"]
-						local OPSp2 = global.OPLocate[a]["spritepos"]
-						local OPS2 = global.OPLocate[a]["surface"]
+					elseif storage.OPLocate[a]["tile"] == "crude-oil" or storage.OPLocate[a]["tile"] == "crude-oil-deep" then
+						local OPE2 = storage.OPLocate[a]["entity"]
+						local OPD2 = storage.OPLocate[a]["direction"]
+						local OPP2 = storage.OPLocate[a]["position"]
+						local OPSp2 = storage.OPLocate[a]["spritepos"]
+						local OPS2 = storage.OPLocate[a]["surface"]
 						local OP2Pl = OPE2.last_user
 						if OPE2.valid == true then
 							OP2Pl = OPE2.last_user
@@ -2569,22 +2569,22 @@ function UpdateMod(data)
 						end
 						OPE2.destroy()
 						local OPN2 = game.surfaces[OPS2.name].create_entity{name="offshore-crude-oil-pump",position = OPSp2,direction = OPD2,player=OP2Pl,force=OPF2}
-						global.OPLocate[a]["entity"] = OPN2
-						-- if global.OPLocate[a]["entity"] == nil then
-							-- if global.WaterGlobalArea[global.OPLocate[a]["WA"]]["OPs"] <= 0 then
-								-- global.WaterGlobalArea[global.OPLocate[a]["WA"]]["OPs"] = 0
+						storage.OPLocate[a]["entity"] = OPN2
+						-- if storage.OPLocate[a]["entity"] == nil then
+							-- if storage.WaterGlobalArea[storage.OPLocate[a]["WA"]]["OPs"] <= 0 then
+								-- storage.WaterGlobalArea[storage.OPLocate[a]["WA"]]["OPs"] = 0
 							-- else
-								-- global.WaterGlobalArea[global.OPLocate[a]["WA"]]["OPs"] = global.WaterGlobalArea[global.OPLocate[a]["WA"]]["OPs"] - 1
+								-- storage.WaterGlobalArea[storage.OPLocate[a]["WA"]]["OPs"] = storage.WaterGlobalArea[storage.OPLocate[a]["WA"]]["OPs"] - 1
 							-- end
-							-- table.remove(global.OPLocate,a)
+							-- table.remove(storage.OPLocate,a)
 							-- game.players[1].insert{name="offshore-pump",count=1}
 						-- end
 					else
-						local OPE3 = global.OPLocate[a]["entity"]
-						local OPD3 = global.OPLocate[a]["direction"]
-						local OPP3 = global.OPLocate[a]["position"]
-						local OPSp3 = global.OPLocate[a]["spritepos"]
-						local OPS3 = global.OPLocate[a]["surface"]
+						local OPE3 = storage.OPLocate[a]["entity"]
+						local OPD3 = storage.OPLocate[a]["direction"]
+						local OPP3 = storage.OPLocate[a]["position"]
+						local OPSp3 = storage.OPLocate[a]["spritepos"]
+						local OPS3 = storage.OPLocate[a]["surface"]
 						local OP3Pl = OPE3.last_user
 						if OPE3.valid == true then
 							OP3Pl = OPE3.last_user
@@ -2605,29 +2605,29 @@ function UpdateMod(data)
 						end
 						OPE3.destroy()
 						local OPN3 = game.surfaces[OPS3.name].create_entity{name="offshore-pump-nofluid",position = OPSp3,direction = OPD3,player=OP3Pl,force = OPF3}
-						global.OPLocate[a]["entity"] = OPN3
+						storage.OPLocate[a]["entity"] = OPN3
 					end
 				end
 			end
-			if #global.ODLocate > 0 then
-				for a = 1, #global.ODLocate, 1 do
-					if global.ODLocate[a]["force"] == nil then
-						global.ODLocate[a]["force"] = global.ODLocate[a]["entity"].last_user.force
+			if #storage.ODLocate > 0 then
+				for a = 1, #storage.ODLocate, 1 do
+					if storage.ODLocate[a]["force"] == nil then
+						storage.ODLocate[a]["force"] = storage.ODLocate[a]["entity"].last_user.force
 					end
 					for b = 1, #game.surfaces, 1 do
-						pos = global.ODLocate[a]["position"]
+						pos = storage.ODLocate[a]["position"]
 						local tile = game.surfaces[b].get_tile(pos)
 						if tile.valid == true then
 							local tilename = tile.name
 							if tilename == "water" or tilename =="deepwater" or tilename=="crude-oil" or tilename=="crude-oil-deep" or tilename=="sand-3" or tilename=="dry-dirt" then
-								global.ODLocate[a]["surface"] = game.surfaces[b]
+								storage.ODLocate[a]["surface"] = game.surfaces[b]
 							end
 						end
 					end
-					local OPE4 = global.ODLocate[a]["entity"]
-					local OPD4 = global.ODLocate[a]["direction"]
-					local OPP4 = global.ODLocate[a]["position"]
-					local OPS4 = global.ODLocate[a]["surface"]
+					local OPE4 = storage.ODLocate[a]["entity"]
+					local OPD4 = storage.ODLocate[a]["direction"]
+					local OPP4 = storage.ODLocate[a]["position"]
+					local OPS4 = storage.ODLocate[a]["surface"]
 					local OP4Pl = OPE4.last_user
 					if OPE4.valid == true then
 						OP4Pl = OPE4.last_user
@@ -2648,158 +2648,158 @@ function UpdateMod(data)
 					end
 					OPE4.destroy()
 					local OPN4 = game.surfaces[OPS4.name].create_entity{name="offshore-drain",position = OPP4, direction = OPD4,player=OP4Pl,force=OPF4}
-					global.ODLocate[a]["entity"] = OPN4
-					for b = 1, #global.WaterGlobalArea, 1 do
-						if global.ODLocate[a]["WA"] == b and global.WaterGlobalArea[b]["Depleted"] ~= 1 then
-							global.ODLocate[a]["tile"] = global.WaterGlobalArea[b]["FluidType"]
-							global.ODLocate[a]["PipeFluid"] = global.WaterGlobalArea[b]["FluidType"]
-						elseif global.ODLocate[a]["WA"] == b and global.WaterGlobalArea[b]["Depleted"] == 1 then
-							global.ODLocate[a]["tile"] = "None"
-							global.ODLocate[a]["PipeFluid"] = "None"
+					storage.ODLocate[a]["entity"] = OPN4
+					for b = 1, #storage.WaterGlobalArea, 1 do
+						if storage.ODLocate[a]["WA"] == b and storage.WaterGlobalArea[b]["Depleted"] ~= 1 then
+							storage.ODLocate[a]["tile"] = storage.WaterGlobalArea[b]["FluidType"]
+							storage.ODLocate[a]["PipeFluid"] = storage.WaterGlobalArea[b]["FluidType"]
+						elseif storage.ODLocate[a]["WA"] == b and storage.WaterGlobalArea[b]["Depleted"] == 1 then
+							storage.ODLocate[a]["tile"] = "None"
+							storage.ODLocate[a]["PipeFluid"] = "None"
 						end
 					end
 				end
 			end
 			Players = #game.players
 			if Players <= 1 then
-				if global.PlayerForces == nil or #global.PlayerForces < 1 then
+				if storage.PlayerForces == nil or #storage.PlayerForces < 1 then
 					Force = game.players[1].force.name
-					global.PlayerForces[#global.PlayerForces+1] = {["name"] = Force, ["OPcount"] = 0, ["ODcount"] = 0, ["WaterFlow"] = 0, ["LastWaterFlow"] = 0, ["CrudeFlow"] = 0, ["LastCrudeFlow"] = 0}
-					for a = 1, #global.WaterGlobalArea, 1 do
+					storage.PlayerForces[#storage.PlayerForces+1] = {["name"] = Force, ["OPcount"] = 0, ["ODcount"] = 0, ["WaterFlow"] = 0, ["LastWaterFlow"] = 0, ["CrudeFlow"] = 0, ["LastCrudeFlow"] = 0}
+					for a = 1, #storage.WaterGlobalArea, 1 do
 						OPs = 0
 						ODs = 0
-						for b = 1, #global.OPLocate, 1 do
-							if global.WaterGlobalArea[a]["WGAID"] == global.OPLocate[b]["WA"] then
+						for b = 1, #storage.OPLocate, 1 do
+							if storage.WaterGlobalArea[a]["WGAID"] == storage.OPLocate[b]["WA"] then
 								OPs = OPs + 1
 							end
 						end
-						for c = 1, #global.ODLocate, 1 do
-							if global.WaterGlobalArea[a]["WGAID"] == global.ODLocate[c]["WA"] then
+						for c = 1, #storage.ODLocate, 1 do
+							if storage.WaterGlobalArea[a]["WGAID"] == storage.ODLocate[c]["WA"] then
 								ODs = ODs + 1
 							end
 						end
-						-- OPs = global.WaterGlobalArea[a]["OPs"]
-						global.WaterGlobalArea[a]["OPs"] = {}
-						-- OPsA = global.WaterGlobalArea[a]["OPsA"]
-						global.WaterGlobalArea[a]["OPsA"] = {}
-						-- ODs = global.WaterGlobalArea[a]["ODs"]
-						global.WaterGlobalArea[a]["ODs"] = {}
-						-- ODsA = global.WaterGlobalArea[a]["ODsA"]
-						global.WaterGlobalArea[a]["ODsA"] = {}
-						WtrAdd = global.WaterGlobalArea[a]["WtrAdd"]
-						global.WaterGlobalArea[a]["WtrAdd"] = {}
-						global.WaterGlobalArea[a]["MapMarker"] = {}
-						global.WaterGlobalArea[a]["MapMarkerPlaced"] = false
-						global.WaterGlobalArea[a]["OPs"][1] = {["force"] = Force, ["count"] = OPs}
-						global.PlayerForces[#global.PlayerForces]["OPcount"] = global.PlayerForces[#global.PlayerForces]["OPcount"] + OPs
-						global.WaterGlobalArea[a]["OPsA"][1] = {["force"] = Force, ["count"] = 0}
-						global.WaterGlobalArea[a]["ODs"][1] = {["force"] = Force, ["count"] = ODs}
-						global.PlayerForces[#global.PlayerForces]["ODcount"] = global.PlayerForces[#global.PlayerForces]["ODcount"] + ODs
-						global.WaterGlobalArea[a]["ODsA"][1] = {["force"] = Force, ["count"] = 0}
-						global.WaterGlobalArea[a]["WtrAdd"][1] = {["force"] = Force, ["count"] = WtrAdd}
-						local maptext = string.format("%s - %s - %.2f %%",global.WaterGlobalArea[a]["WtrName"],comma_value(math.ceil(global.WaterGlobalArea[a]["AmountWtr"]*((100-global.WaterGlobalArea[a]["Percent"])/100))),100-global.WaterGlobalArea[a]["Percent"])
-						if #global.WaterGlobalArea[a]["WaterRepArea"] > 0 then
-							global.WaterGlobalArea[a]["MapMarker"][1] = {["placed"] = true, ["force"] = Force, ["icon"] = game.forces[Force].add_chart_tag(1,{["position"]= global.WaterGlobalArea[a]["WaterRepArea"][1]["position"],["text"] = maptext})}
+						-- OPs = storage.WaterGlobalArea[a]["OPs"]
+						storage.WaterGlobalArea[a]["OPs"] = {}
+						-- OPsA = storage.WaterGlobalArea[a]["OPsA"]
+						storage.WaterGlobalArea[a]["OPsA"] = {}
+						-- ODs = storage.WaterGlobalArea[a]["ODs"]
+						storage.WaterGlobalArea[a]["ODs"] = {}
+						-- ODsA = storage.WaterGlobalArea[a]["ODsA"]
+						storage.WaterGlobalArea[a]["ODsA"] = {}
+						WtrAdd = storage.WaterGlobalArea[a]["WtrAdd"]
+						storage.WaterGlobalArea[a]["WtrAdd"] = {}
+						storage.WaterGlobalArea[a]["MapMarker"] = {}
+						storage.WaterGlobalArea[a]["MapMarkerPlaced"] = false
+						storage.WaterGlobalArea[a]["OPs"][1] = {["force"] = Force, ["count"] = OPs}
+						storage.PlayerForces[#storage.PlayerForces]["OPcount"] = storage.PlayerForces[#storage.PlayerForces]["OPcount"] + OPs
+						storage.WaterGlobalArea[a]["OPsA"][1] = {["force"] = Force, ["count"] = 0}
+						storage.WaterGlobalArea[a]["ODs"][1] = {["force"] = Force, ["count"] = ODs}
+						storage.PlayerForces[#storage.PlayerForces]["ODcount"] = storage.PlayerForces[#storage.PlayerForces]["ODcount"] + ODs
+						storage.WaterGlobalArea[a]["ODsA"][1] = {["force"] = Force, ["count"] = 0}
+						storage.WaterGlobalArea[a]["WtrAdd"][1] = {["force"] = Force, ["count"] = WtrAdd}
+						local maptext = string.format("%s - %s - %.2f %%",storage.WaterGlobalArea[a]["WtrName"],comma_value(math.ceil(storage.WaterGlobalArea[a]["AmountWtr"]*((100-storage.WaterGlobalArea[a]["Percent"])/100))),100-storage.WaterGlobalArea[a]["Percent"])
+						if #storage.WaterGlobalArea[a]["WaterRepArea"] > 0 then
+							storage.WaterGlobalArea[a]["MapMarker"][1] = {["placed"] = true, ["force"] = Force, ["icon"] = game.forces[Force].add_chart_tag(1,{["position"]= storage.WaterGlobalArea[a]["WaterRepArea"][1]["position"],["text"] = maptext})}
 						else
-							global.WaterGlobalArea[a]["MapMarker"][1] = {["placed"] = true, ["force"] = Force, ["icon"] = game.forces[Force].add_chart_tag(1,{["position"]= global.WaterGlobalArea[a]["WaterEdgeArea"][1]["position"],["text"] = maptext})}
+							storage.WaterGlobalArea[a]["MapMarker"][1] = {["placed"] = true, ["force"] = Force, ["icon"] = game.forces[Force].add_chart_tag(1,{["position"]= storage.WaterGlobalArea[a]["WaterEdgeArea"][1]["position"],["text"] = maptext})}
 						end
 					end
 				end
 			else
 				for a = 1, Players, 1 do
 					Force = game.players[a].force.name
-					if global.PlayerForces == nil or global.PlayerForces < 1 then
-						global.PlayerForces[#global.PlayerForces+1] = {["name"] = Force, ["OPcount"] = 0, ["ODcount"] = 0, ["WaterFlow"] = 0, ["LastWaterFlow"] = 0, ["CrudeFlow"] = 0, ["LastCrudeFlow"] = 0}
-						for b = 1, #global.WaterGlobalArea, 1 do
+					if storage.PlayerForces == nil or storage.PlayerForces < 1 then
+						storage.PlayerForces[#storage.PlayerForces+1] = {["name"] = Force, ["OPcount"] = 0, ["ODcount"] = 0, ["WaterFlow"] = 0, ["LastWaterFlow"] = 0, ["CrudeFlow"] = 0, ["LastCrudeFlow"] = 0}
+						for b = 1, #storage.WaterGlobalArea, 1 do
 							OPs = 0
 							ODs = 0
-							for c = 1, #global.OPLocate, 1 do
-								if global.WaterGlobalArea[b]["WGAID"] == global.OPLocate[c]["WA"] then
-									if Force == global.OPLocate[c]["force"] then
+							for c = 1, #storage.OPLocate, 1 do
+								if storage.WaterGlobalArea[b]["WGAID"] == storage.OPLocate[c]["WA"] then
+									if Force == storage.OPLocate[c]["force"] then
 										OPs = OPs + 1
 									end
 								end
 							end
-							for d = 1, #global.ODLocate, 1 do
-								if global.WaterGlobalArea[b]["WGAID"] == global.ODLocate[d]["WA"] then
-									if Force == global.ODLocate[d]["force"] then
+							for d = 1, #storage.ODLocate, 1 do
+								if storage.WaterGlobalArea[b]["WGAID"] == storage.ODLocate[d]["WA"] then
+									if Force == storage.ODLocate[d]["force"] then
 										ODs = ODs + 1
 									end
 								end
 							end
 							if OPs > 0 then
-								-- OPs = global.WaterGlobalArea[a]["OPs"]
-								global.WaterGlobalArea[b]["OPs"] = {}
-								-- OPsA = global.WaterGlobalArea[a]["OPsA"]
-								global.WaterGlobalArea[b]["OPsA"] = {}
-								global.WaterGlobalArea[b]["OPs"][1] = {["force"] = Force, ["count"] = OPs}
-								global.WaterGlobalArea[b]["OPsA"][1] = {["force"] = Force, ["count"] = 0}
-								global.PlayerForces[#global.PlayerForces]["OPcount"] = global.PlayerForces[#global.PlayerForces]["OPcount"] + OPs
-								local maptext = string.format("%s - %s - %.2f %%",global.WaterGlobalArea[b]["WtrName"],comma_value(math.ceil(global.WaterGlobalArea[b]["AmountWtr"]*((100-global.WaterGlobalArea[b]["Percent"])/100))),100-global.WaterGlobalArea[b]["Percent"])
-								if #global.WaterGlobalArea[b]["WaterRepArea"] > 0 then
-									global.WaterGlobalArea[b]["MapMarker"][1] = {["force"] = Force, ["placed"] = true,["icon"] = game.forces[Force].add_chart_tag(1,{["position"]= global.WaterGlobalArea[b]["WaterRepArea"][1]["position"],["text"] = maptext})}
+								-- OPs = storage.WaterGlobalArea[a]["OPs"]
+								storage.WaterGlobalArea[b]["OPs"] = {}
+								-- OPsA = storage.WaterGlobalArea[a]["OPsA"]
+								storage.WaterGlobalArea[b]["OPsA"] = {}
+								storage.WaterGlobalArea[b]["OPs"][1] = {["force"] = Force, ["count"] = OPs}
+								storage.WaterGlobalArea[b]["OPsA"][1] = {["force"] = Force, ["count"] = 0}
+								storage.PlayerForces[#storage.PlayerForces]["OPcount"] = storage.PlayerForces[#storage.PlayerForces]["OPcount"] + OPs
+								local maptext = string.format("%s - %s - %.2f %%",storage.WaterGlobalArea[b]["WtrName"],comma_value(math.ceil(storage.WaterGlobalArea[b]["AmountWtr"]*((100-storage.WaterGlobalArea[b]["Percent"])/100))),100-storage.WaterGlobalArea[b]["Percent"])
+								if #storage.WaterGlobalArea[b]["WaterRepArea"] > 0 then
+									storage.WaterGlobalArea[b]["MapMarker"][1] = {["force"] = Force, ["placed"] = true,["icon"] = game.forces[Force].add_chart_tag(1,{["position"]= storage.WaterGlobalArea[b]["WaterRepArea"][1]["position"],["text"] = maptext})}
 								else
-									global.WaterGlobalArea[b]["MapMarker"][1] = {["force"] = Force, ["placed"] = true,["icon"] = game.forces[Force].add_chart_tag(1,{["position"]= global.WaterGlobalArea[b]["WaterEdgeArea"][1]["position"],["text"] = maptext})}
+									storage.WaterGlobalArea[b]["MapMarker"][1] = {["force"] = Force, ["placed"] = true,["icon"] = game.forces[Force].add_chart_tag(1,{["position"]= storage.WaterGlobalArea[b]["WaterEdgeArea"][1]["position"],["text"] = maptext})}
 								end
-								global.WaterGlobalArea[b]["MapMarkerPlaced"] = false
+								storage.WaterGlobalArea[b]["MapMarkerPlaced"] = false
 							end
 							if ODs > 0 then
-								global.WaterGlobalArea[b]["ODsA"] = {}
-								-- ODs = global.WaterGlobalArea[a]["ODs"]
-								global.WaterGlobalArea[b]["ODs"] = {}
-								-- ODsA = global.WaterGlobalArea[a]["ODsA"]
-								global.WaterGlobalArea[b]["WtrAdd"] = {}
-								global.WaterGlobalArea[b]["ODs"][1] = {["force"] = Force, ["count"] = ODs}
-								global.WaterGlobalArea[b]["ODsA"][1] = {["force"] = Force, ["count"] = 0}
-								global.WaterGlobalArea[b]["WtrAdd"][1] = {["force"] = Force, ["count"] = WtrAdd}
-								global.PlayerForces[#global.PlayerForces]["ODcount"] = global.PlayerForces[#global.PlayerForces]["ODcount"] + ODs
+								storage.WaterGlobalArea[b]["ODsA"] = {}
+								-- ODs = storage.WaterGlobalArea[a]["ODs"]
+								storage.WaterGlobalArea[b]["ODs"] = {}
+								-- ODsA = storage.WaterGlobalArea[a]["ODsA"]
+								storage.WaterGlobalArea[b]["WtrAdd"] = {}
+								storage.WaterGlobalArea[b]["ODs"][1] = {["force"] = Force, ["count"] = ODs}
+								storage.WaterGlobalArea[b]["ODsA"][1] = {["force"] = Force, ["count"] = 0}
+								storage.WaterGlobalArea[b]["WtrAdd"][1] = {["force"] = Force, ["count"] = WtrAdd}
+								storage.PlayerForces[#storage.PlayerForces]["ODcount"] = storage.PlayerForces[#storage.PlayerForces]["ODcount"] + ODs
 							end
 						end
 					else
 						NewForce = true
-						for e = 1, #global.PlayerForces, 1 do
-							if global.PlayerForces[e]["name"] == Force then
+						for e = 1, #storage.PlayerForces, 1 do
+							if storage.PlayerForces[e]["name"] == Force then
 								NewForce = false
 							end
 						end
 						if NewForce == true then
-							global.PlayerForces[#global.PlayerForces+1] = {["name"] = Force, ["OPcount"] = 0, ["ODcount"] = 0, ["WaterFlow"] = 0, ["LastWaterFlow"] = 0, ["CrudeFlow"] = 0, ["LastCrudeFlow"] = 0}
-							--for f = 1, #global.PlayerForces, 1 do
-								for g = 1, #global.WaterGlobalArea, 1 do
+							storage.PlayerForces[#storage.PlayerForces+1] = {["name"] = Force, ["OPcount"] = 0, ["ODcount"] = 0, ["WaterFlow"] = 0, ["LastWaterFlow"] = 0, ["CrudeFlow"] = 0, ["LastCrudeFlow"] = 0}
+							--for f = 1, #storage.PlayerForces, 1 do
+								for g = 1, #storage.WaterGlobalArea, 1 do
 									OPs = 0
 									ODs = 0
-									for h = 1, #global.OPLocate, 1 do
-										if global.WaterGlobalArea[g]["WGAID"] == global.OPLocate[h]["WA"] then
+									for h = 1, #storage.OPLocate, 1 do
+										if storage.WaterGlobalArea[g]["WGAID"] == storage.OPLocate[h]["WA"] then
 											-- REBUILD OFFSHORE WITH CORRECT FORCE ASSIGNMENT
-											if global.OPLocate[h]["force"] == global.PlayerForces[#global.PlayerForces]["name"] then
+											if storage.OPLocate[h]["force"] == storage.PlayerForces[#storage.PlayerForces]["name"] then
 												OPs = OPs + 1
 											end
 										end
 									end
-									for i = 1, #global.ODLocate, 1 do
-										if global.WaterGlobalArea[g]["WGAID"] == global.ODLocate[i]["WA"] then
+									for i = 1, #storage.ODLocate, 1 do
+										if storage.WaterGlobalArea[g]["WGAID"] == storage.ODLocate[i]["WA"] then
 											-- REBUILD OFFSHORE WITH CORRECT FORCE ASSIGNMENT
-											if global.ODLocate[i]["force"] == global.PlayerForces[#global.PlayerForces]["name"] then
+											if storage.ODLocate[i]["force"] == storage.PlayerForces[#storage.PlayerForces]["name"] then
 												ODs = ODs + 1
 											end
 										end
 									end
 									if OPs > 0 then
-										global.WaterGlobalArea[g]["OPs"][#global.WaterGlobalArea[g]["OPs"]+1] = {["force"] = Force, ["count"] = OPs}
-										global.WaterGlobalArea[g]["OPsA"][#global.WaterGlobalArea[g]["OPsA"]+1] = {["force"] = Force, ["count"] = 0}
-										global.PlayerForces[#global.PlayerForces]["OPcount"] = global.PlayerForces[#global.PlayerForces]["OPcount"] + OPs
-										local maptext = string.format("%s - %s - %.2f %%",global.WaterGlobalArea[g]["WtrName"],comma_value(math.ceil(global.WaterGlobalArea[g]["AmountWtr"]*((100-global.WaterGlobalArea[g]["Percent"])/100))),100-global.WaterGlobalArea[g]["Percent"])
-										if #global.WaterGlobalArea[g]["WaterRepArea"] > 0 then
-											global.WaterGlobalArea[g]["MapMarker"][#global.WaterGlobalArea[g]["MapMarker"]+1] = {["force"] = Force, ["placed"] = true,["icon"] = game.forces[Force].add_chart_tag(1,{["position"]= global.WaterGlobalArea[g]["WaterRepArea"][1]["position"],["text"] = maptext})}
+										storage.WaterGlobalArea[g]["OPs"][#storage.WaterGlobalArea[g]["OPs"]+1] = {["force"] = Force, ["count"] = OPs}
+										storage.WaterGlobalArea[g]["OPsA"][#storage.WaterGlobalArea[g]["OPsA"]+1] = {["force"] = Force, ["count"] = 0}
+										storage.PlayerForces[#storage.PlayerForces]["OPcount"] = storage.PlayerForces[#storage.PlayerForces]["OPcount"] + OPs
+										local maptext = string.format("%s - %s - %.2f %%",storage.WaterGlobalArea[g]["WtrName"],comma_value(math.ceil(storage.WaterGlobalArea[g]["AmountWtr"]*((100-storage.WaterGlobalArea[g]["Percent"])/100))),100-storage.WaterGlobalArea[g]["Percent"])
+										if #storage.WaterGlobalArea[g]["WaterRepArea"] > 0 then
+											storage.WaterGlobalArea[g]["MapMarker"][#storage.WaterGlobalArea[g]["MapMarker"]+1] = {["force"] = Force, ["placed"] = true,["icon"] = game.forces[Force].add_chart_tag(1,{["position"]= storage.WaterGlobalArea[g]["WaterRepArea"][1]["position"],["text"] = maptext})}
 										else
-											global.WaterGlobalArea[g]["MapMarker"][#global.WaterGlobalArea[g]["MapMarker"]+1] = {["force"] = Force, ["placed"] = true,["icon"] = game.forces[Force].add_chart_tag(1,{["position"]= global.WaterGlobalArea[g]["WaterEdgeArea"][1]["position"],["text"] = maptext})}
+											storage.WaterGlobalArea[g]["MapMarker"][#storage.WaterGlobalArea[g]["MapMarker"]+1] = {["force"] = Force, ["placed"] = true,["icon"] = game.forces[Force].add_chart_tag(1,{["position"]= storage.WaterGlobalArea[g]["WaterEdgeArea"][1]["position"],["text"] = maptext})}
 										end
 									end
 									if ODs > 0 then
-										global.WaterGlobalArea[g]["ODs"][#global.WaterGlobalArea[g]["ODs"]+1] = {["force"] = Force, ["count"] = ODs}
-										global.WaterGlobalArea[g]["ODsA"][#global.WaterGlobalArea[g]["ODsA"]+1] = {["force"] = Force, ["count"] = 0}
-										global.WaterGlobalArea[g]["WtrAdd"][#global.WaterGlobalArea[g]["WtrAdd"]+1] = {["force"] = Force, ["count"] = 0}
-										global.PlayerForces[#global.PlayerForces]["ODcount"] = global.PlayerForces[#global.PlayerForces]["ODcount"] + ODs
+										storage.WaterGlobalArea[g]["ODs"][#storage.WaterGlobalArea[g]["ODs"]+1] = {["force"] = Force, ["count"] = ODs}
+										storage.WaterGlobalArea[g]["ODsA"][#storage.WaterGlobalArea[g]["ODsA"]+1] = {["force"] = Force, ["count"] = 0}
+										storage.WaterGlobalArea[g]["WtrAdd"][#storage.WaterGlobalArea[g]["WtrAdd"]+1] = {["force"] = Force, ["count"] = 0}
+										storage.PlayerForces[#storage.PlayerForces]["ODcount"] = storage.PlayerForces[#storage.PlayerForces]["ODcount"] + ODs
 									end
 								end
 							--end
@@ -2807,27 +2807,27 @@ function UpdateMod(data)
 					end
 				end
 			end
-			-- for a = 1, #global.OPLocate, 1 do
-				-- for b = 1, #global.WaterGlobalArea, 1 do
-					-- for c = 1, #global.PlayerForces, 1 do
-						-- if global.OPLocate[a]["force"] == global.WaterGlobalArea[b]["OPs"][c]["force"] then
-							-- global.WaterGlobalArea[b]["OPs"][c]["count"] = global.WaterGlobalArea[b]["OPs"][c]["count"] + 1
+			-- for a = 1, #storage.OPLocate, 1 do
+				-- for b = 1, #storage.WaterGlobalArea, 1 do
+					-- for c = 1, #storage.PlayerForces, 1 do
+						-- if storage.OPLocate[a]["force"] == storage.WaterGlobalArea[b]["OPs"][c]["force"] then
+							-- storage.WaterGlobalArea[b]["OPs"][c]["count"] = storage.WaterGlobalArea[b]["OPs"][c]["count"] + 1
 						-- end
 					-- end
 				-- end
 			-- end
-			-- for a = 1, #global.ODLocate, 1 do
-				-- for b = 1, #global.WaterGlobalArea, 1 do
-					-- for c = 1, #global.PlayerForces, 1 do
-						-- if global.ODLocate[a]["force"] == global.WaterGlobalArea[b]["ODs"][c]["force"] then
-							-- global.WaterGlobalArea[b]["ODs"][c]["count"] = global.WaterGlobalArea[b]["ODs"][c]["count"] + 1
+			-- for a = 1, #storage.ODLocate, 1 do
+				-- for b = 1, #storage.WaterGlobalArea, 1 do
+					-- for c = 1, #storage.PlayerForces, 1 do
+						-- if storage.ODLocate[a]["force"] == storage.WaterGlobalArea[b]["ODs"][c]["force"] then
+							-- storage.WaterGlobalArea[b]["ODs"][c]["count"] = storage.WaterGlobalArea[b]["ODs"][c]["count"] + 1
 						-- end
 					-- end
 				-- end
 			-- end
-		global.Added = false
+		storage.Added = false
 		end
-		global.NewInstall = false
+		storage.NewInstall = false
 	end
 end
 
@@ -2838,24 +2838,24 @@ function RestoreWater()
 	if RWDisabled == true then
 		game.player.print("RestoreWater Command has been disabled in map settings.")
 	else
-		if global.WaterGlobalArea then
-			for a = #global.WaterGlobalArea, 1, -1 do
-				if global.WaterGlobalArea[a]["Percent"] >= 80 or global.WaterGlobalArea[a]["FluidType"] == "crude-oil" then
-					if #global.WaterGlobalArea[a]["WaterRepArea"] > 0 then
-						local NoTiles = global.WaterGlobalArea[a]["ShallowWater"] + global.WaterGlobalArea[a]["DeepWater"]
+		if storage.WaterGlobalArea then
+			for a = #storage.WaterGlobalArea, 1, -1 do
+				if storage.WaterGlobalArea[a]["Percent"] >= 80 or storage.WaterGlobalArea[a]["FluidType"] == "crude-oil" then
+					if #storage.WaterGlobalArea[a]["WaterRepArea"] > 0 then
+						local NoTiles = storage.WaterGlobalArea[a]["ShallowWater"] + storage.WaterGlobalArea[a]["DeepWater"]
 						for b = 1, NoTiles, 1 do
-								TileName = global.WaterGlobalArea[a]["WaterRepArea"][b]["name"]
+								TileName = storage.WaterGlobalArea[a]["WaterRepArea"][b]["name"]
 								if TileName == "sand-3" or TileName == "crude-oil" or TileName == "lake-shallow" then
-									global.WaterGlobalArea[a]["WaterRepArea"][b]["name"] = "water"
+									storage.WaterGlobalArea[a]["WaterRepArea"][b]["name"] = "water"
 								elseif TileName == "dry-dirt" or TileName == "crude-oil-deep" or "lake-deep" then
-									global.WaterGlobalArea[a]["WaterRepArea"][b]["name"] = "deepwater"
+									storage.WaterGlobalArea[a]["WaterRepArea"][b]["name"] = "deepwater"
 								else
 									game.print("Not A Replaceable Tile")
 								end
-							game.surfaces[global.WaterGlobalArea[a]["Surface"].name].set_tiles(global.WaterGlobalArea[a]["WaterRepArea"], true)
+							game.surfaces[storage.WaterGlobalArea[a]["Surface"].name].set_tiles(storage.WaterGlobalArea[a]["WaterRepArea"], true)
 						end
 					else
-						local WGA = global.WaterGlobalArea
+						local WGA = storage.WaterGlobalArea
 						local surface = WGA[a]["Surface"]
 						local WAArea = WGA[a]["WaterEdgeArea"]
 						local TilesToReplace = {}
@@ -2888,67 +2888,67 @@ function RestoreWater()
 						game.surfaces[surface.name].set_tiles(TilesToReplace, true)
 					end
 				end
-				table.remove(global.WaterGlobalArea,a)
+				table.remove(storage.WaterGlobalArea,a)
 			end
 			local RemoveFromTable = settings.global["FluidArea-RemoveFromTable"].value
 			if RemoveFromTable == true then
 				game.print("As Remove From Table is active, old depleted fluid areas cannot be restored.")
 			end
 		end
-		--global.WaterGlobalArea = nil
-		if global.OPLocate then	
-			for a = #global.OPLocate, 1, -1 do
-				RepOP = global.OPLocate[a]["position"]
-				RepOPSp = global.OPLocate[a]["spritepos"]
-				RepOPD = global.OPLocate[a]["direction"]
-				RepOPE = global.OPLocate[a]["entity"]
-				RepOPS = global.OPLocate[a]["surface"]
-				RepOPPl = global.OPLocate[a]["entity"].last_user
+		--storage.WaterGlobalArea = nil
+		if storage.OPLocate then	
+			for a = #storage.OPLocate, 1, -1 do
+				RepOP = storage.OPLocate[a]["position"]
+				RepOPSp = storage.OPLocate[a]["spritepos"]
+				RepOPD = storage.OPLocate[a]["direction"]
+				RepOPE = storage.OPLocate[a]["entity"]
+				RepOPS = storage.OPLocate[a]["surface"]
+				RepOPPl = storage.OPLocate[a]["entity"].last_user
 				if RepOPPl == nil then
 					RepOPPl = game.players[1]["name"]
 				end
 				RepOPF = RepOPE.force
 				RepOPE.destroy()
 				game.surfaces[RepOPS.name].create_entity{name="offshore-pump",position = RepOPSp,direction = RepOPD,player=RepOPPl,force = RepOPF}
-				table.remove(global.OPLocate,a)
+				table.remove(storage.OPLocate,a)
 			end
-		--global.OPLocate = nil
+		--storage.OPLocate = nil
 		end
-		if global.ODLocate then
-			for a = #global.ODLocate,1, -1 do
-				RepODE = global.ODLocate[a]["entity"]
+		if storage.ODLocate then
+			for a = #storage.ODLocate,1, -1 do
+				RepODE = storage.ODLocate[a]["entity"]
 				RepODE.destroy()
-				table.remove(global.ODLocate,a)
+				table.remove(storage.ODLocate,a)
 			end
-		--global.ODLocate = nil
+		--storage.ODLocate = nil
 		end
-		if global.FluidProducers then
-			for a = #global.FluidProducers,1, -1 do
-				table.remove(global.ODLocate,a)
+		if storage.FluidProducers then
+			for a = #storage.FluidProducers,1, -1 do
+				table.remove(storage.ODLocate,a)
 			end
-		--global.ODLocate = nil
+		--storage.ODLocate = nil
 		end
-		--global.FluidProducers = nil
-		global.PercentChange = 0
-		global.WaterFlow = 0
-		global.CrudeFlow = 0
-		global.LastWaterFlow = 0
-		global.LastCrudeFlow = 0
-		global.WGAID = 0
-		global.Type = 0
-		global.ActiveOPs = 0
-		global.ActiveODs = 0
+		--storage.FluidProducers = nil
+		storage.PercentChange = 0
+		storage.WaterFlow = 0
+		storage.CrudeFlow = 0
+		storage.LastWaterFlow = 0
+		storage.LastCrudeFlow = 0
+		storage.WGAID = 0
+		storage.Type = 0
+		storage.ActiveOPs = 0
+		storage.ActiveODs = 0
 		game.print("FluidAreas Restored!")
 	end
 end
 
 function StopScanning()
 	game.player.print("Stopping All Active Scans")
-	for a = 1, #global.WaterGlobalArea, 1 do
-		if global.WaterGlobalArea[a]["ToSearch"] ~= nil then
-			global.WaterGlobalArea[a]["ToSearch"] = nil
+	for a = 1, #storage.WaterGlobalArea, 1 do
+		if storage.WaterGlobalArea[a]["ToSearch"] ~= nil then
+			storage.WaterGlobalArea[a]["ToSearch"] = nil
 			waterbodies.WtrName(a)
-			game.player.print(string.format("%s created, with %sL of %s.", global.WaterGlobalArea[a]["WtrName"], global.WaterGlobalArea[a]["AmountWtr"], global.WaterGlobalArea[a]["FluidType"]))
+			game.player.print(string.format("%s created, with %sL of %s.", storage.WaterGlobalArea[a]["WtrName"], storage.WaterGlobalArea[a]["AmountWtr"], storage.WaterGlobalArea[a]["FluidType"]))
 			MapMarker(a)
 		end
 	end
@@ -2956,29 +2956,29 @@ end
 
 function PlayerForces()
 	game.player.print("PlayerForces Info")
-	if #global.PlayerForces == 0 then
+	if #storage.PlayerForces == 0 then
 		game.player.print("No PlayerForces Data to show.")
 	else
-		local PF = global.PlayerForces
-		for a = 1, #global.PlayerForces, 1 do
-			game.player.print(string.format("PlayerForce: %s, Offshore: Pumps: %s | Drains: %s, Flow: Water: %s | Crude: %s",global.PlayerForces[a]["name"],global.PlayerForces[a]["OPcount"],global.PlayerForces[a]["ODcount"],comma_value(global.PlayerForces[a]["WaterFlow"]),comma_value(global.PlayerForces[a]["CrudeFlow"])))
+		local PF = storage.PlayerForces
+		for a = 1, #storage.PlayerForces, 1 do
+			game.player.print(string.format("PlayerForce: %s, Offshore: Pumps: %s | Drains: %s, Flow: Water: %s | Crude: %s",storage.PlayerForces[a]["name"],storage.PlayerForces[a]["OPcount"],storage.PlayerForces[a]["ODcount"],comma_value(storage.PlayerForces[a]["WaterFlow"]),comma_value(storage.PlayerForces[a]["CrudeFlow"])))
 		end
 	end
 end
 
 function Offshores()
 	game.player.print("Offshore Pump(s) Info")
-	if #global.OPLocate == 0 then
+	if #storage.OPLocate == 0 then
 		game.player.print("No Offshore Pump(s) on map.")
 	else
 		local PlayerForce = game.player.force.name
 		local Found = false
-		for a = 1, #global.OPLocate, 1 do
-			if global.OPLocate[a]["force"] == PlayerForce then
+		for a = 1, #storage.OPLocate, 1 do
+			if storage.OPLocate[a]["force"] == PlayerForce then
 				Found = true
-				local FluidName = string.sub(global.OPLocate[a]["tile"],1,1):upper()..string.sub(global.OPLocate[a]["tile"],2)
-				local SurfaceName = string.sub(global.OPLocate[a]["surface"].name,1,1):upper()..string.sub(global.OPLocate[a]["surface"].name,2)
-				game.player.print(string.format("Offshore Pump Position: {%s, %s}, Pump Surface: %s, Fluid Type: %s, FluidArea: %s, Active: %s, Force: %s",global.OPLocate[a]["position"]["x"],global.OPLocate[a]["position"]["y"],SurfaceName, FluidName,global.OPLocate[a]["WA"], global.OPLocate[a]["Active"], global.OPLocate[a]["force"]))
+				local FluidName = string.sub(storage.OPLocate[a]["tile"],1,1):upper()..string.sub(storage.OPLocate[a]["tile"],2)
+				local SurfaceName = string.sub(storage.OPLocate[a]["surface"].name,1,1):upper()..string.sub(storage.OPLocate[a]["surface"].name,2)
+				game.player.print(string.format("Offshore Pump Position: {%s, %s}, Pump Surface: %s, Fluid Type: %s, FluidArea: %s, Active: %s, Force: %s",storage.OPLocate[a]["position"]["x"],storage.OPLocate[a]["position"]["y"],SurfaceName, FluidName,storage.OPLocate[a]["WA"], storage.OPLocate[a]["Active"], storage.OPLocate[a]["force"]))
 			end
 		end
 		if Found == false then
@@ -2989,21 +2989,21 @@ end
 
 function OffshoreDrains()
 	game.player.print("Offshore Drain(s) Info")
-	if #global.ODLocate == 0 then
+	if #storage.ODLocate == 0 then
 		game.player.print("No Offshore Drain(s) on map.")
 	else
 		local PlayerForce = game.player.force.name
 		local Found = false
-		for a = 1, #global.ODLocate, 1 do
-			if global.ODLocate[a]["force"] == PlayerForce then
-				if global.ODLocate[a]["PipeFluid"] == nil then
+		for a = 1, #storage.ODLocate, 1 do
+			if storage.ODLocate[a]["force"] == PlayerForce then
+				if storage.ODLocate[a]["PipeFluid"] == nil then
 					FluidName = "None"
 				else
-					FluidName = string.sub(global.ODLocate[a]["PipeFluid"],1,1):upper()..string.sub(global.ODLocate[a]["PipeFluid"],2)
+					FluidName = string.sub(storage.ODLocate[a]["PipeFluid"],1,1):upper()..string.sub(storage.ODLocate[a]["PipeFluid"],2)
 				end
 				Found = true
-				local SurfaceName = string.sub(global.ODLocate[a]["surface"].name,1,1):upper()..string.sub(global.ODLocate[a]["surface"].name,2)
-				game.player.print(string.format("Offshore Drain Position: {%s, %s}, Pipe Surface: %s , Pipe Fluid: %s, Fluid Area: %s, Active: %s",global.ODLocate[a]["position"]["x"],global.ODLocate[a]["position"]["y"],SurfaceName, FluidName, global.ODLocate[a]["WA"], global.ODLocate[a]["Active"]))
+				local SurfaceName = string.sub(storage.ODLocate[a]["surface"].name,1,1):upper()..string.sub(storage.ODLocate[a]["surface"].name,2)
+				game.player.print(string.format("Offshore Drain Position: {%s, %s}, Pipe Surface: %s , Pipe Fluid: %s, Fluid Area: %s, Active: %s",storage.ODLocate[a]["position"]["x"],storage.ODLocate[a]["position"]["y"],SurfaceName, FluidName, storage.ODLocate[a]["WA"], storage.ODLocate[a]["Active"]))
 			end
 		end
 		if Found == false then
@@ -3014,57 +3014,57 @@ end
 
 function WaterAreas()
 	game.player.print("FluidArea(s) Info")
-	if #global.WaterGlobalArea == 0 then
+	if #storage.WaterGlobalArea == 0 then
 		game.player.print("No FluidArea(s) on map.")
 	else
 		PForce = game.player.force.name
 		Found = false
-		for a = 1, #global.WaterGlobalArea, 1 do
+		for a = 1, #storage.WaterGlobalArea, 1 do
 			OPs = 0
 			OPsA = 0
 			ODs = 0
 			ODsA = 0
 			Shallow = 0
-			for b = 1, #global.WaterGlobalArea[a]["OPs"], 1 do
-				if global.WaterGlobalArea[a]["OPs"][b]["force"] == PForce then
+			for b = 1, #storage.WaterGlobalArea[a]["OPs"], 1 do
+				if storage.WaterGlobalArea[a]["OPs"][b]["force"] == PForce then
 					Found = true
-					FluidName = string.sub(global.WaterGlobalArea[a]["FluidType"],1,1):upper()..string.sub(global.WaterGlobalArea[a]["FluidType"],2)
+					FluidName = string.sub(storage.WaterGlobalArea[a]["FluidType"],1,1):upper()..string.sub(storage.WaterGlobalArea[a]["FluidType"],2)
 					FluidName2 = FluidName
 					if FluidName2 == "None" then
 						FluidName2 = "Fluid"
 					end
-					SurfaceName = string.sub(global.WaterGlobalArea[a]["Surface"].name,1,1):upper()..string.sub(global.WaterGlobalArea[a]["Surface"].name,2)
-					if global.WaterGlobalArea[a]["OPs"][b] == nil then
+					SurfaceName = string.sub(storage.WaterGlobalArea[a]["Surface"].name,1,1):upper()..string.sub(storage.WaterGlobalArea[a]["Surface"].name,2)
+					if storage.WaterGlobalArea[a]["OPs"][b] == nil then
 						OPs = 0
 						OPsA = 0
 					else
-						OPs = global.WaterGlobalArea[a]["OPs"][b]["count"]
-						OPsA = global.WaterGlobalArea[a]["OPsA"][b]["count"]
+						OPs = storage.WaterGlobalArea[a]["OPs"][b]["count"]
+						OPsA = storage.WaterGlobalArea[a]["OPsA"][b]["count"]
 					end
-					Shallow = global.WaterGlobalArea[a]["ShallowWater"] + global.WaterGlobalArea[a]["ShallowWater-Shallow"] + global.WaterGlobalArea[a]["ShallowWater-Mud"]
+					Shallow = storage.WaterGlobalArea[a]["ShallowWater"] + storage.WaterGlobalArea[a]["ShallowWater-Shallow"] + storage.WaterGlobalArea[a]["ShallowWater-Mud"]
 				end
 			end
-			for d = 1, #global.WaterGlobalArea[a]["ODs"], 1 do
-				if global.WaterGlobalArea[a]["ODs"][d]["force"] == PForce then
+			for d = 1, #storage.WaterGlobalArea[a]["ODs"], 1 do
+				if storage.WaterGlobalArea[a]["ODs"][d]["force"] == PForce then
 					Found = true
-					FluidName = string.sub(global.WaterGlobalArea[a]["FluidType"],1,1):upper()..string.sub(global.WaterGlobalArea[a]["FluidType"],2)
+					FluidName = string.sub(storage.WaterGlobalArea[a]["FluidType"],1,1):upper()..string.sub(storage.WaterGlobalArea[a]["FluidType"],2)
 					FluidName2 = FluidName
 					if FluidName2 == "None" then
 						FluidName2 = "Fluid"
 					end
-					SurfaceName = string.sub(global.WaterGlobalArea[a]["Surface"].name,1,1):upper()..string.sub(global.WaterGlobalArea[a]["Surface"].name,2)
-					if global.WaterGlobalArea[a]["ODs"][d] == nil then
+					SurfaceName = string.sub(storage.WaterGlobalArea[a]["Surface"].name,1,1):upper()..string.sub(storage.WaterGlobalArea[a]["Surface"].name,2)
+					if storage.WaterGlobalArea[a]["ODs"][d] == nil then
 						ODs = 0
 						ODsA = 0
 					else
-						ODs = global.WaterGlobalArea[a]["ODs"][d]["count"]
-						ODsA = global.WaterGlobalArea[a]["ODsA"][d]["count"]
+						ODs = storage.WaterGlobalArea[a]["ODs"][d]["count"]
+						ODsA = storage.WaterGlobalArea[a]["ODsA"][d]["count"]
 					end
-					Shallow = global.WaterGlobalArea[a]["ShallowWater"] + global.WaterGlobalArea[a]["ShallowWater-Shallow"] + global.WaterGlobalArea[a]["ShallowWater-Mud"]
+					Shallow = storage.WaterGlobalArea[a]["ShallowWater"] + storage.WaterGlobalArea[a]["ShallowWater-Shallow"] + storage.WaterGlobalArea[a]["ShallowWater-Mud"]
 				end
 			end
 			if Found == true then
-				game.player.print(string.format("ID: %s | %s | Surface: %s | Fluid Type: %s | %s Amount: %s L | Regen %.2f | Percent Depleted: %.4f %% | \n Tiles (RepArea:(%.f) / EdgeArea:(%.f)) | Shallow: %.f / Deep: %.f | Active: Pumps: %.f / Drains: %.f | Total : Pumps: %.f / Drains: %.f |", global.WaterGlobalArea[a]["WGAID"],global.WaterGlobalArea[a]["WtrName"],SurfaceName,FluidName,FluidName2, comma_value(global.WaterGlobalArea[a]["AmountWtr"]),global.WaterGlobalArea[a]["RegenAmount"], global.WaterGlobalArea[a]["Percent"],#global.WaterGlobalArea[a]["WaterRepArea"],#global.WaterGlobalArea[a]["WaterEdgeArea"],Shallow,global.WaterGlobalArea[a]["DeepWater"], OPsA, ODsA, OPs,ODs))
+				game.player.print(string.format("ID: %s | %s | Surface: %s | Fluid Type: %s | %s Amount: %s L | Regen %.2f | Percent Depleted: %.4f %% | \n Tiles (RepArea:(%.f) / EdgeArea:(%.f)) | Shallow: %.f / Deep: %.f | Active: Pumps: %.f / Drains: %.f | Total : Pumps: %.f / Drains: %.f |", storage.WaterGlobalArea[a]["WGAID"],storage.WaterGlobalArea[a]["WtrName"],SurfaceName,FluidName,FluidName2, comma_value(storage.WaterGlobalArea[a]["AmountWtr"]),storage.WaterGlobalArea[a]["RegenAmount"], storage.WaterGlobalArea[a]["Percent"],#storage.WaterGlobalArea[a]["WaterRepArea"],#storage.WaterGlobalArea[a]["WaterEdgeArea"],Shallow,storage.WaterGlobalArea[a]["DeepWater"], OPsA, ODsA, OPs,ODs))
 			end
 		end
 		if Found == false then
@@ -3075,26 +3075,26 @@ end
 
 function PumpJacks()
 	game.player.print("Pumpjack(s) Location Info")
-	if #global.FluidProducers == 0 then
+	if #storage.FluidProducers == 0 then
 		game.player.print("No Pumpjack(s) to show.")
 	else
 		local PlayerForce = game.player.force.name
-		for a = 1, #global.FluidProducers, 1 do
-			if global.FluidProducers[a]["force"] == PlayerForce then
-				local SurfaceName = string.sub(global.FluidProducers[a]["surface"].name,1,1):upper()..string.sub(global.FluidProducers[a]["surface"].name,2)
-				game.player.print(string.format("Pumpjack Position: {%s, %s}, Pumpjack Surface: %s",global.FluidProducers[a]["position"]["x"],global.FluidProducers[a]["position"]["y"],SurfaceName))
+		for a = 1, #storage.FluidProducers, 1 do
+			if storage.FluidProducers[a]["force"] == PlayerForce then
+				local SurfaceName = string.sub(storage.FluidProducers[a]["surface"].name,1,1):upper()..string.sub(storage.FluidProducers[a]["surface"].name,2)
+				game.player.print(string.format("Pumpjack Position: {%s, %s}, Pumpjack Surface: %s",storage.FluidProducers[a]["position"]["x"],storage.FluidProducers[a]["position"]["y"],SurfaceName))
 			end
 		end
 	end
 end
 
 function ScenFunc()
-	global.LandFill = {}
-	global.PlayerForces = {}
-	global.ScanOffshoresQueue = {}
-	global.InstallTick = 0
-	global.WGAID = 0
-	global.LoopTick = 0
+	storage.LandFill = {}
+	storage.PlayerForces = {}
+	storage.ScanOffshoresQueue = {}
+	storage.InstallTick = 0
+	storage.WGAID = 0
+	storage.LoopTick = 0
 end
 
 function WaaRSetup()
@@ -3122,7 +3122,7 @@ script.on_event({defines.events.on_player_mined_entity,defines.events.script_rai
 script.on_event({defines.events.on_player_built_tile,defines.events.on_robot_built_tile}, LandFillCheck)
 script.on_event({defines.events.on_game_created_from_scenario},ScenFunc)
 script.on_configuration_changed(UpdateMod)
-remote.add_interface("WaaR", {	build = function(a,b)	event = a	global.remotetrigger = b	if event ~= nil then		ScriptConvert(event)	end end})
+remote.add_interface("WaaR", {	build = function(a,b)	event = a	storage.remotetrigger = b	if event ~= nil then		ScriptConvert(event)	end end})
 commands.add_command("RestoreWater", "Restores Water Areas & Clears GlobalTable",RestoreWater)
 commands.add_command("Offshores", "Displays All The Offshore Pumps Built", Offshores)
 commands.add_command("OffshoreDrains", "Displays All The Offshore Drains Built", OffshoreDrains)
